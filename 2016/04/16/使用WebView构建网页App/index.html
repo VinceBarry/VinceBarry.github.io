@@ -1,0 +1,427 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>使用WebView构建网页App&#39;&#39; | </title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="使用WebView构建网页App
+写作原因：最近博主打算构建一个Android Web浏览器，而作为浏览器的核心组成，WebView有必要认真学习一遍，下面是我对Google官方指南WebView的翻译，如有疏漏或错误，希望指正，谢谢！
+如果你想要搭建一个web应用（或者只是一个web页面）作为客户">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="使用WebView构建网页App&#39;&#39;"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            Home
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            Archives
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            Categories
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            Reading
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            About
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://ww2.sinaimg.cn/small/74990035jw1f1rjkd681bj20rs0rsdhg.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    Home
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    Archives
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    Categories
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    Reading
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    About
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">1</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">Current page(Categories)</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Android-Google官方文档/">Android Google官方文档</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>使用WebView构建网页App&#39;&#39;</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-04-16T05:43:34.000Z"><a href="/2016/04/16/使用WebView构建网页App/">2016-04-16</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/翻译/" class="chip pink lighten-1">翻译</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">使用WebView构建网页App</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">写作原因：最近博主打算构建一个Android Web浏览器，而作为浏览器的核心组成，WebView有必要认真学习一遍，下面是我对Google官方指南WebView的翻译，如有疏漏或错误，希望指正，谢谢！</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">向应用中加入WebView</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">在WebView中使用JavaScript</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">绑定JavaScript到Android</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">处理页面导航</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#undefined"><span class="section table-of-contents-text">网页历史导航</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p></p><h1>使用WebView构建网页App</h1><p></p>
+<p></p><h3>写作原因：最近博主打算构建一个Android Web浏览器，而作为浏览器的核心组成，WebView有必要认真学习一遍，下面是我对Google官方指南WebView的翻译，如有疏漏或错误，希望指正，谢谢！</h3><p></p>
+<p>如果你想要搭建一个web应用（或者只是一个web页面）作为客户端程序的一个部分，你可以使用WebView来实现。WebView类是Android View类的一个继承类，使用它你可以在你的Activity布局中展示web页面。WebView没有包括任何完整的以开发完成的web浏览器的特征，诸如导航控制或者地址栏。WebView默认下是用于展示一个Web页面的。<br>一个有效的使用WebView的常见的场景是当你想要在你的应用中提供可更新的信息（例如用户协议或者指南）。在你的应用中，你可以创造一个包含WebView的Activity用于展示存在网络端的文档。<br>另一个使用场景是如果你的应用需要频繁向用户提供基于网络请求的数据（如Email）时，你可以使用。这种情况下，你会发现相比实现网络请求，解析数据然后在布局中展示，WebView方便许多。你可以为设备设计一个合理的web页面让你的应用加载web页面。<br>下面的文档向你展示了如何初步使用WebView和如何做一些额外的事情如处理页面导航和绑定来自你web页面的JavaScript到客户端app中。</p>
+<p></p><h2>向应用中加入WebView</h2><br>简单地在布局中加入<webview>标签即可。例如，<br>‘’’XML<br>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<p></p>
+<p><webview xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/webview" android:layout_width="fill_parent" android:layout_height="fill_parent"><br>‘’’<br>通过loadUrl()方法来载入Web页面，如：<br>‘’’Java<br>WebView myWebView = (WebView) findViewById(R.id.webview);<br>myWebView.loadUrl(“<a href="http://www.example.com" target="_blank" rel="external">http://www.example.com</a>“);<br>‘’’<br>为了使上述成功执行，你的应用中需要加入网络访问权限。在manifest文件中：<br>‘’’XML</webview></p>
+<p><manifest ...=""><br>    <uses-permission android:name="android.permission.INTERNET"><br>    …<br></uses-permission></manifest><br>‘’’<br>以上就是一个基本展示web页面的WebView的搭建过程。</p>
+<p></p><h2>在WebView中使用JavaScript</h2><br>如果你希望在你的WebView中使用JavaScript，你必须使WebView的JavaScript可用（enable），你可以使用WebView的getSettings()方法获得WebSettings对象，然后调用WebSettings对象的setJavaScriptEnabled(true)来使JavaScript可用。<br>例如：<br>‘’’Java<br>WebView myWebView = (WebView) findViewById(R.id.webview);<br>WebSettings webSettings = myWebView.getSettings();<br>webSettings.setJavaScriptEnabled(true);<br>‘’’<br>WebSettings有一系列其他的有用的设置可供访问。例如，如果你在使用WebView开发一个设计方向明确的web应用，你可以通过setUserAgentSetting定义一个自定义的用户代理字符串（user agent），然后在你的web页面查询请求自定义的用户代理来核实请求你的web页面的客户端是否为你的应用。<p></p>
+<p></p><h2>绑定JavaScript到Android</h2><br>当在你的Android应用中开发一个使用WebView的设计具体web应用时，你可以在你的JavaScript和Android源码之间创建接口。举个例子，你的JavaScript可以调用Android Code去展示一个Dialog，而不是使用JavaScript的alert()函数。（笔者不会JS。。。）<br>例如在你的Application中添加：<br>‘’’Java<br>public class WebAppInterface {<br>    Context mContext;<p></p>
+<pre><code>/** Instantiate the interface and set the context */
+WebAppInterface(Context c) {
+    mContext = c;
+}
+
+/** Show a toast from the web page */
+@JavascriptInterface
+public void showToast(String toast) {
+    Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+}
+</code></pre><p>}<br>‘’’<br>警告：如果你设置你的targetSdkVersion为17甚至更大时，你必须添加’@JavascriptInterface annotation’到任何向JavaScript开放的方法中（此方法必为public）。如果你没有提供annotation，当你在Android4.2或更高版本运行时方法是不可见的。<br>在这个例子中，WebAppInterface类允许web页面通过使用showToast()去创造一个Toast。<br>你可以通过addJavascriptInterface()绑定这个类到在你app运行JavaScript的WebView上并且将接口命名为Android，例如：<br>‘’’Java<br>WebView webView = (WebView) findViewById(R.id.webview);<br>webView.addJavascriptInterface(new WebAppInterface(this), “Android”);<br>‘’’<br>这样为跑在WebView上的JavaScript创造了一个名为Android的接口，你的web页面已经有权限访问WebAppInterface类，下面是通过JavaScript实现当用户点击button（Web页面）时弹出一个toast（Android）。<br>‘’’HTML</p>
+<input type="button" value="Say hello" onclick="showAndroidToast('Hello Android!')">
+
+<p><script type="text/javascript"><br>    function showAndroidToast(toast) {<br>        Android.showToast(toast);<br>    }<br></script><br>‘’’<br>没有必要在JavaScript中为Android接口初始化，WebView自动向Web页面将接口可见化。所以，一点击button，showAndroidToast() 方法使用Android接口去调用WebAppInterface.showToast()方法。<br>笔记：对象在非其构建线程中运行。<br>警告：（精简语意）Google说明通过JavaScript调用Android方法是一种危险的行为，你的Android源码可能会被攻击利用除非所有的HTML和JavaScript都在你的WebView中。</p>
+<p></p><h2>处理页面导航</h2><br>当用户点击你WebView上面Web页面的链接时，默认行为是启动一个应用去处理URL。通常，默认的Web浏览器会打开载入目的URL。然而，你可以为你的WebView重写行为使得链接在你的WebView中打开。然后你可以允许用户在他们的历史页面间进行前进后退的导航操作。<br>为了打开用户点击的链接，只需使用setWebViewClient()为你的WebView简单地提供一个WebViewClient，例如：<br>‘’’Java<br>WebView myWebView = (WebView) findViewById(R.id.webview);<br>myWebView.setWebViewClient(new WebViewClient());<br>‘’’<br>现在可以实现在你的WebView上载入页面了。<br>如果你希望更多的控制一个链接启动的位置，重写shouldOverrideUrlLoading()。例如：<br>‘’’Java<br>private class MyWebViewClient extends WebViewClient {<br>    @Override<br>    public boolean shouldOverrideUrlLoading(WebView view, String url) {<br>        if (Uri.parse(url).getHost().equals(“www.example.com”)) {<br>            // This is my web site, so do not override; let my WebView load the page<br>            return false;<br>        }<br>        // Otherwise, the link is not for a page on my site, so launch another Activity that handles URLs<br>        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));<br>        startActivity(intent);<br>        return true;<br>    }<br>}<br>‘’’<br>个人注解：如果shouldOverrideUrlLoading(WebView view, String url) 方法返回值为true则当前WebView显示，false则启动外部默认应用显示。<br>然后为WebView创建一个新的WebViewClient实例：<br>‘’’Java<br>WebView myWebView = (WebView) findViewById(R.id.webview);<br>myWebView.setWebViewClient(new MyWebViewClient());<br>‘’’<br>现在当用户点击链接，系统调用shouldOverrideUrlLoading()检查URL是否为该WebView特定执行的Web页，若是则WebView内启动，否则通过intent通知外部应用（默认程序）来启动Web页。<p></p>
+<p></p><h2>网页历史导航</h2><br>当你的WebView重写URL载入，它将自动积累已浏览的网页的历史记录。你可以通过goBack()和goForward()实现前后导航。<br>例如，下面是如何利用物理后退键来实现向后导航：<p></p>
+<p>‘’’Java<br>@Override<br>public boolean onKeyDown(int keyCode, KeyEvent event) {<br>    // Check if the key event was the Back button and if there’s history<br>    if ((keyCode == KeyEvent.KEYCODE_BACK) &amp;&amp; myWebView.canGoBack()) {<br>        myWebView.goBack();<br>        return true;<br>    }<br>    // If it wasn’t the Back key or there’s no web page history, bubble up to the default<br>    // system behavior (probably exit the activity)<br>    return super.onKeyDown(keyCode, event);<br>}<br>‘’’<br>canGoBack()方法返回真如果真的有用户浏览记录。同样，你可以使用canGoForward()去检查是否有forward记录。如果不检查，则一旦到达历史记录的末尾，goBack()和goForward()不做任何事情。</p>
+</webview>
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="Return to top"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse yellow darken-1"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">Social</h5>
+                
+                    <a class="social-link" href="http://weibo.com/1956184117" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">Links</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism主题作者的技术博客</a>
+                
+                    <a class="social-link" href="https://github.com/raytaylorlin" target="_blank">Github地址（测试友情链接）</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2016 example.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">Blog powered by <a href="https://hexo.io">Hexo</a> | Theme <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').addClass('responsive-table striped bordered');
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('pink lighten-2');
+
+        
+        // 添加new标签
+        $('.menu-reading,.menu-about').append('<span class="new badge pink"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
