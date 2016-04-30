@@ -7,15 +7,17 @@
 
     
 
-    <title>Hello World | </title>
+    <title>Fragment间的通信 | </title>
     <meta name="author" content="陈颍聪">
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+    <meta name="description" content="写作原因：在使用Fragment代替Activity作为整个应用的用户展示交互时大多数情况会遇到Fragment之间的通信问题，所以有必要认真对Fragment的通信进行学习。Communicating with Other Fragments
+
+为了重用Fragment UI组件，你应该将每个Fr">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Hello World"/>
+    <meta property="og:title" content="Fragment间的通信"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋"/>
 
     
@@ -184,6 +186,10 @@
         <span class="breadcrumb">当前位置（分类目录）</span>
         
             
+    
+    
+    <a class="breadcrumb" href="/categories/Android-Google官方文档/">Android Google官方文档</a>
+
 
         
 
@@ -199,30 +205,38 @@
             <div class="article-title">
                 
     
-        <h1>Hello World</h1>
+        <h1>Fragment间的通信</h1>
     
 
 
             </div>
-            <time class="pink-link-context" datetime="2016-04-12T06:09:42.222Z"><a href="/2016/04/12/hello-world/">2016-04-12</a></time>
+            <time class="pink-link-context" datetime="2016-04-30T04:59:55.000Z"><a href="/2016/04/30/Fragment间的通信/">2016-04-30</a></time>
 
             
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/翻译/" class="chip pink lighten-1">翻译</a>
+        
+    </div>
+
 
             <div class="toc pink-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Quick-Start"><span class="section table-of-contents-text">Quick Start</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Create-a-new-post"><span class="section table-of-contents-text">Create a new post</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Run-server"><span class="section table-of-contents-text">Run server</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Generate-static-files"><span class="section table-of-contents-text">Generate static files</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Deploy-to-remote-sites"><span class="section table-of-contents-text">Deploy to remote sites</span></a></li></ol></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#定义一个接口"><span class="section table-of-contents-text">定义一个接口</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#实现接口"><span class="section table-of-contents-text">实现接口</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#传递消息到另一个Fragment"><span class="section table-of-contents-text">传递消息到另一个Fragment</span></a></li></ol>
 </div>
 
 
             <div class="entry pink-link-context">
-                <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+                <p><strong>写作原因：在使用Fragment代替Activity作为整个应用的用户展示交互时大多数情况会遇到Fragment之间的通信问题，所以有必要认真对Fragment的通信进行学习。</strong><br><a href="http://developer.android.com/training/basics/fragments/communicating.html" target="_blank" rel="external">Communicating with Other Fragments</a></p>
+<hr>
+<p>为了重用Fragment UI组件，你应该将每个Fragment建立为完全自包含，模块化的，定义了其自身的布局和行为的组件。一旦你定义了这些可以重用的Fragments，你可以通过一个Activity和应用程序逻辑将它们联系起来从而实现总体的综合的UI设计。<br>你经常需要将一个Fragment与另一个进行交互，例如基于一个用户事件改变内容。所有的Fragment之间的通信应该通过Activity来进行。两个Fragment之间不能直接通信。</p>
+<h2 id="定义一个接口"><a href="#定义一个接口" class="headerlink" title="定义一个接口"></a>定义一个接口</h2><p>为了使一个Fragment与其所属的Activity相联系，你可以在Fragment类中定义一个接口并且在Activity中实现它。Fragment在它的onAttach()生命周期中捕获接口的执行，然后调用接口方法去实现和Activity的通信。<br>下面是一个Fragment和Activity通信的例子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public class HeadlinesFragment extends ListFragment &#123;</span><br><span class="line">    OnHeadlineSelectedListener mCallback;</span><br><span class="line"></span><br><span class="line">    // Container Activity must implement this interface</span><br><span class="line">    //在Fragment中定义一个接口</span><br><span class="line">    public interface OnHeadlineSelectedListener &#123;</span><br><span class="line">        public void onArticleSelected(int position);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onAttach(Activity activity) &#123;</span><br><span class="line">        super.onAttach(activity);</span><br><span class="line">        </span><br><span class="line">        // This makes sure that the container activity has implemented</span><br><span class="line">        // the callback interface. If not, it throws an exception</span><br><span class="line">        try &#123;</span><br><span class="line">            //在此处将activity强转成接口</span><br><span class="line">            mCallback = (OnHeadlineSelectedListener) activity;</span><br><span class="line">        &#125; catch (ClassCastException e) &#123;</span><br><span class="line">            throw new ClassCastException(activity.toString()</span><br><span class="line">                    + &quot; must implement OnHeadlineSelectedListener&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在fragment可以通过使用OnHeadlineSelectedListener接口的mCallBack实例调用onArticleSelected()方法（或接口中的其它方法）实现传递消息到Activity中。（好拗口~）<br>例如下面，当用户点击一个list item时，fragment的方法会被调用。fragment会使用callback接口去向父activity传递事件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onListItemClick(ListView l, View v, int position, long id) &#123;</span><br><span class="line">        // Send the event to the host activity</span><br><span class="line">        mCallback.onArticleSelected(position);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="实现接口"><a href="#实现接口" class="headerlink" title="实现接口"></a>实现接口</h2><p>为了从fragment中获取回调，fragment的宿主activity必须实现fragment中定义的接口。<br>例如，上述例子中的activity中实现interface：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public static class MainActivity extends Activity</span><br><span class="line">        implements HeadlinesFragment.OnHeadlineSelectedListener&#123;</span><br><span class="line">    ...</span><br><span class="line">    </span><br><span class="line">    public void onArticleSelected(int position) &#123;</span><br><span class="line">        // The user selected the headline of an article from the HeadlinesFragment</span><br><span class="line">        // Do something here to display that article</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="传递消息到另一个Fragment"><a href="#传递消息到另一个Fragment" class="headerlink" title="传递消息到另一个Fragment"></a>传递消息到另一个Fragment</h2><p>宿主activity能够传递消息到另一个fragment通过findFragmentById()方法捕获Fragment实例，然后直接调用fragment的公共方法。<br>例如，想象一下上述的activity包含另一个通过fragmentA的item展示相关数据的fragmentB。在这个案例中，activity传递在回调方法中收到的fragmentA的信息到fragmentB然后fragmentB展示item对应的数据：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public static class MainActivity extends Activity</span><br><span class="line">        implements HeadlinesFragment.OnHeadlineSelectedListener&#123;</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    public void onArticleSelected(int position) &#123;</span><br><span class="line">        // The user selected the headline of an article from the HeadlinesFragment</span><br><span class="line">        // Do something here to display that article</span><br><span class="line"></span><br><span class="line">        ArticleFragment articleFrag = (ArticleFragment)</span><br><span class="line">                getSupportFragmentManager().findFragmentById(R.id.article_fragment);</span><br><span class="line"></span><br><span class="line">        if (articleFrag != null) &#123;</span><br><span class="line">            // If article frag is available, we&apos;re in two-pane layout...</span><br><span class="line"></span><br><span class="line">            // Call a method in the ArticleFragment to update its content</span><br><span class="line">            articleFrag.updateArticleView(position);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            // Otherwise, we&apos;re in the one-pane layout and must swap frags...</span><br><span class="line"></span><br><span class="line">            // Create fragment and give it an argument for the selected article</span><br><span class="line">            ArticleFragment newFragment = new ArticleFragment();</span><br><span class="line">            Bundle args = new Bundle();</span><br><span class="line">            args.putInt(ArticleFragment.ARG_POSITION, position);</span><br><span class="line">            newFragment.setArguments(args);</span><br><span class="line">        </span><br><span class="line">            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();</span><br><span class="line"></span><br><span class="line">            // Replace whatever is in the fragment_container view with this fragment,</span><br><span class="line">            // and add the transaction to the back stack so the user can navigate back</span><br><span class="line">            transaction.replace(R.id.fragment_container, newFragment);</span><br><span class="line">            transaction.addToBackStack(null);</span><br><span class="line"></span><br><span class="line">            // Commit the transaction</span><br><span class="line">            transaction.commit();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面是Google官方关于fragment之间通信给出的一个方案，下面贴上本人学习实现的代码，希望大神指正。<br><a href="https://github.com/VinceBarry/FraComDemo" target="_blank" rel="external">博主的github地址</a></p>
 
             </div>
         </div>
@@ -236,7 +250,7 @@
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/04/12/hello-world/" data-title="Hello World" data-url="http://yoursite.com/2016/04/12/hello-world/"></div>
+                <div class="ds-thread" data-thread-key="2016/04/30/Fragment间的通信/" data-title="Fragment间的通信" data-url="http://yoursite.com/2016/04/30/Fragment间的通信/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
