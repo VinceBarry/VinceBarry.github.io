@@ -7,13 +7,17 @@
 
     
 
-    <title>读书 | </title>
+    <title>Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取 | </title>
     <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="zxing是google提供的一个开源的条码处理的库，可支持maxicode、qrcode、pdf17等多种条码，github地址如下：zxing Gitub地址
+
+可以看出，内容还是非常多的，我们用到的也是只其中的核心部分，都在core包里面，这里提供一个打包好的zxing.jar给大家来用，或者">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="读书"/>
+    <meta property="og:title" content="Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋"/>
 
     
@@ -184,185 +188,94 @@
 </nav>
 
     <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
         
-
-<div class="container main-container">
+            
     
-        <div class="">
-            <div class="row">
-                <ul class="tabs ">
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#readed">已读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#reading">在读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#wanted">想读(1)</a>
-                        </li>
-                    
-                </ul>
-            </div>
+    
+    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a>
 
-            
-                <div id="readed" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img5.imgtn.bdimg.com/it/u=1627009949,4034064364&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Android从入门到精通
-                                    </span>
-                                    <p>评分: 7
-                                        <a class="external-link right" href="http://book.douban.com/subject/20281463/" target="_blank">
 
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">简评
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>详细介绍了Android基础知识，Android入门必备</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.douban.com/lpic/s6195030.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java从入门到精通
-                                    </span>
-                                    <p>评分: 8.5
-                                        <a class="external-link right" href="http://book.douban.com/subject/11506062/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">简评
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>Java初学者的福音，Java学习神器</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="reading" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.imgtn.bdimg.com/it/u=1273324854,3761519053&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java编程思想
-                                    </span>
-                                    <p>评分: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">简评
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>深入学习Java编程和理解面向对象的好帮手</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img2.imgtn.bdimg.com/it/u=949596138,2850318938&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">大话数据结构
-                                    </span>
-                                    <p>评分: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">简评
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>数据结构入门用书</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="wanted" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img4.douban.com/lpic/s1113106.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">计算机程序的构造和解释
-                                    </span>
-                                    <p>评分: ???
-                                        <a class="external-link right" href="http://book.douban.com/subject/1148282/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">简评
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-
-        </div>
         
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-05-03T05:12:18.000Z"><a href="/2016/05/03/Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取/">2016-05-03</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/转载/" class="chip pink lighten-1">转载</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p>zxing是google提供的一个开源的条码处理的库，可支持maxicode、qrcode、pdf17等多种条码，github地址如下：<br><a href="https://github.com/zxing/zxing" target="_blank" rel="external">zxing Gitub地址</a></p>
+<p><img src="http://www.codernote.top/static/blog/file/2016/03/QQ%E6%88%AA%E5%9B%BE20160325144921_20160325165548.png" alt="zxing"></p>
+<p>可以看出，内容还是非常多的，我们用到的也是只其中的核心部分，都在core包里面，这里提供一个打包好的zxing.jar给大家来用，或者你可以自己下载了源码自己打包。</p>
+<p><a href="http://www.codernote.top/static/blog/file/2016/03/zxing_20160325165738.zip" target="_blank" rel="external">压缩包</a></p>
+<p>下面我们来看看zxing库的用法</p>
+<p><strong>[二维码生成]</strong></p>
+<p>二维码生成主要是使用QRCodeWriter这个类，encode()方法传入需要编码的字符串，会返回一个BitMatrix，然后我们把它转化转化为Bitmap可用的byte[]类型数据，就可以生成Bitmap了。</p>
+<p><img src="http://www.codernote.top/static/blog/file/2016/03/blob_20160325174331.png" alt="QRcreate"></p>
+<p>BitMatrix的get()方法返回的是boolean类型的数据，true代表二维码深色像素，false代表二维码浅色像素。注意，深色和浅色如果颜色差别不够明显，二维码有可能将无法识别，差别越大，识别成功率越高。所以一般推荐使用黑色和白色来显示二维码。</p>
+<p><strong>[二维码识别]</strong></p>
+<p>二维码识别可使用QRCodeReader或者MultiFormatReader这两个类，区别是，后者可以识别除了二维码之外的一些条码。本例中使用的是MultiFormatReader。</p>
+<p>首先我们需要把图像源数据转换为可识别的亮度信息，zxing提供了LuminanceSource这个抽象类，根据不同的图像类型，其中的getMatrix()方法和getRow()方法需要自己来实现。zxing也提供好了planar类型的YUV图像和RGB图像的LuminanceSource，只需要传入源数据即可。</p>
+<p><img src="http://www.codernote.top/static/blog/file/2016/03/blob_20160325171059.png" alt="xinxi"></p>
+<p>本例中改写了这两个类，增加了灰度图像Bitmap生成的方法。不管是用zxing提供的，还是自己来改写，了解了原理，写代码就很简单了。YUV图像和RGB图像如何提取亮度信息后面会讲到，这里先把zxing讲完。</p>
+<p>LuminanceSource需要封装为HybridBinarizer,再封装为BinaryBitmap，然后通过MultiFormatReader.decodeWithState()方法进行二维码解析，解析失败会抛出异常，解析成功返回一个Result类型的结果，使用Result.getText()方法就可以得到解析后的字符串了。</p>
+<p><img src="http://www.codernote.top/static/blog/file/2016/03/blob_20160325174400.png" alt="code"></p>
+<p>注意，二维码的解析是耗时操作，为避免ANR，我们要把它放到子线程里，本例中使用的是AsyncTask。</p>
+<p><strong>[亮度信息处理]</strong></p>
+<p>对于YUV图像，前一篇已经介绍过。相对于RGB图像来说，YUV图像提取亮度信息很简单，只保留Y数据，忽略UV数据即可。相机返回的数据，大都是YUV类型数据。</p>
+<p>如果是识别本地图像，我们需要对RGB图像做亮度信息的计算。前一篇也有介绍如何通过RGB数据来计算亮度信息，还记得这个公式么：</p>
+<pre><code>Y = 0.299 R + 0.587 G + 0.114 B
+</code></pre><p>不过在实际写代码的过程中，浮点运算太过麻烦和耗时，我们可以改变下公式，得到一个近似值就可以了：</p>
+<pre><code>Y = (R + 2*G + B)/4  或者 Y = (R + G + G + B) &gt;&gt; 2
+</code></pre><p>通过上面的公式就可以得到亮度信息的近似值。</p>
+<p>关于Android二维码的应用就介绍到这里，欢迎大家多多关注。</p>
+<p><a href="https://github.com/xushanmeng/QRCodeScannerDemo" target="_blank" rel="external">点击查看二维码扫描Demo源码</a></p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
 
 
     <section id="comment">
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="reading/index.html" data-title="读书" data-url="http://yoursite.com/reading/index.html"></div>
+                <div class="ds-thread" data-thread-key="2016/05/03/Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取/" data-title="Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取" data-url="http://yoursite.com/2016/05/03/Android二维码扫描开发（三）：zxing库的使用及图像亮度信息提取/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
@@ -386,7 +299,7 @@
     </section>
 
 
-    
+
 </div>
 
         <div class="fixed-action-btn float-sitemap">
