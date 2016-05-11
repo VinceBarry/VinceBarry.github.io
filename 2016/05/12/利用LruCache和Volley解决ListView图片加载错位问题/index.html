@@ -7,13 +7,16 @@
 
     
 
-    <title>读书 | </title>
+    <title>利用LruCache和Volley解决ListView图片加载错位问题 | </title>
     <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。参考源码Android API
+LruCache类简介LruCache类，先找一下And">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="读书"/>
+    <meta property="og:title" content="利用LruCache和Volley解决ListView图片加载错位问题"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋"/>
 
     
@@ -192,185 +195,78 @@
 </nav>
 
     <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">Current page(Categories)</span>
         
-
-<div class="container main-container">
+            
     
-        <div class="">
-            <div class="row">
-                <ul class="tabs ">
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#readed">已读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#reading">在读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#wanted">想读(1)</a>
-                        </li>
-                    
-                </ul>
-            </div>
+    
+    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a><a class="breadcrumb" href="/categories/Android第三方开源库/Android官方文档/">Android官方文档</a>
 
-            
-                <div id="readed" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img5.imgtn.bdimg.com/it/u=1627009949,4034064364&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Android从入门到精通
-                                    </span>
-                                    <p>Score: 7
-                                        <a class="external-link right" href="http://book.douban.com/subject/20281463/" target="_blank">
 
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>详细介绍了Android基础知识，Android入门必备</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.douban.com/lpic/s6195030.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java从入门到精通
-                                    </span>
-                                    <p>Score: 8.5
-                                        <a class="external-link right" href="http://book.douban.com/subject/11506062/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>Java初学者的福音，Java学习神器</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="reading" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.imgtn.bdimg.com/it/u=1273324854,3761519053&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java编程思想
-                                    </span>
-                                    <p>Score: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>深入学习Java编程和理解面向对象的好帮手</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img2.imgtn.bdimg.com/it/u=949596138,2850318938&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">大话数据结构
-                                    </span>
-                                    <p>Score: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>数据结构入门用书</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="wanted" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img4.douban.com/lpic/s1113106.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">计算机程序的构造和解释
-                                    </span>
-                                    <p>Score: ???
-                                        <a class="external-link right" href="http://book.douban.com/subject/1148282/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-
-        </div>
         
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>利用LruCache和Volley解决ListView图片加载错位问题</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-05-11T16:04:17.000Z"><a href="/2016/05/12/利用LruCache和Volley解决ListView图片加载错位问题/">2016-05-12</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/原创/" class="chip pink lighten-1">原创</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#LruCache类简介"><span class="section table-of-contents-text">LruCache类简介</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#ImageCache的实现"><span class="section table-of-contents-text">ImageCache的实现</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Volley异步加载图片操作"><span class="section table-of-contents-text">Volley异步加载图片操作</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#思路整理"><span class="section table-of-contents-text">思路整理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。</strong><br><a href="https://github.com/lesliebeijing/VolleyListViewImageDemo" target="_blank" rel="external">参考源码</a><br><a href="http://developer.android.com/reference/android/util/LruCache.html" target="_blank" rel="external">Android API</a></p>
+<h2 id="LruCache类简介"><a href="#LruCache类简介" class="headerlink" title="LruCache类简介"></a>LruCache类简介</h2><p>LruCache类，先找一下Android API，API上面是这样说的：LruCache是一个用于储存限制数量的强引用（强引用是指创建一个对象并把这个对象赋给一个引用变量。强引用有引用变量指向时永远不会被垃圾回收。即使内存不足的时候。<br>一个用于储存强引用的缓存）的Cache。每次当一个Value被访问，该Value所在的强引用会被移动至队列的头。当一个Value被加进一个满的Cache时，队列最后的Value会被撤出并实施垃圾回收。说白了LruCache就是一个指定大小的缓存区。所以要为它指定缓存区大小，下面的Override实现为LruCache指定缓存区大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int cacheSize = 4 * 1024 * 1024; // 指定单条缓存大小最多为4MiB</span><br><span class="line">   LruCache bitmapCache = new LruCache(cacheSize) &#123;</span><br><span class="line">       protected int sizeOf(String key, Bitmap value) &#123;</span><br><span class="line">           return value.getByteCount();  </span><br><span class="line">   &#125;&#125;//Override sizeOf()方法，返回bitmap的字节大小</span><br></pre></td></tr></table></figure>
+<h2 id="ImageCache的实现"><a href="#ImageCache的实现" class="headerlink" title="ImageCache的实现"></a>ImageCache的实现</h2><p>下面我们通过实现ImageCache来自定义一个BitmapCache类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">public class BitmapCache implements ImageCache &#123;</span><br><span class="line">    private LruCache&lt;String, Bitmap&gt; mCache;</span><br><span class="line"></span><br><span class="line">    public BitmapCache() &#123;</span><br><span class="line">        int maxSize = 4 * 1024 * 1024;</span><br><span class="line">        mCache = new LruCache&lt;String, Bitmap&gt;(maxSize) &#123;</span><br><span class="line">            @Override</span><br><span class="line">            protected int sizeOf(String key, Bitmap bitmap) &#123;</span><br><span class="line">                return bitmap.getByteCount();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Bitmap getBitmap(String url) &#123;</span><br><span class="line">        Log.i(&quot;leslie&quot;, &quot;get cache &quot; + url);</span><br><span class="line">        return mCache.get(url);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void putBitmap(String url, Bitmap bitmap) &#123;</span><br><span class="line">        Log.i(&quot;leslie&quot;, &quot;add cache &quot; + url);</span><br><span class="line">        if (bitmap != null) &#123;</span><br><span class="line">            mCache.put(url, bitmap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上述代码实现了ImageCache接口（Volley框架），这个接口功能就是实现图片的缓存。我们使用LruCache来实现它，在构造方法中实例化LruCache指定缓存大小，然后Override getBitmap()和putBitmap()方法，分别用于获取图片缓存和写入缓存。BitmapCache类是后面的Volley异步加载图片操作的一个参数。</p>
+<h2 id="Volley异步加载图片操作"><a href="#Volley异步加载图片操作" class="headerlink" title="Volley异步加载图片操作"></a>Volley异步加载图片操作</h2><p>接着便是进行Volley异步加载网络图片操作：<br>第一步，启动队列：<br><code>RequestQueue queue = Volley.newRequestQueue(context);</code><br>第二步：创建ImageLoader：<br><code>ImageLoader imageLoader = new ImageLoader(queue, new BitmapCache());</code><br>此步中<br>第三步：实例化NetWorkImageView：<br><code>NetWorkImageView img.setImageUrl(imgUrl, imageLoader);</code><br>通过调用setImageUrl()方法将待显示的图片的URL和创建好的ImageLoader传入。</p>
+<h2 id="思路整理"><a href="#思路整理" class="headerlink" title="思路整理"></a>思路整理</h2><p>上述过程整体可以理解为，有一个ImageLoader,它在每次有异步加载图片的请求时，将请求放入队列中，已经缓存好的图片将其放入缓存区（使用LruCache来实现缓存）；然后每次需要显示时，就通过URL查找对应的键值对，在缓存区中找到对应的Bitmap返回给显示控件（NetWorkImageView），从而很好地实现了图片缓存机制。<br>下面就是ListView展示图片的工作了，这里不再多加阐述了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>从上面的应用看出，图片缓存机制在需要大量图片展示时是十分必要的，而LruCache和Volley ImageLoader的结合使用很好地实现了图片的缓存，从而能够解决ListView多图显示出现的图片错位等等问题。</p>
+<p>本人学艺不精，上述阐述如有问题，请指教。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
 
 
     <section id="comment">
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="reading/index.html" data-title="读书" data-url="http://yoursite.com/reading/index.html"></div>
+                <div class="ds-thread" data-thread-key="2016/05/12/利用LruCache和Volley解决ListView图片加载错位问题/" data-title="利用LruCache和Volley解决ListView图片加载错位问题" data-url="http://yoursite.com/2016/05/12/利用LruCache和Volley解决ListView图片加载错位问题/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
@@ -394,7 +290,7 @@
     </section>
 
 
-    
+
 </div>
 
         <div class="fixed-action-btn float-sitemap">
