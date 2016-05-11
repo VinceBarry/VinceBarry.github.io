@@ -10,8 +10,10 @@
     <title>利用LruCache和Volley解决ListView图片加载错位问题 | </title>
     <meta name="author" content="陈颍聪">
     
-    <meta name="description" content="写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。参考源码Android API
-LruCache类简介LruCache类，先找一下And">
+    <meta name="description" content="写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。
+参考源码Android API
+
+LruCache类简介LruCache类，先找一下A">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -164,8 +166,8 @@ LruCache类简介LruCache类，先找一下And">
         
 
             <li class="collapse-level-1" collapse-level="1">
-                <a class="no-padding" href="/categories/Android第三方开源库/Android官方文档/">
-                    Android官方文档 <span class="right">1</span></a>
+                <a class="no-padding" href="/categories/Android第三方开源库/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">1</span></a>
                 </a>
             </li>
 
@@ -203,7 +205,7 @@ LruCache类简介LruCache类，先找一下And">
             
     
     
-    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a><a class="breadcrumb" href="/categories/Android第三方开源库/Android官方文档/">Android官方文档</a>
+    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a><a class="breadcrumb" href="/categories/Android第三方开源库/Android-Google官方文档/">Android Google官方文档</a>
 
 
         
@@ -243,7 +245,9 @@ LruCache类简介LruCache类，先找一下And">
 
 
             <div class="entry pink-link-context">
-                <p><strong>写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。</strong><br><a href="https://github.com/lesliebeijing/VolleyListViewImageDemo" target="_blank" rel="external">参考源码</a><br><a href="http://developer.android.com/reference/android/util/LruCache.html" target="_blank" rel="external">Android API</a></p>
+                <p><strong>写作原因：在使用ListView加载大量图片时常常会出现图片错位的问题，解决方案是通过图片缓存防止重复请求实现，下面的文章或许可以帮助你解决以上问题，另外文章涉及Volley加载图片的使用，本人不才，求大神指教。</strong></p>
+<p><a href="https://github.com/lesliebeijing/VolleyListViewImageDemo" target="_blank" rel="external">参考源码</a><br><a href="http://developer.android.com/reference/android/util/LruCache.html" target="_blank" rel="external">Android API</a></p>
+<hr>
 <h2 id="LruCache类简介"><a href="#LruCache类简介" class="headerlink" title="LruCache类简介"></a>LruCache类简介</h2><p>LruCache类，先找一下Android API，API上面是这样说的：LruCache是一个用于储存限制数量的强引用（强引用是指创建一个对象并把这个对象赋给一个引用变量。强引用有引用变量指向时永远不会被垃圾回收。即使内存不足的时候。<br>一个用于储存强引用的缓存）的Cache。每次当一个Value被访问，该Value所在的强引用会被移动至队列的头。当一个Value被加进一个满的Cache时，队列最后的Value会被撤出并实施垃圾回收。说白了LruCache就是一个指定大小的缓存区。所以要为它指定缓存区大小，下面的Override实现为LruCache指定缓存区大小。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int cacheSize = 4 * 1024 * 1024; // 指定单条缓存大小最多为4MiB</span><br><span class="line">   LruCache bitmapCache = new LruCache(cacheSize) &#123;</span><br><span class="line">       protected int sizeOf(String key, Bitmap value) &#123;</span><br><span class="line">           return value.getByteCount();  </span><br><span class="line">   &#125;&#125;//Override sizeOf()方法，返回bitmap的字节大小</span><br></pre></td></tr></table></figure>
 <h2 id="ImageCache的实现"><a href="#ImageCache的实现" class="headerlink" title="ImageCache的实现"></a>ImageCache的实现</h2><p>下面我们通过实现ImageCache来自定义一个BitmapCache类：</p>
