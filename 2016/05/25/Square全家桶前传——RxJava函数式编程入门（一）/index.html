@@ -7,13 +7,15 @@
 
     
 
-    <title>读书 | </title>
+    <title>Square全家桶前传——RxJava函数式编程入门（一） | </title>
     <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="前言：作为Android开发者，构建项目应该更多地把精力放在业务逻辑上，于是一个完整的框架显得十分有价值。而且在搭建框架的过程中可以对软件开发有更深入的理解。于是博主打算开始构建一个完整的属于自己的框架，Square全家桶便是搭建框架的第一选择。接下来我将学习Square的几大著名的框架：RxJav">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="读书"/>
+    <meta property="og:title" content="Square全家桶前传——RxJava函数式编程入门（一）"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋"/>
 
     
@@ -192,185 +194,81 @@
 </nav>
 
     <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">Current page(Categories)</span>
         
-
-<div class="container main-container">
+            
     
-        <div class="">
-            <div class="row">
-                <ul class="tabs ">
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#readed">已读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#reading">在读(2)</a>
-                        </li>
-                    
-                        <li class="tab col s4 ">
-                            <a class="pink-text " href="#wanted">想读(1)</a>
-                        </li>
-                    
-                </ul>
-            </div>
+    
+    <a class="breadcrumb" href="/categories/Android快速开发/">Android快速开发</a>
 
-            
-                <div id="readed" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img5.imgtn.bdimg.com/it/u=1627009949,4034064364&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Android从入门到精通
-                                    </span>
-                                    <p>Score: 7
-                                        <a class="external-link right" href="http://book.douban.com/subject/20281463/" target="_blank">
 
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>详细介绍了Android基础知识，Android入门必备</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.douban.com/lpic/s6195030.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java从入门到精通
-                                    </span>
-                                    <p>Score: 8.5
-                                        <a class="external-link right" href="http://book.douban.com/subject/11506062/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>Java初学者的福音，Java学习神器</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="reading" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img3.imgtn.bdimg.com/it/u=1273324854,3761519053&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">Java编程思想
-                                    </span>
-                                    <p>Score: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>深入学习Java编程和理解面向对象的好帮手</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img2.imgtn.bdimg.com/it/u=949596138,2850318938&amp;fm=21&amp;gp=0.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">大话数据结构
-                                    </span>
-                                    <p>Score: 9.0
-                                        <a class="external-link right" href="http://book.douban.com/subject/25850090/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p>数据结构入门用书</p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-                <div id="wanted" class="row" style="margin-top: 20px;">
-                    
-                    
-                        <div class="book-item col s12 m6">
-                            <div class="card small hoverable">
-                                <div class="card-image waves-effect waves-block waves-light">
-                                    <img class="card-cover-image activator" src="http://img4.douban.com/lpic/s1113106.jpg">
-                                </div>
-                                <div class="card-content pink-link-context">
-                                    <span class="card-title truncate activator grey-text text-darken-4">计算机程序的构造和解释
-                                    </span>
-                                    <p>Score: ???
-                                        <a class="external-link right" href="http://book.douban.com/subject/1148282/" target="_blank">
-
-                                            <i class="fa fa-external-link"></i>
-                                        </a>
-                                    </p>
-                                </div>
-
-                                <div class="card-reveal">
-                                    <span class="card-title grey-text text-darken-4">Comment
-                                        <i class="fa fa-times-circle-o right"></i>
-                                    </span>
-
-                                    <p></p>
-                                </div>
-                            </div>
-                        </div>
-                    
-                </div>
-            
-
-        </div>
         
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Square全家桶前传——RxJava函数式编程入门（一）</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2016-05-25T08:35:15.000Z"><a href="/2016/05/25/Square全家桶前传——RxJava函数式编程入门（一）/">2016-05-25</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/原创/" class="chip pink lighten-1">原创</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#简介"><span class="section table-of-contents-text">简介</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#实现"><span class="section table-of-contents-text">实现</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>前言：作为Android开发者，构建项目应该更多地把精力放在业务逻辑上，于是一个完整的框架显得十分有价值。而且在搭建框架的过程中可以对软件开发有更深入的理解。于是博主打算开始构建一个完整的属于自己的框架，Square全家桶便是搭建框架的第一选择。接下来我将学习Square的几大著名的框架：RxJava（响应式编程），ButterKnife（依赖注入），Retrofit，Okhttp（网络请求），Picasso（图片加载缓存），EventBus（事件总线），Gson（Json解析）并利用它们来搭建自己的应用框架，下面开始RxJava的学习。</strong></p>
+<p>RxJava的github地址：<a href="https://github.com/ReactiveX/RxJava" target="_blank" rel="external">https://github.com/ReactiveX/RxJava</a><br>RxJava请求图片简单Demo：<a href="https://github.com/VinceBarry/SquareDemo" target="_blank" rel="external">https://github.com/VinceBarry/SquareDemo</a><br>给Android开发者的RxJava详解：<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_1" target="_blank" rel="external">http://gank.io/post/560e15be2dca930e00da1083#toc_1</a><br>深入浅出RxJava：<a href="http://blog.csdn.net/lzyzsd/article/details/41833541" target="_blank" rel="external">http://blog.csdn.net/lzyzsd/article/details/41833541</a></p>
+<hr>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在说明RxJava是什么之前，先大概说一下设计模式中的观察者模式（Publish–subscribe_pattern）。维基百科上的定义是这样的：In software architecture, publish–subscribe is a messaging pattern where senders of messages, called publishers, do not program the messages to be sent directly to specific receivers, called subscribers, but instead characterize published messages into classes without knowledge of which subscribers, if any, there may be. Similarly, subscribers express interest in one or more classes and only receive messages that are of interest, without knowledge of which publishers, if any, there are.也就是说，观察者模式包含两个对象：Publisher（事件源）和Subscribe（观察者）。事件源不关心自己应该把消息传递给哪些接收器，在它本身的状态改变时主动发出通知，而观察者则关心自己关联的事件源本身是否发生变化，一旦变化便做出响应。RxJava基本采用了观察者模式，利用观察者模式实现一些异步的操作。RxJava优点在于其相比Handler和AsyncTask而言逻辑简洁。下面博主利用使用RxJava来实现异步请求下载网络图片并将其加载在本地控件上的例子来讲解RxJava的基本使用。<strong>基本概念用粗体标出。</strong>由于我也是新手，存在疏漏请指正。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p><strong>RxJava的四个基本概念：Observable (可观察者，即被观察者)、 Observer (观察者)、 subscribe (订阅)、事件。实质上就是观察者模式的基本概念。被观察者通过subscribe()方法与观察者实现订阅关系，之后一有事件发出就通知观察者。</strong><br>先导入依赖：<br>OK，很明显我们需要先把基础的思路理清：我们将通过事件源来实现在IO线程中获取并下载图片，一旦下载完成，便通知订阅者，订阅者在主线程中做出相应（弹出Toast“下载完成”）。新建事件源的代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Observable.create(new Observable.OnSubscribe&lt;Bitmap&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void call(Subscriber&lt;? super Bitmap&gt; subscriber) &#123;</span><br><span class="line">                Bitmap bitmap = null;</span><br><span class="line">                try &#123;</span><br><span class="line">                    bitmap = Picasso.with(context).load(url).get();</span><br><span class="line">                &#125; catch (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                if (bitmap == null) &#123;</span><br><span class="line">                    subscriber.onError(new Exception(&quot;Couldn&apos;t download the picture&quot;));</span><br><span class="line">                &#125;</span><br><span class="line">                subscriber.onNext(bitmap);</span><br><span class="line">                subscriber.onCompleted();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;).subscribeOn(Schedulers.io());</span><br></pre></td></tr></table></figure>
+<p>上面代码新建了一个存储Bitmap数据的事件源队列，然后通过Picasso库请求网络图片（关于Picasso后面的文章有讲解）获取Bitmap对象，将Bitmap对象塞入事件源并通过onNext()方法通知订阅者。注意subscribeOn(Schedulers.io())方法，<strong>Scheduler调度器</strong>的使用表明事件源在IO线程中进行。关于调度器的用法参见上面的文章。</p>
+<p>然后新建一个订阅者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Observer&lt;Bitmap&gt; observer = new Observer&lt;Bitmap&gt;() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onCompleted() &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onError(Throwable e) &#123;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void onNext(Bitmap bitmap) &#123;</span><br><span class="line">                mIv.setImageBitmap(bitmap);</span><br><span class="line">                Toast.makeText(MainActivity.this,&quot;Picture&quot;,Toast.LENGTH_SHORT).show();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br></pre></td></tr></table></figure>
+<p>上面的订阅者采用最普遍最容易理解的方式，除了这种方式还有just()和from()两种方式。just(T…): 将传入的参数依次发送出来。from(T[]) / from(Iterable&lt;? extends T&gt;) : 将传入的数组或 Iterable 拆分成具体对象后，依次发送出来。在适当的时候使用这两种方式可以起到节省代码量的作用。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Subscription s = RxPic.saveImage(MainActivity.this,&quot;http://img2.imgtn.bdimg.com/it/u=3234625060,3330214688&amp;fm=21&amp;gp=0.jpg&quot;,&quot;Hello&quot;)</span><br><span class="line">                .observeOn(AndroidSchedulers.mainThread())</span><br><span class="line">                .subscribe(observer);</span><br><span class="line">        if (this.mCompositeSubscription == null) &#123;</span><br><span class="line">            this.mCompositeSubscription = new CompositeSubscription();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        this.mCompositeSubscription.add(s);</span><br></pre></td></tr></table></figure>
+<p>然后就是订阅者订阅事件源，通过将Observer和Observable关联到Subscription，然后使用CompsiteSubscription来添加此Subscription。完成以上操作我们就实现了异步请求网络图片并加载到ImageView中。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>RxJava的使用最主要是理解观察者模式，四个基本概念及其创建，如何订阅事件源和函数式编程（由于本文只是入门介绍，没有提到RxJava的函数编程，读者可以通过上面的链接进行学习，或者阅读博主下一篇博客），具体的Demo也参见上文中的博主的Github，如有错误求指正。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
 
 
     <section id="comment">
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="reading/index.html" data-title="读书" data-url="http://yoursite.com/reading/index.html"></div>
+                <div class="ds-thread" data-thread-key="2016/05/25/Square全家桶前传——RxJava函数式编程入门（一）/" data-title="Square全家桶前传——RxJava函数式编程入门（一）" data-url="http://yoursite.com/2016/05/25/Square全家桶前传——RxJava函数式编程入门（一）/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
@@ -394,7 +292,7 @@
     </section>
 
 
-    
+
 </div>
 
         <div class="fixed-action-btn float-sitemap">
