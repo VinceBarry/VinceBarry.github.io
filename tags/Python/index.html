@@ -7,16 +7,13 @@
 
     
 
-    <title>Android二维码扫描开发（二）：YUV图像格式详解 | </title>
+    <title>Python | </title>
     <meta name="author" content="陈颍聪">
-    
-    <meta name="description" content="上一篇中，我们了解了Android二维码扫描开发的实现思路和原理。其中从相机里获取到的数据是NV21格式的，NV21属于YUV图像，当然有些外置摄像头会返回其他YUV格式的数据，那么我们就来看一看，到底什么是YUV图像。
-RGB图像大家都了解，RGB图像分为了三个颜色分量，R红色分量，G绿色分量，B">
     
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Android二维码扫描开发（二）：YUV图像格式详解"/>
+    
     <meta property="og:site_name" content="RoadToGeek技术小屋"/>
 
     
@@ -212,145 +209,30 @@ RGB图像大家都了解，RGB图像分为了三个颜色分量，R红色分量�
 
     <main>
         <div class="container main-container">
-    <nav class="page-nav hide-on-small-only">
+    
+
+<nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
-        <span class="breadcrumb">当前位置（分类目录）</span>
-        
-            
-    
-    
-    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a>
-
-
+        <span class="breadcrumb">当前位置（标签）</span>
         
 
+        
+            <a class="breadcrumb" href="/tags/Python/">Python</a>
         
     </div>
 </nav>
 
-<article>
-    <div class="card">
-        <div class="card-content">
-            
-
-            <div class="article-title">
-                
-    
-        <h1>Android二维码扫描开发（二）：YUV图像格式详解</h1>
-    
 
 
-            </div>
-            <time class="light-green-link-context" datetime="2016-05-03T05:11:34.000Z"><a href="/2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/">2016-05-03</a></time>
-
-            
-    <div class="tags-row">
+    <div class="collection mt-0">
         
-            <a href="/tags/Android/" class="chip light-green">Android</a>
-        
-            <a href="/tags/转载/" class="chip light-green">转载</a>
+            <a href="/2016/06/16/Javaer学习Python之路（一）/" class="collection-item grey-text text-darken-1">
+                <time datetime="2016-06-16T06:32:01.000Z">2016-06-16</time>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                Javaer学习Python之路（一）
+            </a>
         
     </div>
-
-
-            <div class="toc light-green-link-context hide-on-med-and-down">
-    
-</div>
-
-
-            <div class="entry light-green-link-context">
-                <p>上一篇中，我们了解了Android二维码扫描开发的实现思路和原理。其中从相机里获取到的数据是NV21格式的，NV21属于YUV图像，当然有些外置摄像头会返回其他YUV格式的数据，那么我们就来看一看，到底什么是YUV图像。</p>
-<p>RGB图像大家都了解，RGB图像分为了三个颜色分量，R红色分量，G绿色分量，B蓝色分量。而YUV图像，也是分为了三个分量，Y亮度分量，用来表示明亮度，也叫灰阶值，U分量和V分量是色值分量，用来表示图像色彩与饱和度，其中U分量也叫Cb，表示的图像蓝色偏移量，V分量也叫Cr，用来表示图像红色部分偏移量，所以YUV有时也写作YCbCr。</p>
-<p>YUV图像把亮度和色度分开了，避免了亮度和色度的相互干扰，可以在降低色度采样率的情况下，保持图像的视觉质量。</p>
-<p><strong>[采样比率]</strong></p>
-<p>下面我们来看看YUV图像的采样方式，是如何改变色度采样率的。YUV图像有以下几种采样比例：</p>
-<p>444采样中，Y:U:V=4:4:4，每一个Y对应一个UV，水平和垂直方向都保持原数据；</p>
-<p>422采样中，Y:U:V=4:2:2，每两个Y共用一个UV，水平方向采用2:1采样，垂直方向保持原数据；</p>
-<p>411采样中，Y:U:V=4:1:1，每四个Y共用一个UV，水平方向采用4:1采样，垂直方向保持原数据；</p>
-<p>420采样中，Y:UV=4:2或Y:U:V=4:1:1，每四个Y共用一个UV，水平方向和垂直方向都采用2:1采样。</p>
-<p>如果用×表示Y数据，用〇表示UV数据，那么下面几种采样如下图所示：<br><img src="http://www.codernote.top/static/blog/file/2016/03/YUV%E9%87%87%E6%A0%B7_20160324141159.png" alt="caiyang"></p>
-<p><strong>[存储方式]</strong></p>
-<p>YUV数据的存储方式分为打包的(packed)和平面的(planar)。</p>
-<p>packed存储方式是，每一组YUV作为一个连续存储，每个组后面跟着另外一组，常见的有UYVY、YUYV等类型，以YUYV(属于YUV422)为例，储存方式如下图所示：<br><img src="http://www.codernote.top/static/blog/file/2016/03/YUYV422_20160324144247.png" alt="cunchu1"></p>
-<p>从上图中可以看出，两个相邻的Y共用一组UV，Y和UV是交错储存的。</p>
-<p>planar储存方式是，先是连续的Y，然后是连续的UV，UV可以交错也可以不交错。以YUV420为例，YUV420分为YUV420P和YUV420SP,区别是YUV420P中U和V是分开连续存储的，YUV420SP中，UV是交错存储的。如下图所示：</p>
-<p><img src="http://www.codernote.top/static/blog/file/2016/03/YUYV420_20160324150343.png" alt="cunchu2"></p>
-<p><strong>[常见YUV格式]</strong></p>
-<ul>
-<li><p>YUYV，YUYV属于YUV422，根据上面的图像也可以看出来，Y和UV是按照(YUYV)(YUYV)(YUYV)…的格式交错存储的。</p>
-</li>
-<li><p>UYVY，UYVY也是YUV422图像，和YUYV类似，不过是Y和UV的存储顺序按照(UYVY)(UYVY)(UYVY)…的顺序存储的。</p>
-</li>
-<li><p>YUV422P，属于YUV422图像，其中Y、U、V分别连续存储。</p>
-</li>
-<li><p>NV21和NV12,这两种格式都属于YUV420SP图像，Y连续存储，然后是交错的UV,二者区别是，NV21是V在U前，NV12是U在V前。</p>
-</li>
-<li><p>YU12和YV12，这两种格式属于YUV420P图像，Y、U、V分别连续存储。区别是YU12是Y在前，其次是U，最后是V；而YV12是Y在前，其次是V，最后是U。</p>
-</li>
-<li><p>I420，即YU12图像。</p>
-</li>
-</ul>
-<p><strong>[YUV图像处理]</strong></p>
-<ol>
-<li><p>YUV422和YUV420之间的转换</p>
-<p>YUV422转YUV420，需要在垂直方向上隔行采样，只保留奇数行或偶数行的UV数据。YUV420转YUV422，需要在垂直方向上，将一行拷贝成两行。</p>
-</li>
-<li><p>YUV转RGB</p>
-<p>YUV和RGB的计算方法，用矩阵公式表示的话，如下图所示：</p>
-<p><img src="http://www.codernote.top/static/blog/file/2016/03/YUV%E8%BD%ACRGB_20160324162455.png" alt="matrix"></p>
-</li>
-</ol>
-<p>如果用算数公式表示的话如下所示：</p>
-<p>RGB转YUV:</p>
-<pre><code>Y = 0.299 R + 0.587 G + 0.114 B
-
-U = - 0.1687 R - 0.3313 G + 0.5 B + 128
-
-V = 0.5 R - 0.4187 G - 0.0813 B + 128
-</code></pre><p>YUV转RGB</p>
-<pre><code>R = Y + 1.402 (V - 128)
-
-G = Y - 0.34414 (U - 128) - 0.71414 (V - 128)
-
-B = Y + 1.772 (U - 128)
-</code></pre><p>注意，这里只是单个像素点的转换方法，图像里的批量转换，还需根据YUV的储存格式进行考虑。</p>
-<p>YUV图像就先讲解到这里，下一篇我将对YUV图像和RGB图像的亮度计算，以及zxing的使用方法进行介绍。</p>
-
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-    <section id="comment">
-        <div class="card">
-            <div class="card-content">
-                <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/" data-title="Android二维码扫描开发（二）：YUV图像格式详解" data-url="http://yoursite.com/2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/"></div>
-
-                <script type="text/javascript">
-                    console.log(document.querySelector('.ds-thread'));
-                    var duoshuoQuery = {
-                        short_name: 'roadtogeek'
-                    };
-                    (function() {
-                        var ds = document.createElement('script');
-                        ds.type = 'text/javascript';
-                        ds.async = true;
-                        ds.src = (document.location.protocol == 'https:'
-                            ? 'https:'
-                            : 'http:') + '//static.duoshuo.com/embed.js';
-                        ds.charset = 'UTF-8';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-                    })();
-                </script>
-                <!-- Duoshuo Comment END -->
-            </div>
-        </div>
-    </section>
-
 
 
 </div>

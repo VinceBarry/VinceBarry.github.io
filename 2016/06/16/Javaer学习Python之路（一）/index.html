@@ -1,0 +1,524 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Javaer学习Python之路（一） | </title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="写作原因：学习前总得有个目的，我为什么想学习Python？第一，是被大量的网络爬虫给吸引了，网络爬虫真的很酷，自己有实现它的想法，这是学习Python的初衷（虽然Java也可以实现爬虫）；第二，作为一个Coder不能只局限只会两门语言（C和Java），而且C语言个人并没有使用的需求，俗话说技多不压身">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Javaer学习Python之路（一）"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="brown darken-1">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav brown darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://7xszli.com2.z0.glb.clouddn.com/mmexport1461491429496.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav brown darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android第三方开源库/">
+                    Android第三方开源库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Python基础知识/">
+                    Python基础知识 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android知识库/">
+                    Android知识库 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-实战/">
+                    Android-实战 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper brown darken-1">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Python基础知识/">Python基础知识</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Javaer学习Python之路（一）</h1>
+    
+
+
+            </div>
+            <time class="light-green-link-context" datetime="2016-06-16T06:32:01.000Z"><a href="/2016/06/16/Javaer学习Python之路（一）/">2016-06-16</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Python/" class="chip light-green">Python</a>
+        
+            <a href="/tags/原创/" class="chip light-green">原创</a>
+        
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#一、Python的定义："><span class="section table-of-contents-text">一、Python的定义：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#二、Python的用处："><span class="section table-of-contents-text">二、Python的用处：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#三、Python的优缺点："><span class="section table-of-contents-text">三、Python的优缺点：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#四、编译环境配置"><span class="section table-of-contents-text">四、编译环境配置</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#五、输入输出函数："><span class="section table-of-contents-text">五、输入输出函数：</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#输出："><span class="section table-of-contents-text">输出：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#输入："><span class="section table-of-contents-text">输入：</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#六、数据类型"><span class="section table-of-contents-text">六、数据类型</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#七、变量"><span class="section table-of-contents-text">七、变量</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#八、常量"><span class="section table-of-contents-text">八、常量</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#九、运算"><span class="section table-of-contents-text">九、运算</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#十、流程："><span class="section table-of-contents-text">十、流程：</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#条件："><span class="section table-of-contents-text">条件：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#循环："><span class="section table-of-contents-text">循环：</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#十一、集合"><span class="section table-of-contents-text">十一、集合</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#list"><span class="section table-of-contents-text">list</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#tuple"><span class="section table-of-contents-text">tuple</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#dict"><span class="section table-of-contents-text">dict</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#set"><span class="section table-of-contents-text">set</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：学习前总得有个目的，我为什么想学习Python？第一，是被大量的网络爬虫给吸引了，网络爬虫真的很酷，自己有实现它的想法，这是学习Python的初衷（虽然Java也可以实现爬虫）；第二，作为一个Coder不能只局限只会两门语言（C和Java），而且C语言个人并没有使用的需求，俗话说技多不压身嘛，除了重量级语言，学习一门脚本语言也是有必要的；第三，被Python的优雅简洁的语法所吸引；第四，为后面学习后台做一些铺垫。总之，学习Python有许多好处。这是我这个系列笔记出现的原因。这个系列笔记从java程序员的角度切入，有些地方会与java进行类比。</strong></p>
+<hr>
+<p>这节内容包括Python简介到集合部分。下面开始吧。</p>
+<h2 id="一、Python的定义："><a href="#一、Python的定义：" class="headerlink" title="一、Python的定义："></a>一、Python的定义：</h2><p>一门面向对象的简洁优雅的解释型语言。</p>
+<h2 id="二、Python的用处："><a href="#二、Python的用处：" class="headerlink" title="二、Python的用处："></a>二、Python的用处：</h2><p>网站开发，科学计算，爬虫，日常工具等等</p>
+<h2 id="三、Python的优缺点："><a href="#三、Python的优缺点：" class="headerlink" title="三、Python的优缺点："></a>三、Python的优缺点：</h2><p>优点：语法简洁强大，有大量的内置库和第三方库，方便快速开发；<br>缺点：运行速度慢（只是相对编程语言而言，实际上不明显）<br>代码不能加密（脚本语言）</p>
+<h2 id="四、编译环境配置"><a href="#四、编译环境配置" class="headerlink" title="四、编译环境配置"></a>四、编译环境配置</h2><p>这里提供下载链接：<br>Python最新版本下载：<a href="https://www.python.org/downloads/" target="_blank" rel="external">https://www.python.org/downloads/</a></p>
+<p>pip下载（关于pip后文讲述）：<a href="https://bootstrap.pypa.io/get-pip.py" target="_blank" rel="external">https://bootstrap.pypa.io/get-pip.py</a></p>
+<h2 id="五、输入输出函数："><a href="#五、输入输出函数：" class="headerlink" title="五、输入输出函数："></a>五、输入输出函数：</h2><h3 id="输出："><a href="#输出：" class="headerlink" title="输出："></a>输出：</h3><p>单字符串：<br>  <code>print(&#39;Hello World!&#39;)</code></p>
+<p>多字符串：<br>  <code>print(&#39;Hello&#39;,&#39;World!&#39;)//遇到逗号“,”会输出一个空格</code></p>
+<p>整数：</p>
+<p>  <code>print(300) OR print(100+200)//显示都是300</code></p>
+<h3 id="输入："><a href="#输入：" class="headerlink" title="输入："></a>输入：</h3><p>基本格式：<br>  <code>value = input() //此时输入后value默认为字符串类型</code></p>
+<p>输入提示：<br>  <code>value = input(&#39;Please input your value&#39;)</code></p>
+<p>类型转换：<br>  上面注释说过，value默认为字符串类型，所以当你需要整数时，可以将之转换：<br>  <code>s = int(value)</code></p>
+<h2 id="六、数据类型"><a href="#六、数据类型" class="headerlink" title="六、数据类型"></a>六、数据类型</h2><p>整数，浮点数操作与java类似，这里不详述了</p>
+<p>字符串：字符串是以单引号’或双引号”括起来的任意文本，注意可以用单引号括起来。</p>
+<p>转义字符：<br>字符串内部的’和”要使用转义字符来标示，如：<code>print(&#39;I\&#39;m ok.&#39;)</code><br>用<code>r&#39;&#39;</code>表示’’内部的字符串默认不转义<br><code>print(r&#39;\\\t\\&#39;) //显示结果：\\\t\\</code><br>用’’’…’’’的格式表示多行内容</p>
+<p>编码相关：<br>  Python以Unicode编码<br>        ord()函数获取字符的整数表示，chr()函数把编码转换为对应的字符<br>        如果要在网络上传输，或者保存到磁盘上，就需要把str变为以字节为单位的bytes，对bytes类型的数据用带b前缀的单引号或双引号表示，如：x = b’ABC’；<br>        以Unicode表示的str通过encode()方法可以编码为指定的bytes，如：<br>     <code>&#39;ABC&#39;.encode(&#39;ascii&#39;) //显示结果：b&#39;ABC&#39;；&#39;中文&#39;.encode(&#39;utf-8&#39;) //显示结果：b&#39;\xe4\xb8\xad\xe6\x96\x87&#39;</code></p>
+<p>反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法，如：<br><code>b&#39;ABC&#39;.decode(&#39;ascii&#39;)//显示结果：&#39;ABC&#39;； b&#39;\xe4\xb8\xad\xe6\x96\x87&#39;.decode(&#39;utf-8&#39;) //显示结果：&#39;中文&#39;</code></p>
+<p>len()函数计算的是str的字符数，如果换成bytes，len()函数就计算字节数<br>    格式化：%d：整数；%f：浮点数；%s：字符串；%x：十六进制整数，如：<code>&#39;Hello, %s&#39; % &#39;world&#39;//显示结果：&#39;Hello, world&#39;</code></p>
+<p>布尔运算：<br>与或非：and、or、not<br>空值：None（无意义）</p>
+<h2 id="七、变量"><a href="#七、变量" class="headerlink" title="七、变量"></a>七、变量</h2><p>变量名：必须是大小写英文、数字和_的组合，且不能用数字开头</p>
+<p>声明方式：<code>name = value；//将值赋给变量</code><br>由于Python是动态语言，所以同一个变量可以反复赋值，而且可以是不同类型的变量</p>
+<h2 id="八、常量"><a href="#八、常量" class="headerlink" title="八、常量"></a>八、常量</h2><p>常量名：在Python中，通常用全部大写的变量名表示常量。常量是可以改变的，只是一种习惯性的用法</p>
+<h2 id="九、运算"><a href="#九、运算" class="headerlink" title="九、运算"></a>九、运算</h2><p>普通除法：/ 结果为浮点数，如：<br><code>10 / 3 //显示结果为：3.3333333333333335</code></p>
+<p>地板除法：// 结果为整数，如：<br>  <code>10//3 //显示结果为：3</code></p>
+<h2 id="十、流程："><a href="#十、流程：" class="headerlink" title="十、流程："></a>十、流程：</h2><h3 id="条件："><a href="#条件：" class="headerlink" title="条件："></a>条件：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">  if 布尔表达式:</span><br><span class="line">--tab--表达式1</span><br><span class="line">--tab--表达式2</span><br><span class="line">elif 布尔表达式:</span><br><span class="line">--tab--表达式1</span><br><span class="line">--tab--表达式2</span><br><span class="line">else</span><br><span class="line">--tab--表达式1</span><br><span class="line">--tab--表达式2</span><br></pre></td></tr></table></figure>
+<h3 id="循环："><a href="#循环：" class="headerlink" title="循环："></a>循环：</h3><p>第一种类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for 变量 in 集合//关于集合部分见下面阐述</span><br><span class="line">--tab--表达式1</span><br><span class="line">--tab--表达式2</span><br><span class="line">//range()可以生成整数序列</span><br></pre></td></tr></table></figure></p>
+<p>第二种类型：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while 布尔表达式:</span><br><span class="line">  		--tab--表达式1</span><br><span class="line">--tab--表达式2</span><br></pre></td></tr></table></figure></p>
+<h2 id="十一、集合"><a href="#十一、集合" class="headerlink" title="十一、集合"></a>十一、集合</h2><h3 id="list"><a href="#list" class="headerlink" title="list"></a>list</h3><p>定义：list是一种有序的集合，可以随时添加和删除其中的元素。这跟java中的List集合相似。</p>
+<p>声明：<code>classmates = [&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;]</code></p>
+<p>相关操作：</p>
+<ol>
+<li>获得list元素的个数：len()</li>
+<li>访问list中的单个元素：classmates[0]<br><strong>注意：要取最后一个元素，除了计算索引位置外，还可以用-1做索引，直接获取最后一个元素。以此类推，可以获取倒数第2个（-2）、倒数第3个（-3）</strong></li>
+<li>追加元素到末尾：classmates.append(‘Adam’)</li>
+<li>把元素插入指定位置：classmates.insert(1, ‘Jack’)</li>
+<li>删除list末尾的元素：pop()</li>
+<li>删除指定位置的元素：pop(i)</li>
+<li>把某个元素替换成别的元素：classmates[1] = ‘Sarah’</li>
+</ol>
+<h3 id="tuple"><a href="#tuple" class="headerlink" title="tuple"></a>tuple</h3><p>定义：有序列表，与list相似，但是一旦初始化就不能修改。</p>
+<p>声明：<code>classmates = (&#39;Michael&#39;, &#39;Bob&#39;, &#39;Tracy&#39;)</code><br>    注意：如果要定义一个空的tuple，可以写成t=()，但是如果定义一个只有1个元素的tuple，必须写成t = (1,)</p>
+<h3 id="dict"><a href="#dict" class="headerlink" title="dict"></a>dict</h3><p>定义：跟java中的map一样，使用键值对（Key-Value）存储</p>
+<p>声明：<code>d = {&#39;Michael&#39;: 95, &#39;Bob&#39;: 75, &#39;Tracy&#39;: 85}</code><br><strong>（注：也可以通过key放入：d[‘Adam’] = 67，但是这样写必须先使用’Thomas’ in d或者d.get(‘Tomas’)判断key是否存在）</strong></p>
+<p>基本操作：pop(key)<br><strong>注意：key必须为不可变对象。</strong></p>
+<h3 id="set"><a href="#set" class="headerlink" title="set"></a>set</h3><p>定义：与dict类似，是一组key的集合，但不存储value。由于key不能重复，所以，在set中，没有重复的key。</p>
+<p>声明：<code>s = set([1, 2, 3,3]) # 结果：s {1,2,3}</code></p>
+<p>基本操作：与dict相似，另外set可以类比为集合，可以进行并集，交集等运算</p>
+<p><strong>总结：本篇是Python最基础的语法，本系列下一篇将会引入函数的用法。</strong></p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/06/16/Javaer学习Python之路（一）/" data-title="Javaer学习Python之路（一）" data-url="http://yoursite.com/2016/06/16/Javaer学习Python之路（一）/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large light-green">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect red" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse purple"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer brown darken-1 darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/1956184117" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism主题作者的技术博客</a>
+                
+                    <a class="social-link" href="https://github.com/raytaylorlin" target="_blank">Github地址（测试友情链接）</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright light-green-link-context">
+        <div class="container">
+            © 2016 roadtogeek.cn, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').each(function() {
+            var $table = $(this);
+            // 除去多行代码的情况
+            if ($table.find('pre').length == 0) {
+                $table.addClass('responsive-table striped bordered');
+            }
+        });
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('light-green lighten-2');
+
+        
+        // 添加new标签
+        $('').append('<span class="new badge light-green"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
