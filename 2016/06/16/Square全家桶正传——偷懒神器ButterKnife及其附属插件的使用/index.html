@@ -1,0 +1,532 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用 | </title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="写作原因：程序员喜欢偷懒，对于安卓程序员来说，把时间花在不用动脑筋的findViewById()上简直让人难以忍受。此外大量的点击监听事件的分散化使得代码可读性下降。于是，基于注解的ButterKnife应运而生。
+参考链接：
+ButterKnife官网：http://jakewharton.git">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="brown darken-1">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav brown darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://7xszli.com2.z0.glb.clouddn.com/mmexport1461491429496.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav brown darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android第三方开源库/">
+                    Android第三方开源库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Python基础知识/">
+                    Python基础知识 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android知识库/">
+                    Android知识库 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-实战/">
+                    Android-实战 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper brown darken-1">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Android快速开发/">Android快速开发</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用</h1>
+    
+
+
+            </div>
+            <time class="light-green-link-context" datetime="2016-06-16T08:36:20.000Z"><a href="/2016/06/16/Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用/">2016-06-16</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip light-green">Android</a>
+        
+            <a href="/tags/原创/" class="chip light-green">原创</a>
+        
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#简介"><span class="section table-of-contents-text">简介</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#获取ButterKnife："><span class="section table-of-contents-text">获取ButterKnife：</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#基本使用"><span class="section table-of-contents-text">基本使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#进阶操作："><span class="section table-of-contents-text">进阶操作：</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#1-利用ViewList实现同时配置多个View："><span class="section table-of-contents-text">1.利用ViewList实现同时配置多个View：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#2-利用形参直接对当前View进行操作"><span class="section table-of-contents-text">2. 利用形参直接对当前View进行操作</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#3-实现多View点击事件的关联（原理同2）"><span class="section table-of-contents-text">3. 实现多View点击事件的关联（原理同2）</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#4-防止目标View不存在出现exception的请况的发生"><span class="section table-of-contents-text">4.防止目标View不存在出现exception的请况的发生</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#5-代替onItemClickListener的注解实现"><span class="section table-of-contents-text">5. 代替onItemClickListener的注解实现</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#6-通过LayoutInflater获取View的ButterKnife实现方法findById："><span class="section table-of-contents-text">6. 通过LayoutInflater获取View的ButterKnife实现方法findById：</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#ButterKnifeZelezny"><span class="section table-of-contents-text">ButterKnifeZelezny</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#下载地址："><span class="section table-of-contents-text">下载地址：</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#基本用法"><span class="section table-of-contents-text">基本用法</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#总结："><span class="section table-of-contents-text">总结：</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：程序员喜欢偷懒，对于安卓程序员来说，把时间花在不用动脑筋的findViewById()上简直让人难以忍受。此外大量的点击监听事件的分散化使得代码可读性下降。于是，基于注解的ButterKnife应运而生。</strong></p>
+<p><strong>参考链接：</strong></p>
+<p>ButterKnife官网：<a href="http://jakewharton.github.io/butterknife/" target="_blank" rel="external">http://jakewharton.github.io/butterknife/</a></p>
+<p>ButterKnife GitHub地址：<a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">https://github.com/JakeWharton/butterknife</a></p>
+<p>ButterKnife-Zelezny地址：<a href="https://github.com/avast/android-butterknife-zelezny" target="_blank" rel="external">https://github.com/avast/android-butterknife-zelezny</a></p>
+<hr>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>先来看看ButterKnife有哪些功能吧，官网上是这样描述的：</p>
+<ol>
+<li>通过使用@BindView来消除调用findViewById()；</li>
+<li>可以把多个View放在一个数组或者list中。然后一次性可以同时对这些View的动作，属性等进行操作；</li>
+<li>通过使用@OnClick注解来消除由监听器带来的匿名内部类；</li>
+<li>通过对resource进行注解来消除多余的资源查找代码。</li>
+</ol>
+<h2 id="获取ButterKnife："><a href="#获取ButterKnife：" class="headerlink" title="获取ButterKnife："></a>获取ButterKnife：</h2><ol>
+<li><p>在你的项目的build.gradle中加入以下依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">buildscript &#123;</span><br><span class="line">  repositories &#123;</span><br><span class="line">    mavenCentral()</span><br><span class="line">   &#125;</span><br><span class="line">  dependencies &#123;</span><br><span class="line">    classpath &apos;com.neenbedankt.gradle.plugins:android-apt:1.8&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在你的Module的build.gradle中加入以下依赖：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">apply plugin: &apos;android-apt&apos;</span><br><span class="line"></span><br><span class="line">android &#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">dependencies &#123;</span><br><span class="line">  compile &apos;com.jakewharton:butterknife:8.1.0&apos;</span><br><span class="line">  apt &apos;com.jakewharton:butterknife-compiler:8.1.0&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：apply plugin: ‘android-apt’</strong></p>
+<h1 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h1><p>下面的代码演示了ButterKnife的基本使用技巧：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class ExampleActivity extends Activity &#123;</span><br><span class="line">  @BindView(R.id.user) EditText username;</span><br><span class="line">  @BindView(R.id.pass) EditText password;</span><br><span class="line"></span><br><span class="line">  @BindString(R.string.login_error) String loginErrorMessage;</span><br><span class="line"></span><br><span class="line">  @OnClick(R.id.submit) void submit() &#123;</span><br><span class="line">    // TODO call server...</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">    super.onCreate(savedInstanceState);</span><br><span class="line">    setContentView(R.layout.simple_activity);</span><br><span class="line">    ButterKnife.bind(this);</span><br><span class="line">    // TODO Use fields...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>包括以下几个步骤：</p>
+<p>1.定义UnBinder对象，对待操作元素进行注解：</p>
+<p>定义：<code>private UnBinder unBinder;</code></p>
+<p>对View：<code>@BindView(R.id.user) EditText username;</code></p>
+<p>对Resource：<code>@BindString(R.string.login_error) String loginErrorMessage;</code></p>
+<p><strong>（注：资源绑定有以下注解：@BindBool, @BindColor, @BindDimen, @BindDrawable, @BindInt, @BindString）</strong></p>
+<p>对监听事件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.submit) void submit() &#123;</span><br><span class="line">  // TODO call server...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.在onCreate方法或者onCreateView方法中调用方法：</p>
+<p><code>unBinder = ButterKnife.bind(this);//如果在Fragment中使用ButterKnife.bind(this,view);</code></p>
+<p>3.在onDestory方法或者onDestoryView中解除绑定：</p>
+<p><code>unBinder = ButterKnife.unbind();</code></p>
+<h1 id="进阶操作："><a href="#进阶操作：" class="headerlink" title="进阶操作："></a>进阶操作：</h1><h2 id="1-利用ViewList实现同时配置多个View："><a href="#1-利用ViewList实现同时配置多个View：" class="headerlink" title="1.利用ViewList实现同时配置多个View："></a>1.利用ViewList实现同时配置多个View：</h2><p>①. 将多个View绑定到一个List中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@BindViews(&#123; R.id.first_name, R.id.middle_name, R.id.last_name &#125;)</span><br><span class="line">List&lt;EditText&gt; nameViews;</span><br></pre></td></tr></table></figure></p>
+<p>②. 调用ButterKnife.apply()方法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ButterKnife.apply(nameViews, DISABLE);</span><br><span class="line">ButterKnife.apply(nameViews, ENABLED, false);</span><br><span class="line">ButterKnife.apply(nameViews, View.ALPHA, 0.0f);</span><br></pre></td></tr></table></figure></p>
+<p>按照官网的思路，上面三行分别是对nameViews中所有View的action，Setter和Property的设置，但是仅仅调用了apply()方法并不能真正修改nameViews中的View，必须完成下一步工作。</p>
+<p>③. 实现接口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">static final ButterKnife.Action&lt;View&gt; DISABLE = new ButterKnife.Action&lt;View&gt;() &#123;</span><br><span class="line">  @Override public void apply(View view, int index) &#123;</span><br><span class="line">    view.setEnabled(false);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">static final ButterKnife.Setter&lt;View, Boolean&gt; ENABLED = new ButterKnife.Setter&lt;View, Boolean&gt;() &#123;</span><br><span class="line">  @Override public void set(View view, Boolean value, int index) &#123;</span><br><span class="line">    view.setEnabled(value);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码已经将action和Setter实现，重写接口内部方法apply或set，在内部实现对nameViews的操作。这样就完成了同时操作多个View的功能。</p>
+<h2 id="2-利用形参直接对当前View进行操作"><a href="#2-利用形参直接对当前View进行操作" class="headerlink" title="2. 利用形参直接对当前View进行操作"></a>2. 利用形参直接对当前View进行操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.submit)</span><br><span class="line">public void sayHi(Button button) &#123;</span><br><span class="line">  button.setText(&quot;Hello!&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="3-实现多View点击事件的关联（原理同2）"><a href="#3-实现多View点击事件的关联（原理同2）" class="headerlink" title="3. 实现多View点击事件的关联（原理同2）"></a>3. 实现多View点击事件的关联（原理同2）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(&#123; R.id.door1, R.id.door2, R.id.door3 &#125;)</span><br><span class="line">public void pickDoor(DoorView door) &#123;</span><br><span class="line">  if (door.hasPrizeBehind()) &#123;</span><br><span class="line">    Toast.makeText(this, &quot;You win!&quot;, LENGTH_SHORT).show();</span><br><span class="line">  &#125; else &#123;</span><br><span class="line">    Toast.makeText(this, &quot;Try again&quot;, LENGTH_SHORT).show();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-防止目标View不存在出现exception的请况的发生"><a href="#4-防止目标View不存在出现exception的请况的发生" class="headerlink" title="4.防止目标View不存在出现exception的请况的发生"></a>4.防止目标View不存在出现exception的请况的发生</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Nullable @BindView(R.id.might_not_be_there) TextView mightNotBeThere;</span><br><span class="line"></span><br><span class="line">@Optional @OnClick(R.id.maybe_missing) void onMaybeMissingClicked() &#123;</span><br><span class="line">  // TODO ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过使用@Nullable或者@Optional实现防止因为目标View不存在出现exception的请况的发生。</p>
+<h2 id="5-代替onItemClickListener的注解实现"><a href="#5-代替onItemClickListener的注解实现" class="headerlink" title="5. 代替onItemClickListener的注解实现"></a>5. 代替onItemClickListener的注解实现</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@OnItemSelected(R.id.list_view)</span><br><span class="line">void onItemSelected(int position) &#123;</span><br><span class="line">  // TODO ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="6-通过LayoutInflater获取View的ButterKnife实现方法findById："><a href="#6-通过LayoutInflater获取View的ButterKnife实现方法findById：" class="headerlink" title="6. 通过LayoutInflater获取View的ButterKnife实现方法findById："></a>6. 通过LayoutInflater获取View的ButterKnife实现方法findById：</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">View view = LayoutInflater.from(context).inflate(R.layout.thing, null);</span><br><span class="line">TextView firstName = ButterKnife.findById(view, R.id.first_name);</span><br><span class="line">TextView lastName = ButterKnife.findById(view, R.id.last_name);</span><br><span class="line">ImageView photo = ButterKnife.findById(view, R.id.photo);</span><br></pre></td></tr></table></figure>
+<p>注：这个真没觉得哪里简单了。。。</p>
+<p>到此我们讲完了ButterKnife的基本使用。怎样不错吧？下面有更强大的东西——ButterKnifeZelezny，配合着这个神器一起使用，可以为我们的项目节省大量时间和增加代码可读性。</p>
+<h1 id="ButterKnifeZelezny"><a href="#ButterKnifeZelezny" class="headerlink" title="ButterKnifeZelezny"></a>ButterKnifeZelezny</h1><h2 id="下载地址："><a href="#下载地址：" class="headerlink" title="下载地址："></a>下载地址：</h2><p><a href="http://plugins.jetbrains.com/plugin/7369" target="_blank" rel="external">http://plugins.jetbrains.com/plugin/7369</a></p>
+<p>关于AS安装插件的问题在这里不多阐述了，不会的自行百度。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>下面这幅图展示了ButterKnifeZelezny的基本用法。<br><img src="https://github.com/avast/android-butterknife-zelezny/blob/master/img/zelezny_animated.gif?raw=true" alt="bkz"></p>
+<p>基本步骤：</p>
+<ol>
+<li>有所使用的布局 ID 上点击右键 (例如上图中的 R.layout.activity_settings )， 然后选择 Generate -&gt; Generate ButterKnife Injections</li>
+<li>在对话框中选择需要注入的 View， 还有个选项可以给 Adapter 创建一个 ViewHolder。</li>
+<li>点击 Confirm ， 代码自动生成！</li>
+</ol>
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p>本文只是关于ButterKnife用法的介绍，关于Java中的依赖注解的知识博主仍在学习中，有兴趣参照《Java编程思想》一书关于Annotation的介绍，此外欢迎继续关注博主的Square全家桶系列。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/06/16/Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用/" data-title="Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用" data-url="http://yoursite.com/2016/06/16/Square全家桶正传——偷懒神器ButterKnife及其附属插件的使用/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large light-green">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect red" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse purple"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer brown darken-1 darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://weibo.com/1956184117" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism主题作者的技术博客</a>
+                
+                    <a class="social-link" href="https://github.com/raytaylorlin" target="_blank">Github地址（测试友情链接）</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright light-green-link-context">
+        <div class="container">
+            © 2016 roadtogeek.cn, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').each(function() {
+            var $table = $(this);
+            // 除去多行代码的情况
+            if ($table.find('pre').length == 0) {
+                $table.addClass('responsive-table striped bordered');
+            }
+        });
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('light-green lighten-2');
+
+        
+        // 添加new标签
+        $('').append('<span class="new badge light-green"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
