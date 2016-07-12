@@ -1,0 +1,541 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Square全家桶正传——事件总线介绍及EventBus、Otto使用教程 | RoadToGeek技术小屋</title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="RoadToGeek技术小屋">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Square全家桶正传——事件总线介绍及EventBus、Otto使用教程"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋（少年，别再收藏文章了！）" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="brown darken-1">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋（少年，别再收藏文章了！）</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav brown darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://7xszli.com2.z0.glb.clouddn.com/mmexport1461491429496.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav brown darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android第三方开源库/">
+                    Android第三方开源库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux学习/">
+                    Linux学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Python基础知识/">
+                    Python基础知识 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android知识库/">
+                    Android知识库 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Studio/">
+                    Android-Studio <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/心情随笔/">
+                    心情随笔 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-实战/">
+                    Android-实战 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper brown darken-1">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Android快速开发/">Android快速开发</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Square全家桶正传——事件总线介绍及EventBus、Otto使用教程</h1>
+    
+
+
+            </div>
+            <time class="light-green-link-context" datetime="2016-07-12T08:44:49.000Z"><a href="/2016/07/12/Square全家桶正传——事件总线介绍及EventBus、Otto使用教程/">2016-07-12</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip light-green">Android</a>
+        
+            <a href="/tags/原创/" class="chip light-green">原创</a>
+        
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#事件总线定义"><span class="section table-of-contents-text">事件总线定义</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#EventBus的使用"><span class="section table-of-contents-text">EventBus的使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Otto的使用"><span class="section table-of-contents-text">Otto的使用</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Otto与EventBus的对比"><span class="section table-of-contents-text">Otto与EventBus的对比</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：没有EventBus之前，Android中各组件之间的通信常常基于广播或者接口等等，写法繁杂而且容易使代码混乱。而事件总线的出现及时地解决了这个问题。下面跟着我的思路一起看看EventBus和Otto的使用吧，两者类似自行取其一，不过一起学习有利于更好地理解事件总线的思想。如果对于Square其他框架有兴趣了解可以点击：</strong></p>
+<p><a href="https://github.com/square/otto" target="_blank" rel="external">https://github.com/square/otto</a></p>
+<p><a href="https://github.com/greenrobot/EventBus" target="_blank" rel="external">https://github.com/greenrobot/EventBus</a></p>
+<hr>
+<h2 id="事件总线定义"><a href="#事件总线定义" class="headerlink" title="事件总线定义"></a>事件总线定义</h2><p>事件总线是一个发布 / 订阅的事件总线。包含4个成分：发布者，订阅者，事件，总线。订阅者订阅事件到总线，发送者发布事件。（来自鸿洋大神的博客）官网上面的图片很好地展示了它的原理：<br><img src="https://github.com/greenrobot/EventBus/blob/master/EventBus-Publish-Subscribe.png?raw=true" alt="EventBus"><br>说白了是观察者模式的一种应用，关于观察者模式可以联系RxJava进行理解：<a href="http://roadtogeek.cn/2016/05/25/Square%E5%85%A8%E5%AE%B6%E6%A1%B6%E5%89%8D%E4%BC%A0%E2%80%94%E2%80%94RxJava%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/" target="_blank" rel="external">Square全家桶前传——RxJava函数式编程入门（一）</a>，个人感觉还是直接把步骤放出来，读者可以结合步骤自行操作更容易理解使用。下面开始讲述EventBus和Otto的使用，导入依赖这里就不再讲述了。</p>
+<h2 id="EventBus的使用"><a href="#EventBus的使用" class="headerlink" title="EventBus的使用"></a>EventBus的使用</h2><p>下面以实现在SecondActivity向MainActivity发送信息为例讲解EventBus的使用：</p>
+<p>1.创建事件类（理解为用于通信的数据），如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Event &#123;</span><br><span class="line">    private String message;</span><br><span class="line">    public Event(String s)&#123;</span><br><span class="line">        message = s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.在接收信息方（观察者）注册和反注册，代码如下：</p>
+<p>注册：<code>EventBus.getDefault().register(this);</code></p>
+<p>反注册：<code>EventBus.getDefault().unregister(this);</code></p>
+<p>3.在接收信息方重写回调函数，这里有四种函数供选择，注意<code>@Subscribe</code>注解，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">onEventMainThread//代表这个方法会在UI线程执行</span><br><span class="line">onEventPostThread//代表这个方法会在当前发布事件的线程执行</span><br><span class="line">onEventBackgroundThread//这个方法，如果在非UI线程发布的事件，则直接执行，和发布在同一个线程中。如果在UI线程发布的事件，则加入后台任务队列，使用线程池一个接一个调用。</span><br><span class="line">onEventAsync //加入后台任务队列，使用线程池调用，注意没有BackgroundThread中的一个接一个。</span><br></pre></td></tr></table></figure></p>
+<p>4.根据需要发送消息，代码如下：<br><code>EventBus.getDefault().post(new Event(“Message”));</code></p>
+<p>就是这么简单的操作即可完成各组件之间通信的问题。</p>
+<p>下面附上详细的代码：</p>
+<p>布局：<br>MainActivity中一个TextView和一个Button，SecondActivity中一个Button</p>
+<p>Java：</p>
+<p>MainActivity.java:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">public class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    private Button mBtJump;</span><br><span class="line">    private TextView mTvMessage;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        EventBus.getDefault().register(this);</span><br><span class="line">        mBtJump = (Button) findViewById(R.id.bt_jump);</span><br><span class="line">        mTvMessage = (TextView) findViewById(R.id.tv_receiver);</span><br><span class="line">        mBtJump.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                Intent intent = new Intent(MainActivity.this,SecondActivity.class);</span><br><span class="line">                startActivity(intent);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Subscribe</span><br><span class="line">    public void onEventMainThread(Event event)&#123;</span><br><span class="line">        mTvMessage.setText(event.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line">        EventBus.getDefault().unregister(this);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>SecondActivity.java:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class SecondActivity extends AppCompatActivity &#123;</span><br><span class="line">    private Button mBtSender;</span><br><span class="line">    @Override</span><br><span class="line">    public void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_second);</span><br><span class="line">        mBtSender = (Button) findViewById(R.id.bt_send);</span><br><span class="line">        mBtSender.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onClick(View v) &#123;</span><br><span class="line">                EventBus.getDefault().post(new Event(&quot;Hello EventBus!&quot;));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDestroy() &#123;</span><br><span class="line">        super.onDestroy();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Otto的使用"><a href="#Otto的使用" class="headerlink" title="Otto的使用"></a>Otto的使用</h2><p>除了EventBus以外，Otto也是实现事件总线的优秀的框架，是Square的亲儿子（由于我先看了EventBus，所以亲儿子就只能放在后面了）其用法与EventBus类似，下面给出Otto的用法：</p>
+<p>1.定义一个AppBus类继承Bus类，采用单例模式方便以后调用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class AppBus extends Bus &#123;  </span><br><span class="line"></span><br><span class="line">    private static AppBus bus;  </span><br><span class="line"></span><br><span class="line">    public static AppBus getInstance() &#123;  </span><br><span class="line">        if (bus == null) &#123;  </span><br><span class="line">            bus = new AppBus();  </span><br><span class="line">        &#125;  </span><br><span class="line">        return bus;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>2.创建事件类（与EventBus一样），如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Event &#123;</span><br><span class="line">    private String message;</span><br><span class="line">    public Event(String s)&#123;</span><br><span class="line">        message = s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getMessage() &#123;</span><br><span class="line">        return message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3.在接收信息方（观察者）注册和反注册，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">AppBus.getInstance().register(this);  </span><br><span class="line">AppBus.getInstance().unregister(this);</span><br></pre></td></tr></table></figure></p>
+<p>4.在接收信息方重写回调函数，注意@Subscribe注解，代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void customName(Event event) &#123;  </span><br><span class="line">        textView.setText(event.getMessage());  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>5.根据需要发送消息，代码如下：<br> AppBus.getInstance().post(new Event(“message”));</p>
+<p><strong>补充：Otto可以使用@Produce注解实现事件的产生</strong>，下面的例子正是使用@Produce注解事件产生方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">BusProvider.getInstance().post(produceEvent());</span><br><span class="line">@Produce</span><br><span class="line">    public MessageEvent produceEvent() &#123;</span><br><span class="line">        return new MessageEvent(&quot;message&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Otto与EventBus的对比"><a href="#Otto与EventBus的对比" class="headerlink" title="Otto与EventBus的对比"></a>Otto与EventBus的对比</h2><p>（来自非著名程序员）<br>从事件订阅的处理差别来看：</p>
+<ol>
+<li>eventbus是采用反射的方式对整个注册的类的所有方法进行扫描来完成注册；</li>
+<li>otto采用了注解的方式完成注册；</li>
+<li>共同的地方缓存所有注册并有可用性的检测。同时可以移除注册;</li>
+<li>注册的共同点都是采用method方法进行一个集成。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>EventBus和Otto用起来差不多，至于选择哪一个看个人感觉吧，不过既然是Square全家桶，那么使用Otto在兼容性上更有优势。如果会用Rx的话，建议尝试使用Rx来实现通信。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/07/12/Square全家桶正传——事件总线介绍及EventBus、Otto使用教程/" data-title="Square全家桶正传——事件总线介绍及EventBus、Otto使用教程" data-url="http://yoursite.com/2016/07/12/Square全家桶正传——事件总线介绍及EventBus、Otto使用教程/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large light-green">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect red" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse purple"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer brown darken-1 darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://blog.csdn.net/u011506583" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism作者的技术博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank">郭霖CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lmj623565791?viewmode=contents" target="_blank">张鸿洋CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lzyzsd?viewmode=contents" target="_blank">大头鬼BruseCSDN博客</a>
+                
+                    <a class="social-link" href="http://www.ima-vida.com/" target="_blank">智能硬件与互联网创业协会</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright light-green-link-context">
+        <div class="container">
+            © 2016 roadtogeek.cn, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').each(function() {
+            var $table = $(this);
+            // 除去多行代码的情况
+            if ($table.find('pre').length == 0) {
+                $table.addClass('responsive-table striped bordered');
+            }
+        });
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('light-green lighten-2');
+
+        
+        // 添加new标签
+        $('').append('<span class="new badge light-green"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=56878365" charset="UTF-8"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
