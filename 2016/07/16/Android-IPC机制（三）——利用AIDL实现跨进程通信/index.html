@@ -1,0 +1,530 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Android IPC机制（三）——利用AIDL实现跨进程通信 | RoadToGeek技术小屋</title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="RoadToGeek技术小屋">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Android IPC机制（三）——利用AIDL实现跨进程通信"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋（少年，别再收藏文章了！）" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="brown darken-1">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋（少年，别再收藏文章了！）</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav brown darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://7xszli.com2.z0.glb.clouddn.com/mmexport1461491429496.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav brown darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android知识库/">
+                    Android知识库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android第三方开源库/">
+                    Android第三方开源库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Python基础知识/">
+                    Python基础知识 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux学习/">
+                    Linux学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Studio/">
+                    Android-Studio <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/心情随笔/">
+                    心情随笔 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-实战/">
+                    Android-实战 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper brown darken-1">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Android知识库/">Android知识库</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Android IPC机制（三）——利用AIDL实现跨进程通信</h1>
+    
+
+
+            </div>
+            <time class="light-green-link-context" datetime="2016-07-16T07:27:16.000Z"><a href="/2016/07/16/Android-IPC机制（三）——利用AIDL实现跨进程通信/">2016-07-16</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip light-green">Android</a>
+        
+            <a href="/tags/原创/" class="chip light-green">原创</a>
+        
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#AIDL基本介绍"><span class="section table-of-contents-text">AIDL基本介绍</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#基本用法"><span class="section table-of-contents-text">基本用法</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#具体实现"><span class="section table-of-contents-text">具体实现</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#1-编写AIDL暴露接口"><span class="section table-of-contents-text">1.编写AIDL暴露接口</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#2-Service的实现"><span class="section table-of-contents-text">2.Service的实现</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#3-客户端的实现"><span class="section table-of-contents-text">3.客户端的实现</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：跨进程通信的实现和理解是Android进阶中重要的一环。下面博主分享IPC一些相关知识、操作及自己在学习IPC过程中的一些理解。这一章是对AIDL的基本使用的介绍，由于博主也是AIDL初学者，所以一些地方阐述可能不准确，如有发现希望指正。关于使用Messenger通信参阅：<a href="http://roadtogeek.cn/2016/07/14/Android-IPC%E6%9C%BA%E5%88%B6%EF%BC%88%E4%BA%8C%EF%BC%89%E2%80%94%E2%80%94%E5%88%A9%E7%94%A8Messenger%E5%AE%9E%E7%8E%B0%E8%B7%A8%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1/" target="_blank" rel="external">Android IPC机制（二）——利用Messenger实现跨进程通信</a>
+</strong></p>
+<p><a href="https://developer.android.com/guide/components/aidl.html" target="_blank" rel="external">https://developer.android.com/guide/components/aidl.html</a></p>
+<hr>
+<h2 id="AIDL基本介绍"><a href="#AIDL基本介绍" class="headerlink" title="AIDL基本介绍"></a>AIDL基本介绍</h2><p>关于AIDL，先看看Google官方文档对它的定义：AIDL是接口定义语言，它允许你定义程序接口实现跨进程的客户端与服务端的通信。在Android中，一个进程通常不能访问另一个进程的内存（这是IPC出现的原因），也就是说，进程之间要想通信，就需要将想要共享的对象分解成操作系统能够理解的原始元素通过底层来实现通信。这个过程是乏味无趣的，所以Android帮我们通过AIDL解决了这个问题。（个人翻译）此外，官方文档有说明，只有在不同的客户端与服务端通信，服务端并发处理是才有必要使用这种方式，否则选择Messenger可能更合适。相比Messenger，AIDL有这些优势：<strong>一、跨进程调用服务端的方法；二、服务端并发处理数据时。</strong>上述两种情况使用AIDL更加合适。</p>
+<h2 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h2><p>下面开始掌握AIDL的使用方法，先概述一下基本用法：<br>1.服务端创建一个Service监听处理请求，创建一个AIDL文件将暴露给客户端的接口在AIDL文件中声明，然后在Service中实现AIDL接口。<br>2.客户端绑定Service获得Binder对象转化成AIDL接口所属的类型，调用接口中的方法。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>具体实现见下面（下面例子是官方举例的升级版，可以学习一下）：</p>
+<p>本例中共有上个文件，MainActivity.java（客户端）、RemoteService.java（服务端）、Command.java（实体类）、IRemoteService.aidl（AIDL文件）、Command.aidl（AIDL文件）。</p>
+<h3 id="1-编写AIDL暴露接口"><a href="#1-编写AIDL暴露接口" class="headerlink" title="1.编写AIDL暴露接口"></a>1.编写AIDL暴露接口</h3><p>AIDL文件中只支持六种数据类型：基本数据类型、ArrayList、HashMap、Parcelable和AIDL。本例中我使用基本数据类型和Parcelable来阐述。</p>
+<p>由于下面我要使用Parcelable序列化的对象Command，所以先写好Command类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">public class Command implements Parcelable&#123;</span><br><span class="line">    String name;</span><br><span class="line">    int id;</span><br><span class="line">    public static final Parcelable.Creator&lt;Command&gt; CREATOR = new Parcelable.Creator&lt;Command&gt;()&#123;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public Command createFromParcel(Parcel source) &#123;</span><br><span class="line">            //实现从Parcel容器读取传递数据值，封装成Parcelable对象返回逻辑层</span><br><span class="line">            return new Command(source);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public Command[] newArray(int size) &#123;</span><br><span class="line">            //创建一个类型为T长度为size的数组，仅一句话即可</span><br><span class="line">            return new Command[size];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    private Command()&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    private Command(Parcel source)&#123;</span><br><span class="line">        name = source.readString();</span><br><span class="line">        id = source.readInt();</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return id+name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int describeContents() &#123;</span><br><span class="line">        return 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void writeToParcel(Parcel dest, int flags) &#123;</span><br><span class="line">        //将对象映射成Parcelable对象，注意与读取的顺序相同</span><br><span class="line">        dest.writeString(name);</span><br><span class="line">        dest.writeInt(id);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于Parcelable序列化，在这里就不多加阐述了，不然这篇文章不知道要多长……序列化的基本方法见上面。官方推荐使用Parcelable是有原因的，Parcelable效率相对高，虽然实现起来比较麻烦。上面类写好之后新建一个Command.aidl文件，内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">package com.example.vincebarry.googleaidl;</span><br><span class="line">parcelable Command;</span><br></pre></td></tr></table></figure>
+<p>下面实现一下IRemoteService.aidl：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">package com.example.vincebarry.googleaidl;</span><br><span class="line">// Declare any non-default types here with import statements</span><br><span class="line">import com.example.vincebarry.googleaidl.Command;</span><br><span class="line">interface IRemoteService &#123;</span><br><span class="line">    int getPid();</span><br><span class="line">    Command getCommand();</span><br><span class="line">    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,</span><br><span class="line">            double aDouble, String aString);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里有两个部分要注意:其一是开放的方法接口要准确，其二是把序列化的Command类导入该aidl文件之中。<br>这样，我们就把所需的aidl文件写完了，总结一下：</p>
+<ol>
+<li><p>首先是一个业务接口aidl文件，该文件包含所有的Service暴露给客户端的方法。此外如果在该文件中使用序列化对象必须将其导入；</p>
+</li>
+<li><p>序列化对象实现Parcelable接口，实现序列化和反序列化功能，并且将其注册到aidl文件中，注册过程见上面；</p>
+</li>
+</ol>
+<h3 id="2-Service的实现"><a href="#2-Service的实现" class="headerlink" title="2.Service的实现"></a>2.Service的实现</h3><p>这里主要是将接口中的方法实现并且打包到（该词可能不准确）IBinder对象中将其发送到与该Service绑定的客户端去。主要实现了返回当前线程的id和将Service中的Command对象返回的逻辑，具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class RemoteService extends Service &#123;</span><br><span class="line">    private Command myCommand;</span><br><span class="line">    @Override</span><br><span class="line">    public IBinder onBind(Intent intent) &#123;</span><br><span class="line">        myCommand = new Command();</span><br><span class="line">        myCommand.setId(10);</span><br><span class="line">        myCommand.setName(&quot;Hello&quot;);</span><br><span class="line">        Toast.makeText(getApplicationContext(),&quot;Remote Service bound&quot;,Toast.LENGTH_SHORT).show();</span><br><span class="line">        return new IRemoteService.Stub()&#123;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public int getPid() throws RemoteException &#123;</span><br><span class="line">                return Process.myPid();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public Command getCommand() throws RemoteException &#123;</span><br><span class="line">                return myCommand;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            @Override</span><br><span class="line">            public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-客户端的实现"><a href="#3-客户端的实现" class="headerlink" title="3.客户端的实现"></a>3.客户端的实现</h3><p>客户端方面主要是将Activity与Service绑定，然后将接口存根取出转化为接口，利用该接口来调用服务中的方法。具体代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">ublic class MainActivity extends AppCompatActivity &#123;</span><br><span class="line">    private static final String SERVICE_ACTION = &quot;com.example.vincebarry.googleaidl.RemoteService&quot;;</span><br><span class="line">    private IRemoteService iRemoteService;</span><br><span class="line">    @Override</span><br><span class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</span><br><span class="line">        super.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        Intent intent = new Intent(MainActivity.this,RemoteService.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private ServiceConnection conn = new ServiceConnection() &#123;</span><br><span class="line">        @Override</span><br><span class="line">        public void onServiceConnected(ComponentName name, IBinder service) &#123;</span><br><span class="line">            iRemoteService = IRemoteService.Stub.asInterface(service);</span><br><span class="line">            int i = -1;</span><br><span class="line">            String command = null;</span><br><span class="line">            try &#123;</span><br><span class="line">                i = iRemoteService.getPid();</span><br><span class="line">                command = iRemoteService.getCommand().getName()+iRemoteService.getCommand().id;</span><br><span class="line">            &#125; catch (RemoteException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            if(i != -1)&#123;</span><br><span class="line">                Log.i(&quot;Pid&quot;,&quot;Remote Service:&quot;+i);</span><br><span class="line">                Log.i(&quot;Pid&quot;,&quot;Remote Service:&quot;+command);</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                Log.i(&quot;Pid&quot;,&quot;Remote Service:&quot;+&quot;null&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        @Override</span><br><span class="line">        public void onServiceDisconnected(ComponentName name) &#123;</span><br><span class="line">            iRemoteService = null;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>实现下来发现其实理解上难度并不大，只是稍显麻烦，只要前面两章理解好，对于AIDL的通信还是可以较好掌握的，关键还是要多实践。关于多线程并发的情况本文没有讲到，由于博主对于并发编程的掌握局限性的原因就暂时不实现并发情况下的AIDL通信情况，以后对并发理解加深后再作讨论。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/07/16/Android-IPC机制（三）——利用AIDL实现跨进程通信/" data-title="Android IPC机制（三）——利用AIDL实现跨进程通信" data-url="http://yoursite.com/2016/07/16/Android-IPC机制（三）——利用AIDL实现跨进程通信/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large light-green">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect red" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse purple"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer brown darken-1 darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://blog.csdn.net/u011506583" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism作者的技术博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank">郭霖CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lmj623565791?viewmode=contents" target="_blank">张鸿洋CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lzyzsd?viewmode=contents" target="_blank">大头鬼BruseCSDN博客</a>
+                
+                    <a class="social-link" href="http://www.ima-vida.com/" target="_blank">智能硬件与互联网创业协会</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright light-green-link-context">
+        <div class="container">
+            © 2016 roadtogeek.cn, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').each(function() {
+            var $table = $(this);
+            // 除去多行代码的情况
+            if ($table.find('pre').length == 0) {
+                $table.addClass('responsive-table striped bordered');
+            }
+        });
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('light-green lighten-2');
+
+        
+        // 添加new标签
+        $('').append('<span class="new badge light-green"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=56878365" charset="UTF-8"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
