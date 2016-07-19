@@ -1,0 +1,535 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    
+
+    <title>Android自定义View系列（二）——打造一个仿2K游戏摇杆 | RoadToGeek技术小屋</title>
+    <meta name="author" content="陈颍聪">
+    
+    <meta name="description" content="RoadToGeek技术小屋">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Android自定义View系列（二）——打造一个仿2K游戏摇杆"/>
+    <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="RoadToGeek技术小屋（少年，别再收藏文章了！）" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="brown darken-1">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">RoadToGeek技术小屋（少年，别再收藏文章了！）</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                            <i class="fa fa-bookmark "></i>
+                            
+                            分类
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav brown darken-1" id="main-menu">
+        
+        <li class="side-user">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="http://7xszli.com2.z0.glb.clouddn.com/mmexport1461491429496.jpg" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">RoadToGeek</p>
+                        <p class="desc">Android/Java/数据结构/Coder</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-category category-menu" href="javascript:;" data-activates="category-menu" >
+                    <i class="fa fa-bookmark "></i>
+                    
+                    分类
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav brown darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android第三方开源库/">
+                    Android第三方开源库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android知识库/">
+                    Android知识库 <span class="right">5 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-实战/">
+                    Android-实战 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Python基础知识/">
+                    Python基础知识 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Linux学习/">
+                    Linux学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Google官方文档/">
+                    Android-Google官方文档 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android-Studio/">
+                    Android-Studio <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/心情随笔/">
+                    心情随笔 <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper brown darken-1">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Android-实战/">Android 实战</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Android自定义View系列（二）——打造一个仿2K游戏摇杆</h1>
+    
+
+
+            </div>
+            <time class="light-green-link-context" datetime="2016-07-19T09:23:02.000Z"><a href="/2016/07/19/Android自定义View系列（二）——打造一个仿2K游戏摇杆/">2016-07-19</a></time>
+
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip light-green">Android</a>
+        
+            <a href="/tags/原创/" class="chip light-green">原创</a>
+        
+    </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#最终效果"><span class="section table-of-contents-text">最终效果</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#基本思路"><span class="section table-of-contents-text">基本思路</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#具体实现"><span class="section table-of-contents-text">具体实现</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#前期准备"><span class="section table-of-contents-text">前期准备</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#测量绘制"><span class="section table-of-contents-text">测量绘制</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#View事件处理"><span class="section table-of-contents-text">View事件处理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#监听器的构造"><span class="section table-of-contents-text">监听器的构造</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#附录：View具体代码"><span class="section table-of-contents-text">附录：View具体代码</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：Android进阶过程中有一个绕不开的话题——自定义View。这一块是安卓程序员更好地实现功能自主化必须迈出的一步。下面这个系列博主将通过实现几个例子来认识安卓自定义View的方法。从自定义View到自定义ViewGroup，View事件处理再到View深入分析（这一章如果水平未到位可能今后再补充），其中会涉及一些小的知识，包括Canvas的使用、动画等等。这是本系列的第二章，博主将通过定制一个摇杆的实例巩固上章的知识，并引入自定义View中实现用户交互和数据回调两个方面的功能。此外在本章中我们将看到数学知识（尤其是三角函数）在自定义View中的重要作用（这也是本例的一个难点），下面开始解放大脑和双手吧。</strong></p>
+<h2 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h2><p>本例的最终效果如下：</p>
+<p><img src="http://7xszli.com1.z0.glb.clouddn.com/customview3.gif" alt="效果"></p>
+<p>这就是本例的最终效果，我们将实现一个虚拟游戏方向摇杆，模拟摇杆操作。此外我们将为它写一个监听器实现摇动方向和速度等数据返回（本例中只实现了监听部分代码，数据读者可以自行加上）。</p>
+<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><p>首先依然是上一篇所讲述的那几个步骤，包括自定义XML属性，引入属性，测量和绘制几个部分（没看过上一篇文章的点击博客阅读或者查看博主的简书），除了这几个部分外我们还需要重写onTouchEvent()方法进行View事件处理和利用回调写好监听器。整体思路就是这样，看起来不难，实际操作起来陷阱多多。</p>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><p>新建value/attrs.xml，在XML中声明并引入以下属性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;resources&gt;</span><br><span class="line">    &lt;attr name=&quot;InnerColor&quot; format=&quot;color&quot;/&gt;</span><br><span class="line">    &lt;attr name=&quot;OuterColor&quot; format=&quot;color&quot;/&gt;</span><br><span class="line">    &lt;declare-styleable name=&quot;NavController&quot;&gt;</span><br><span class="line">        &lt;attr name=&quot;InnerColor&quot; /&gt;</span><br><span class="line">        &lt;attr name=&quot;OuterColor&quot;/&gt;</span><br><span class="line">    &lt;/declare-styleable&gt;</span><br><span class="line">&lt;/resources&gt;</span><br></pre></td></tr></table></figure></p>
+<p>这次我们只需要两个属性，小圆颜色和大圆颜色。然后新建一个java文件，继承View命名为NavController，在java中重写构造方法并且将XML属性导入，新建画笔对象，为之设置好属性。关键代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public NavController(Context context, AttributeSet attrs) &#123;</span><br><span class="line">    super(context, attrs);</span><br><span class="line">    TypedArray ta = getResources().obtainAttributes(attrs,R.styleable.NavController);</span><br><span class="line">    innerColor = ta.getColor(R.styleable.NavController_InnerColor,INNER_COLOR_DEFAULT);</span><br><span class="line">    outerColor = ta.getColor(R.styleable.NavController_OuterColor,OUTER_COLOR_DEFAULT);</span><br><span class="line">    ta.recycle();</span><br><span class="line">    OUTER_WIDTH_SIZE = dip2px(context,125.0f);</span><br><span class="line">    OUTER_HEIGHT_SIZE = dip2px(context,125.0f);</span><br><span class="line">    outerPaint = new Paint();</span><br><span class="line">    innerPaint = new Paint();</span><br><span class="line">    outerPaint.setColor(outerColor);</span><br><span class="line">    outerPaint.setStyle(Paint.Style.FILL_AND_STROKE);</span><br><span class="line">    innerPaint.setColor(innerColor);</span><br><span class="line">    innerPaint.setStyle(Paint.Style.FILL_AND_STROKE);</span><br></pre></td></tr></table></figure></p>
+<p>上面的OUTER_WIDTH_SIZE和OUTER_HEIGHT_SIZE分别是大圆在没有设置具体值下的默认大小，我们使用dip2px()方法将我们熟练掌握的dip转化为java逻辑唯一承认的px单位，具体实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public static int dip2px(Context context, float dpValue)&#123;</span><br><span class="line">        final float scale = context.getResources().getDisplayMetrics().density;</span><br><span class="line">        return (int) (dpValue*scale +0.5f);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这样就做好了前期准备工作，由于上篇讲述过关于onMeasure和onDraw的相关理解和用法，这里就简单阐述，将这两块写在同一个部分。</p>
+<h3 id="测量绘制"><a href="#测量绘制" class="headerlink" title="测量绘制"></a>测量绘制</h3><p>测量时我们分别对三种模式下的尺寸进行不同的处理，分别是返回父View给的值加上padding值（EXACTLY），返回大圆的宽高（UNSPECIFIED）和返回大圆宽高与父View允许最大值之间的最小值（AT_MOST）。然后回调onSizeChanged()中取出实际宽高值，利用该值进行View绘制。onDraw中主要是确定了两个圆的半径（大圆半径为去除padding的宽高一半下四种情况的最小值，参照代码看这句话。小圆半径为大圆的一半）和绘制了两个圆。此外小圆的中心点我们现在onSizeChanged中进行了赋值，注意小圆中心点坐标值的改变是本例的关键，通过改变它来实现效果。这样我们就把View的显示区域和View的基本形状定义完毕。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        int width = measureWidth(widthMeasureSpec);</span><br><span class="line">        int height = measureHeight(heightMeasureSpec);</span><br><span class="line">        setMeasuredDimension(width,height);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int measureWidth(int widthMeasureSpec) &#123;</span><br><span class="line">        int widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line">        int widthVal = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">        //处理三种模式</span><br><span class="line">        if(widthMode==MeasureSpec.EXACTLY)&#123;</span><br><span class="line">            return widthVal+getPaddingLeft()+getPaddingRight();</span><br><span class="line">        &#125;else if(widthMode==MeasureSpec.UNSPECIFIED)&#123;</span><br><span class="line">            return OUTER_WIDTH_SIZE;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return Math.min(OUTER_WIDTH_SIZE,widthVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private int measureHeight(int heightMeasureSpec) &#123;</span><br><span class="line">        int heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line">        int heightVal = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        //处理三种模式</span><br><span class="line">        if(heightMode==MeasureSpec.EXACTLY)&#123;</span><br><span class="line">            return heightVal+getPaddingTop()+getPaddingBottom();</span><br><span class="line">        &#125;else if(heightMode==MeasureSpec.UNSPECIFIED)&#123;</span><br><span class="line">            return OUTER_HEIGHT_SIZE;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return Math.min(OUTER_HEIGHT_SIZE,heightVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onSizeChanged(int w, int h, int oldw, int oldh) &#123;</span><br><span class="line">        super.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line">        realWidth = w;</span><br><span class="line">        realHeight = h;</span><br><span class="line">        innerCenterX = realWidth/2;</span><br><span class="line">        innerCenterY = realHeight/2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDraw(Canvas canvas) &#123;</span><br><span class="line">        super.onDraw(canvas);</span><br><span class="line">        outRadius = Math.min(Math.min(realWidth/2-getPaddingLeft(),realWidth/2-getPaddingRight()),Math.min(realHeight/2-getPaddingTop(),realHeight/2-getPaddingBottom()));</span><br><span class="line">        //画外部圆</span><br><span class="line">        canvas.drawCircle(realWidth/2,realHeight/2,outRadius,outerPaint);</span><br><span class="line">        //内部圆</span><br><span class="line">        innerRedius = outRadius*0.5f;</span><br><span class="line">        canvas.drawCircle(innerCenterX,innerCenterY,innerRedius,innerPaint);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="View事件处理"><a href="#View事件处理" class="headerlink" title="View事件处理"></a>View事件处理</h3><p>下面这一步是实现效果的关键步骤。上面我们已经绘制出了基本的形状，但是View触摸后没有任何效果。这一步正是实现View触摸的效果。对于这一步的理解可能有一定的难度，读者应该反复揣摩其中涉及到基本的三角函数和圆的方程的计算，如果不明白这两部分数学知识的最好先去翻一翻课本……定义一些炫酷的View大都基于数学知识的基础上。我们要重写onTouchEvent()方法，先放上这部分代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">            changeInnerCirclePosition(event);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_MOVE)&#123;</span><br><span class="line">            changeInnerCirclePosition(event);</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;MOVED&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_UP)&#123;</span><br><span class="line">            innerCenterX = realWidth/2;</span><br><span class="line">            innerCenterY = realHeight/2;</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以看到，上面的对onTouchEvent()方法的重写处理了三种情况下的逻辑：用户在View的区域按下、移动和离开三种情况，当手指离开时我们把内圆的中心点移动到View的最中间（恢复初始状态），然后刷新，当按下或者移动时调用changeInnerCirclePosition(event)方法，这个方法用于对内圆进行处理让内圆根据手指位置判断调整位置。<br>下面看看changeInnerCirclePosition()方法。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">private void changeInnerCirclePosition(MotionEvent e) &#123;</span><br><span class="line">        //圆的方程：（x-realWidth/2）^2 +（y - realHeight/2）^2 &lt;= outRadius^2</span><br><span class="line">        //第一步，确定有效的触摸点集</span><br><span class="line">        float X = e.getX();</span><br><span class="line">        float Y = e.getY();</span><br><span class="line">        if(mCallBack!=null)&#123;</span><br><span class="line">            mCallBack.onNavAndSpeed(X,Y);</span><br><span class="line">        &#125;</span><br><span class="line">        boolean isPointInOutCircle = Math.pow(X-realWidth/2,2) +Math.pow(Y-realHeight/2,2)&lt;=Math.pow(outRadius,2);</span><br><span class="line">        if(isPointInOutCircle)&#123;</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;inCircle&quot;);</span><br><span class="line">            //两种情况：小圆半径</span><br><span class="line">            boolean isPointInFree = Math.pow(X-realWidth/2,2) +Math.pow(Y-realHeight/2,2)&lt;=Math.pow(outRadius-innerRedius,2);</span><br><span class="line">            if(isPointInFree)&#123;</span><br><span class="line">                innerCenterX = X;</span><br><span class="line">                innerCenterY = Y;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                //处理限制区域，这部分使用触摸点与中心点与外圆方程交点作为内圆的中心点</span><br><span class="line">                //使用近似三角形来确定这个点</span><br><span class="line">                //求出触摸点，触摸点垂足和中心点构成的直角三角形（pointTri）的直角边长</span><br><span class="line">                float pointTriX = Math.abs(realWidth/2-X);//横边</span><br><span class="line">                float pointTriY = Math.abs(realHeight/2-Y);//竖边</span><br><span class="line">                float pointTriZ = (float) Math.sqrt((Math.pow(pointTriX,2)+Math.pow(pointTriY,2)));</span><br><span class="line">                float TriSin = pointTriY/pointTriZ;</span><br><span class="line">                float TriCos = pointTriX/pointTriZ;</span><br><span class="line">                //求出在圆环上的三角形的两个直角边的长度</span><br><span class="line">                float limitCircleTriY = (outRadius-innerRedius)*TriSin;</span><br><span class="line">                float limitCircleTriX = (outRadius-innerRedius)*TriCos;</span><br><span class="line">                //确定内圆中心点的位置，分四种情况</span><br><span class="line">                if(X&gt;=realWidth/2 &amp;&amp; Y&gt;=realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2+limitCircleTriX;</span><br><span class="line">                    innerCenterY = realHeight/2+limitCircleTriY;</span><br><span class="line">                &#125;else if(X&lt;realWidth/2 &amp;&amp; Y&gt;=realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2-limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2+limitCircleTriY;</span><br><span class="line">                &#125;else if(X&gt;=realWidth/2 &amp;&amp; Y&lt;realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2+limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2-limitCircleTriY;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    innerCenterX = realWidth/2-limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2-limitCircleTriY;</span><br><span class="line">                &#125;</span><br><span class="line">                Log.i(&quot;TAG&quot;,&quot;inLimit&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;notInCircle&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个方法很长，上面我已经说了，它是用于让内圆根据用户的手指的位置进行位置变动的关键。下面一步一步剖析。附上本人实现过程中绘制的图片。建议在实现一些逻辑时可以绘图帮助记录和启发思维。</p>
+<p><img src="http://7xszli.com1.z0.glb.clouddn.com/customview4.PNG" alt="分析图"></p>
+<p><strong>第一步，我们先获取有效的触摸范围（根据个人实际情况而定）</strong></p>
+<p>本例中博主不使用希望用户在点击大圆外面的范围时内圆还跟着运动，所以要先确定一下触摸的有效范围。<br>使用圆的方程来判断用户的触摸点是否在大圆内，代码：<code>boolean isPointInOutCircle = Math.pow(X-realWidth/2,2) +Math.pow(Y-realHeight/2,2)&lt;=Math.pow(outRadius,2);</code>。如果不在大圆内不执行逻辑，在大圆内则进行下一步判断。</p>
+<p><strong>第二步，触摸点是否在自由域内？</strong></p>
+<p>这里博主使用了自由域这个词（好吧，自己扯的）。以大圆半径减去小圆半径后的值作为半径生成新的圆（命名为<strong>限制圆</strong>，下面用到），我把下图中S1部分叫做自由域，S2为非自由域。</p>
+<p><img src="http://7xszli.com1.z0.glb.clouddn.com/customview5.PNG" alt="自由域"></p>
+<p>自由域有什么特点？就是当用户把触摸点落在自由域内我们小圆的中心点只要跟着触摸点的坐标就行了，没有任何限制；而当落在非自由域内时小圆的中心点就受到限制了。这里分成两部分讨论。对于自由域的处理见下面：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if(isPointInFree)&#123;</span><br><span class="line">                innerCenterX = X;</span><br><span class="line">                innerCenterY = Y;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于非自由域我们怎么处理呢？当用户触摸点落在非自由域时，我们把触摸点与限制圆作为小圆中心点的坐标，见下图展示：</p>
+<p><a href="http://7xszli.com1.z0.glb.clouddn.com/customview6.PNG" target="_blank" rel="external">非自由域处理</a></p>
+<p>下面就是求解直线与圆的交点坐标的问题了（博主整整搞了一个小时……），只要解决这个问题即可，不过要注意这里的坐标与数学的坐标系略有不同，横轴为x向右，纵轴为y向下。我的处理方式见上面代码，主要利用相似三角形和三角函数的知识。具体注解上面有表述。这一步跟绘制往往表现了一个自定义View的质量高低。</p>
+<h3 id="监听器的构造"><a href="#监听器的构造" class="headerlink" title="监听器的构造"></a>监听器的构造</h3><p>有了这个摇杆，最后就是为它实现返回数据的功能了，我们使用监听器来实现。（可以参考<a href="http://roadtogeek.cn/2016/04/30/%E5%88%A9%E7%94%A8Android%E5%9B%9E%E8%B0%83%E6%9C%BA%E5%88%B6%E5%AF%B9Dialog%E8%BF%9B%E8%A1%8C%E7%AE%80%E5%8D%95%E5%B0%81%E8%A3%85/" target="_blank" rel="external">利用Android回调机制对Dialog进行简单封装</a>关于回调监听的知识）先写好监听的回调接口，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface OnNavAndSpeedListener&#123;</span><br><span class="line">        public void onNavAndSpeed(float nav,float speed);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>声明接口对象mCallBack，然后在需要回调返回数据的地方调用改接口中的方法：<code>mCallBack.onNavAndSpeed(float nav,float speed)</code>，注意先判断mCallBack对象是否为null。然后使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public void setOnNavAndSpeedListener(OnNavAndSpeedListener listener)&#123;</span><br><span class="line">        mCallBack = listener;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>在Activity中让调用者新建接口并传入。Activity中具体使用如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">navController.setOnNavAndSpeedListener(new NavController.OnNavAndSpeedListener() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public void onNavAndSpeed(float nav, float speed) &#123;</span><br><span class="line">                Log.i(&quot;TAG&quot;,nav+speed+&quot;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>这样就实现了速度和方向的返回，定制完了一个游戏摇杆。读者可以根据需求进行优化更改。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>本章借助实现游戏摇杆的例子回顾了自定义View的基本步骤和引入事件处理和监听器的相关实现，下面的文章将对ViewGroup一块开始动刀子学习。如果感觉对您有帮助可以关注本人博客或者简书。</p>
+<h2 id="附录：View具体代码"><a href="#附录：View具体代码" class="headerlink" title="附录：View具体代码"></a>附录：View具体代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br></pre></td><td class="code"><pre><span class="line">public class NavController extends View &#123;</span><br><span class="line">    private int innerColor;</span><br><span class="line">    private int outerColor;</span><br><span class="line">    private final static int INNER_COLOR_DEFAULT = Color.parseColor(&quot;#d32f2f&quot;);</span><br><span class="line">    private final static int OUTER_COLOR_DEFAULT = Color.parseColor(&quot;#f44336&quot;);</span><br><span class="line">    private int OUTER_WIDTH_SIZE;</span><br><span class="line">    private int OUTER_HEIGHT_SIZE;</span><br><span class="line">    private int realWidth;//绘图使用的宽</span><br><span class="line">    private int realHeight;//绘图使用的高</span><br><span class="line">    private float innerCenterX;</span><br><span class="line">    private float innerCenterY;</span><br><span class="line">    private float outRadius;</span><br><span class="line">    private float innerRedius;</span><br><span class="line">    private Paint outerPaint;</span><br><span class="line">    private Paint innerPaint;</span><br><span class="line">    private OnNavAndSpeedListener mCallBack = null;</span><br><span class="line">    public interface OnNavAndSpeedListener&#123;</span><br><span class="line">        public void onNavAndSpeed(float nav,float speed);</span><br><span class="line">    &#125;</span><br><span class="line">    public NavController(Context context) &#123;</span><br><span class="line">        this(context,null);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public NavController(Context context, AttributeSet attrs) &#123;</span><br><span class="line">        super(context, attrs);</span><br><span class="line">        TypedArray ta = getResources().obtainAttributes(attrs,R.styleable.NavController);</span><br><span class="line">        innerColor = ta.getColor(R.styleable.NavController_InnerColor,INNER_COLOR_DEFAULT);</span><br><span class="line">        outerColor = ta.getColor(R.styleable.NavController_OuterColor,OUTER_COLOR_DEFAULT);</span><br><span class="line">        ta.recycle();</span><br><span class="line">        OUTER_WIDTH_SIZE = dip2px(context,125.0f);</span><br><span class="line">        OUTER_HEIGHT_SIZE = dip2px(context,125.0f);</span><br><span class="line">        outerPaint = new Paint();</span><br><span class="line">        innerPaint = new Paint();</span><br><span class="line">        outerPaint.setColor(outerColor);</span><br><span class="line">        outerPaint.setStyle(Paint.Style.FILL_AND_STROKE);</span><br><span class="line">        innerPaint.setColor(innerColor);</span><br><span class="line">        innerPaint.setStyle(Paint.Style.FILL_AND_STROKE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) &#123;</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">        int width = measureWidth(widthMeasureSpec);</span><br><span class="line">        int height = measureHeight(heightMeasureSpec);</span><br><span class="line">        setMeasuredDimension(width,height);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private int measureWidth(int widthMeasureSpec) &#123;</span><br><span class="line">        int widthMode = MeasureSpec.getMode(widthMeasureSpec);</span><br><span class="line">        int widthVal = MeasureSpec.getSize(widthMeasureSpec);</span><br><span class="line">        //处理三种模式</span><br><span class="line">        if(widthMode==MeasureSpec.EXACTLY)&#123;</span><br><span class="line">            return widthVal+getPaddingLeft()+getPaddingRight();</span><br><span class="line">        &#125;else if(widthMode==MeasureSpec.UNSPECIFIED)&#123;</span><br><span class="line">            return OUTER_WIDTH_SIZE;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return Math.min(OUTER_WIDTH_SIZE,widthVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    private int measureHeight(int heightMeasureSpec) &#123;</span><br><span class="line">        int heightMode = MeasureSpec.getMode(heightMeasureSpec);</span><br><span class="line">        int heightVal = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        //处理三种模式</span><br><span class="line">        if(heightMode==MeasureSpec.EXACTLY)&#123;</span><br><span class="line">            return heightVal+getPaddingTop()+getPaddingBottom();</span><br><span class="line">        &#125;else if(heightMode==MeasureSpec.UNSPECIFIED)&#123;</span><br><span class="line">            return OUTER_HEIGHT_SIZE;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            return Math.min(OUTER_HEIGHT_SIZE,heightVal);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onSizeChanged(int w, int h, int oldw, int oldh) &#123;</span><br><span class="line">        super.onSizeChanged(w, h, oldw, oldh);</span><br><span class="line">        realWidth = w;</span><br><span class="line">        realHeight = h;</span><br><span class="line">        innerCenterX = realWidth/2;</span><br><span class="line">        innerCenterY = realHeight/2;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void onDraw(Canvas canvas) &#123;</span><br><span class="line">        super.onDraw(canvas);</span><br><span class="line">        outRadius = Math.min(Math.min(realWidth/2-getPaddingLeft(),realWidth/2-getPaddingRight()),Math.min(realHeight/2-getPaddingTop(),realHeight/2-getPaddingBottom()));</span><br><span class="line">        //画外部圆</span><br><span class="line">        canvas.drawCircle(realWidth/2,realHeight/2,outRadius,outerPaint);</span><br><span class="line">        //内部圆</span><br><span class="line">        innerRedius = outRadius*0.5f;</span><br><span class="line">        canvas.drawCircle(innerCenterX,innerCenterY,innerRedius,innerPaint);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean onTouchEvent(MotionEvent event) &#123;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_DOWN)&#123;</span><br><span class="line">            changeInnerCirclePosition(event);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_MOVE)&#123;</span><br><span class="line">            changeInnerCirclePosition(event);</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;MOVED&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        if(event.getAction()==MotionEvent.ACTION_UP)&#123;</span><br><span class="line">            innerCenterX = realWidth/2;</span><br><span class="line">            innerCenterY = realHeight/2;</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void changeInnerCirclePosition(MotionEvent e) &#123;</span><br><span class="line">        //圆的方程：（x-realWidth/2）^2 +（y - realHeight/2）^2 &lt;= outRadius^2</span><br><span class="line">        //第一步，确定有效的触摸点集</span><br><span class="line">        float X = e.getX();</span><br><span class="line">        float Y = e.getY();</span><br><span class="line">        if(mCallBack!=null)&#123;</span><br><span class="line">            mCallBack.onNavAndSpeed(X,Y);</span><br><span class="line">        &#125;</span><br><span class="line">        boolean isPointInOutCircle = Math.pow(X-realWidth/2,2) +Math.pow(Y-realHeight/2,2)&lt;=Math.pow(outRadius,2);</span><br><span class="line">        if(isPointInOutCircle)&#123;</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;inCircle&quot;);</span><br><span class="line">            //两种情况：小圆半径</span><br><span class="line">            boolean isPointInFree = Math.pow(X-realWidth/2,2) +Math.pow(Y-realHeight/2,2)&lt;=Math.pow(outRadius-innerRedius,2);</span><br><span class="line">            if(isPointInFree)&#123;</span><br><span class="line">                innerCenterX = X;</span><br><span class="line">                innerCenterY = Y;</span><br><span class="line">            &#125;else&#123;</span><br><span class="line">                //处理限制区域，这部分使用触摸点与中心点与外圆方程交点作为内圆的中心点</span><br><span class="line">                //使用近似三角形来确定这个点</span><br><span class="line">                //求出触摸点，触摸点垂足和中心点构成的直角三角形（pointTri）的直角边长</span><br><span class="line">                float pointTriX = Math.abs(realWidth/2-X);//横边</span><br><span class="line">                float pointTriY = Math.abs(realHeight/2-Y);//竖边</span><br><span class="line">                float pointTriZ = (float) Math.sqrt((Math.pow(pointTriX,2)+Math.pow(pointTriY,2)));</span><br><span class="line">                float TriSin = pointTriY/pointTriZ;</span><br><span class="line">                float TriCos = pointTriX/pointTriZ;</span><br><span class="line">                //求出在圆环上的三角形的两个直角边的长度</span><br><span class="line">                float limitCircleTriY = (outRadius-innerRedius)*TriSin;</span><br><span class="line">                float limitCircleTriX = (outRadius-innerRedius)*TriCos;</span><br><span class="line">                //确定内圆中心点的位置，分四种情况</span><br><span class="line">                if(X&gt;=realWidth/2 &amp;&amp; Y&gt;=realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2+limitCircleTriX;</span><br><span class="line">                    innerCenterY = realHeight/2+limitCircleTriY;</span><br><span class="line">                &#125;else if(X&lt;realWidth/2 &amp;&amp; Y&gt;=realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2-limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2+limitCircleTriY;</span><br><span class="line">                &#125;else if(X&gt;=realWidth/2 &amp;&amp; Y&lt;realHeight/2)&#123;</span><br><span class="line">                    innerCenterX = realWidth/2+limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2-limitCircleTriY;</span><br><span class="line">                &#125;else&#123;</span><br><span class="line">                    innerCenterX = realWidth/2-limitCircleTriX;</span><br><span class="line">                    innerCenterY= realHeight/2-limitCircleTriY;</span><br><span class="line">                &#125;</span><br><span class="line">                Log.i(&quot;TAG&quot;,&quot;inLimit&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            invalidate();</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            Log.i(&quot;TAG&quot;,&quot;notInCircle&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public void setOnNavAndSpeedListener(OnNavAndSpeedListener listener)&#123;</span><br><span class="line">        mCallBack = listener;</span><br><span class="line">    &#125;</span><br><span class="line">    public static int dip2px(Context context, float dpValue)&#123;</span><br><span class="line">        final float scale = context.getResources().getDisplayMetrics().density;</span><br><span class="line">        return (int) (dpValue*scale +0.5f);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/07/19/Android自定义View系列（二）——打造一个仿2K游戏摇杆/" data-title="Android自定义View系列（二）——打造一个仿2K游戏摇杆" data-url="http://yoursite.com/2016/07/19/Android自定义View系列（二）——打造一个仿2K游戏摇杆/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large light-green">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect red" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse purple"  data-activates="main-menu" title="menu"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer brown darken-1 darken-1">
+    
+    <div class="container">
+        <div class="row">
+            
+            <div class="social-group col m3 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="http://blog.csdn.net/u011506583" target="_blank">
+                        <i class="fa fa-2x fa-weibo"></i>
+                    </a>
+                
+                    <a class="social-link" href="https://github.com/VinceBarry" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+            </div>
+            
+
+            
+            <div class="col m9 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="http://raytaylorlin.com/" target="_blank">raytaylorism作者的技术博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/guolin_blog?viewmode=contents" target="_blank">郭霖CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lmj623565791?viewmode=contents" target="_blank">张鸿洋CSDN博客</a>
+                
+                    <a class="social-link" href="http://blog.csdn.net/lzyzsd?viewmode=contents" target="_blank">大头鬼BruseCSDN博客</a>
+                
+                    <a class="social-link" href="http://www.ima-vida.com/" target="_blank">智能硬件与互联网创业协会</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright light-green-link-context">
+        <div class="container">
+            © 2016 roadtogeek.cn, All rights reserved.
+            <p class="right" style="margin-top: 0;">本博客由 <a href="https://hexo.io">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism">raytaylorism</a></p>
+        </div>
+    </div>
+</footer>
+
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前浏览器不支持博客完整功能。如果要获得最佳体验，请点击右上角···，复制链接，并在其它浏览器打开</p>
+</div>
+
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+(function($) {
+    $(document).ready(function() {
+        // 隐藏禁用javascript（针对微信内置浏览器）的提示
+        $('.noscript').hide();
+
+        // 图片缩放效果
+        var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode');
+
+        // 给图片加上点击放大效果（materialbox插件）
+        $imgs.addClass('materialboxed')
+            .each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+        // 优化表格的显示
+        $('table').each(function() {
+            var $table = $(this);
+            // 除去多行代码的情况
+            if ($table.find('pre').length == 0) {
+                $table.addClass('responsive-table striped bordered');
+            }
+        });
+
+        // 首页幻灯片
+        $('.slider').slider({
+            indicators: true,
+            full_width: true,
+            interval: 8000
+        });
+
+        $(".button-collapse").sideNav();
+        $(".category-menu").sideNav();
+
+        // 针对gallery post
+        $('.carousel').carousel({
+            full_width: true
+        });
+        $('.carousel-control.prev').click(function() {
+            $('.carousel').carousel('prev');
+        });
+        $('.carousel-control.next').click(function() {
+            $('.carousel').carousel('next');
+        });
+
+        // 文章目录
+        $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+        // 修正文章目录的left-border颜色
+        var color = $('.table-of-contents-text').css('color');
+        $('.table-of-contents-link').css('border-left-color', color);
+
+        // 针对移动端做的优化：FAB按钮点击一下收回
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+            $('.fixed-action-btn').addClass('click-to-toggle');
+        }
+        // 回到顶部
+        $('.btn-return-top').click(function() {
+            $('body, html').animate({
+                scrollTop: 0
+            }, 500);
+        });
+
+        // 重置读书页面的Tab标签页的颜色
+        $('li.tab a').hover(function() {
+            $(this).toggleClass('text-lighten-4');
+        });
+        $('.indicator').addClass('light-green lighten-2');
+
+        
+        // 添加new标签
+        $('').append('<span class="new badge light-green"></span>');
+        
+    });
+})(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=56878365" charset="UTF-8"></script>
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<script type="text/javascript" async
+  src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+</body>
+</html>
