@@ -7,7 +7,7 @@
 
     
 
-    <title>Android 实战 | RoadToGeek技术小屋</title>
+    <title>小话java注解机制 | RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    
+    <meta property="og:title" content="小话java注解机制"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
 
     
@@ -243,42 +243,98 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
         <span class="breadcrumb">当前位置（分类目录）</span>
         
+            
+    
+    
+    <a class="breadcrumb" href="/categories/Java基础知识/">Java基础知识</a>
+
 
         
-            <a class="breadcrumb" href="/categories/Android-实战/">Android 实战</a>
+
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>小话java注解机制</h1>
+    
 
 
-    <div class="collection mt-0">
+            </div>
+            <time class="light-green-link-context" datetime="2016-07-23T02:59:28.000Z"><a href="/2016/07/23/小话java注解机制/">2016-07-23</a></time>
+
+            
+    <div class="tags-row">
         
-            <a href="/2016/07/19/Android自定义View系列（二）——打造一个仿2K游戏摇杆/" class="collection-item grey-text text-darken-1">
-                <time datetime="2016-07-19T09:23:02.000Z">2016-07-19</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                Android自定义View系列（二）——打造一个仿2K游戏摇杆
-            </a>
+            <a href="/tags/原创/" class="chip light-green">原创</a>
         
-            <a href="/2016/07/18/Android自定义View系列（一）——打造一个爱心进度条/" class="collection-item grey-text text-darken-1">
-                <time datetime="2016-07-18T12:23:18.000Z">2016-07-18</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                Android自定义View系列（一）——打造一个爱心进度条
-            </a>
-        
-            <a href="/2016/06/04/动手撸一个金馆长表情库——爬虫及异步请求/" class="collection-item grey-text text-darken-1">
-                <time datetime="2016-06-04T02:22:42.000Z">2016-06-04</time>
-                <span>&nbsp;&nbsp;&nbsp;</span>
-                动手撸一个金馆长表情库——爬虫及异步请求
-            </a>
+            <a href="/tags/Java/" class="chip light-green">Java</a>
         
     </div>
+
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#定义"><span class="section table-of-contents-text">定义</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#自定义注解"><span class="section table-of-contents-text">自定义注解</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#解析"><span class="section table-of-contents-text">解析</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <p><strong>写作原因：Java反射注解这一块一直是笔者的盲区，但是Java系开发者都知道这一块的重要性。以熟悉的Android开发为例，通过利用反射注解大神们创造了可以减少大量重复赘余代码和清晰逻辑结构的依赖注入框架。本文也是为日后的依赖注入剖析做预备。由于水平限制，一些地方可能存在疏漏，望指出。</strong></p>
+<hr>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>本章继续探讨反射注解的相关知识。上一章分享了关于反射的一些内容，相比反射注解内容少许多。直接开始正文吧。什么是注解？注解就是描述代码的东东，比如我们常见的@Override，它就是描述一个方法说明该方法是重写父类的方法。再比如@Deprecated就是说明一个方法过时了（那些调用时打横线的方法就是过时的方法，就是该注解的功劳）；还有@SuppressWarnings(“XXX”)就是用来忽略各种警告的。好了，我顺便把<strong>官方的注解</strong>也在讲定义的时候说明了。下面看看自定义注解和第三方注解（实际上就是自定义注解）。</p>
+<h2 id="自定义注解"><a href="#自定义注解" class="headerlink" title="自定义注解"></a>自定义注解</h2><p>自定义注解格式如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.METHOD)</span><br><span class="line">//作用域，包括方法、成员、构造函数等几乎所有地方</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">//生命周期，注明注解起效果的时间，SOURCE（源码阶段），CLASS（编译阶段），RUNTIME（运行阶段）</span><br><span class="line">@Inherited</span><br><span class="line">@Documented</span><br><span class="line">public @interface Description &#123;</span><br><span class="line">    String value();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面四个称为元注解（注解的注解），功能见注释，主要说明一下@Inherited，如果在一个父类中某个地方使用该注解，那么继承该父类的子类中该注解也会起效果。@Documented用于在javadoc中为注解输出信息。注解中只有一个成员时最好用value作为成员名，多个时随意，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public @interface Description&#123;</span><br><span class="line">	String desc();//成员以无参无异常的方式声明</span><br><span class="line">	String author();</span><br><span class="line">	int age() default 18;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意成员类型包括基本类型，String，Class，Annotation，Enumeration。也可以没有成员，那叫标示注解。<br>使用自定义注解时在作用域上方写，格式如下：<br><code>@Description(desc=&quot;am&quot;,author=&quot;Mooc&quot;,age=18)</code></p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>个人感觉解析注解是注解最有趣的地方，利用好这个东西可以实现许多代码的优化，具体实现是通过反射进行的，如果对于反射不清楚的可以参考上一篇文章。下面我们写一个注解解释器解释方法上面的注解，代码见下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class DescriptionWorker &#123;</span><br><span class="line">    public static void work()&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Class c = Class.forName(&quot;com.vince.reflect.ClassInfo&quot;);</span><br><span class="line">            Method[] ms = c.getMethods();</span><br><span class="line">            for(Method m:ms)&#123;</span><br><span class="line">                boolean isExist = m.isAnnotationPresent(Description.class);</span><br><span class="line">                if(isExist)&#123;</span><br><span class="line">                    Description d = (Description) m.getAnnotation(Description.class);</span><br><span class="line">                    System.out.println(d.value());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (ClassNotFoundException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>先获取方法然后判断类内部是否有注解，如果有将方法上的注解取出将值打印出来，这就是方法解释器的运行原理。基本都是反射的原理，主要要注意<code>isAnnotationPresent(Description.class);</code>和<code>m.getAnnotation(Description.class)</code>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于对注解价值的认识得结合一些实际代码来分析，之后博主将会结合实战剖析重新认识注解。</p>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2016/07/23/小话java注解机制/" data-title="小话java注解机制" data-url="http://yoursite.com/2016/07/23/小话java注解机制/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
 
 
 </div>
