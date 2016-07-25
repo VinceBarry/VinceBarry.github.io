@@ -7,7 +7,7 @@
 
     
 
-    <title>Linux菜鸟旅程足迹系列 | RoadToGeek技术小屋</title>
+    <title>小话java多线程机制 | RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Linux菜鸟旅程足迹系列"/>
+    <meta property="og:title" content="小话java多线程机制"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
 
     
@@ -250,7 +250,7 @@
             
     
     
-    <a class="breadcrumb" href="/categories/Linux学习/">Linux学习</a>
+    <a class="breadcrumb" href="/categories/Java基础知识/">Java基础知识</a>
 
 
         
@@ -267,55 +267,40 @@
             <div class="article-title">
                 
     
-        <h1>Linux菜鸟旅程足迹系列</h1>
+        <h1>小话java多线程机制</h1>
     
 
 
             </div>
-            <time class="light-green-link-context" datetime="2016-07-11T05:14:19.000Z"><a href="/2016/07/11/Linux菜鸟旅程足迹系列/">2016-07-11</a></time>
+            <time class="light-green-link-context" datetime="2016-07-25T12:09:02.000Z"><a href="/2016/07/25/小话java多线程机制/">2016-07-25</a></time>
 
             
     <div class="tags-row">
         
             <a href="/tags/原创/" class="chip light-green">原创</a>
         
-            <a href="/tags/Linux/" class="chip light-green">Linux</a>
+            <a href="/tags/Java/" class="chip light-green">Java</a>
         
     </div>
 
 
             <div class="toc light-green-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-1"><a class="section table-of-contents-link" href="#目录"><span class="section table-of-contents-text">目录</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Linux基础"><span class="section table-of-contents-text">Linux基础</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#系统管理"><span class="section table-of-contents-text">系统管理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#软件包管理"><span class="section table-of-contents-text">软件包管理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#系统管理高级"><span class="section table-of-contents-text">系统管理高级</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Shell编程"><span class="section table-of-contents-text">Shell编程</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#网络服务"><span class="section table-of-contents-text">网络服务</span></a></li></ol></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#线程初识"><span class="section table-of-contents-text">线程初识</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#创建"><span class="section table-of-contents-text">创建</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#生命周期"><span class="section table-of-contents-text">生命周期</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#常见API"><span class="section table-of-contents-text">常见API</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#线程数据共享问题"><span class="section table-of-contents-text">线程数据共享问题</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#解决方案"><span class="section table-of-contents-text">解决方案</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
 </div>
 
 
             <div class="entry light-green-link-context">
-                <p><strong>前言：深入学习Android系统绕不开对Linux的学习，所以学会基本的Linux的使用十分有必要，对于之后的Android的源码学习具有重要的价值，这是一整个Linux系列的学习笔记，感谢欢迎大家的阅读。如果有疏漏或是错误的地方欢迎指出，谢谢！</strong></p>
-<p><img src="http://bizhi.zhuoku.com/wall/20061112/linux/linux02.jpg" alt=""></p>
-<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><hr>
-<h2 id="Linux基础"><a href="#Linux基础" class="headerlink" title="Linux基础"></a>Linux基础</h2><p><a href="http://roadtogeek.cn/2016/07/11/Linux%E8%8F%9C%E9%B8%9F%E6%97%85%E7%A8%8B%E8%B6%B3%E8%BF%B9%E2%80%94%E2%80%94Linux%E7%AE%80%E4%BB%8B/" target="_blank" rel="external">Linux菜鸟旅程足迹——Linux简介</a></p>
-<p><a href="http://roadtogeek.cn/2016/07/11/Linux%E8%8F%9C%E9%B8%9F%E6%97%85%E7%A8%8B%E8%B6%B3%E8%BF%B9%E2%80%94%E2%80%94Shell%E5%9F%BA%E7%A1%80/" target="_blank" rel="external">Linux菜鸟旅程足迹——Shell基础</a></p>
-<p>Linux菜鸟旅程足迹——Vim、Emacs的使用</p>
-<h2 id="系统管理"><a href="#系统管理" class="headerlink" title="系统管理"></a>系统管理</h2><p>用户管理、进程管理</p>
-<p>系统和服务管理</p>
-<p>其他系统管理</p>
-<p>磁盘与硬件管理</p>
-<p>磁盘管理</p>
-<p>文件与目录管理及安全</p>
-<p>强制位与粘贴位、隐藏属性、访问控制列表</p>
-<p>文件的压缩与解压缩</p>
-<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><p>RPM</p>
-<p>yum</p>
-<h2 id="系统管理高级"><a href="#系统管理高级" class="headerlink" title="系统管理高级"></a>系统管理高级</h2><p>逻辑卷管理</p>
-<p>磁盘阵列</p>
-<p>磁盘配额及虚拟技术</p>
-<h2 id="Shell编程"><a href="#Shell编程" class="headerlink" title="Shell编程"></a>Shell编程</h2><p>Shell编程基础</p>
-<p>流程控制、函数及调试</p>
-<h2 id="网络服务"><a href="#网络服务" class="headerlink" title="网络服务"></a>网络服务</h2><p>网络接口配置</p>
-<p>DHCP服务及配置</p>
-<p>Samba服务器的设置</p>
-<p>WWW服务器的设置</p>
-<p>FTP服务器的设置</p>
+                <p><strong>写作原因：对于并发编程一块，是编程中的一道坎，对于它的理解有一定难度。所以本文作者只能略作皮毛分享，对于深层学习仍在途中。希望读者能够多多交流</strong></p>
+<h2 id="线程初识"><a href="#线程初识" class="headerlink" title="线程初识"></a>线程初识</h2><p>先了解一下线程、进程、并发、并行的概念。进程顾名思义，就是进行中的程序，线程是进程中可以独立并发执行的基本单元。进程中包括内存和线程两块，内存是存储资源，线程是进程内部各个功能的分载体，进程内所有线程都享有进程的共享内存，此外线程有各自的独立工作内存。这些细节在下面的锁机制中进行分析。</p>
+<h2 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h2><p>java中创建一个线程并不难，有下面两种方式：直接使用Thread创建，实现Runnable接口然后注入Thread中创建。由于相对简单，这里不多加阐述。</p>
+<h2 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h2><p>一个线程包括下面几个生命周期：新建、可运行（启动线程）、运行（系统调度）、阻塞/等待、消亡（退出run）。新建一个线程就是指我们写完一个线程并将它实例化对象的过程，可运行其实就是使用start()方法的过程，注意调用start()方法后不一定开始运行，因为线程的运行受到系统的调度。运行过程是线程真正运行的过程，当调用sleep()、suspend()、wait()时或者线程执行IO操作时会让出CPU中止执行，进入阻塞和等待过程；当run()方法结束后进入死亡状态。</p>
+<h2 id="常见API"><a href="#常见API" class="headerlink" title="常见API"></a>常见API</h2><p>这里介绍几个常用的API：<br>类方法：currentThread()获取当前类对象、yield()线程礼让、sleep()线程休眠<br>setDaemon():设置守护线程（幽灵）。守护线程的特点：当其它线程中止时，守护线程自动消亡。</p>
+<h2 id="线程数据共享问题"><a href="#线程数据共享问题" class="headerlink" title="线程数据共享问题"></a>线程数据共享问题</h2><p>下面开始阐述线程同步的问题。线程同步很重要，因为一个进程内多个线程的数据经常需要共享使用。然而如果在不知道任何关于线程同步的操作的情况下直接进行线程间数据的共享，那样是很危险的。为什么不能直接进行线程之间的数据共享呢？我们都知道每个线程有它们独立的工作内存，这说明线程操作共享内存是间接的，也就是说某个线程对主工作内存刷新后另一个工作内存可能不知道，那么你直接操作拿到的数据可能就过时了，这样共享就失败了。此外，由于多个线程可能同时进行，内部操作某个共有的变量时顺序可能会出现多种不同的顺序，即指令重排序问题。比如说A线程，B线程，如果A线程和B线程内部多次操作C变量，这时就会出现混乱的排序问题。如果解决了以上两个问题就解决了线程数据共享问题。下面引入synchronized关键字。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>java提供了锁机制（mutex），每次只允许一个线程访问一块共享内存。对于加锁有两种形式，一种是使用代码块对某个共享的变量进行加锁，另一种是直接对方法进行加锁，对方法进行加锁实际上是以成员方法所在的对象本身作为对象锁。下面通过一个例子来认识synchronized关键字：<br>Data类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class Data &#123;</span><br><span class="line">    static int i;</span><br><span class="line">    public static synchronized void add()&#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            Thread.sleep(500);</span><br><span class="line">        &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        i++;</span><br><span class="line">        System.out.println(&quot;i:&quot;+i);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>ThreadA:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public class ThreadA extends Thread&#123;</span><br><span class="line">    private Data data;</span><br><span class="line">    public ThreadA(String name,Data data)&#123;</span><br><span class="line">        super(name);</span><br><span class="line">        this.data = data;</span><br><span class="line">    &#125;</span><br><span class="line">    public void run()&#123;</span><br><span class="line">        while(true)&#123;</span><br><span class="line">            data.add();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Main.java:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args)&#123;</span><br><span class="line">        for(int i=0;i&lt;10;i++)&#123;</span><br><span class="line">            Data data = new Data();</span><br><span class="line">            new ThreadA(&quot;Thread&quot;+i,data).start();</span><br><span class="line">        &#125;</span><br><span class="line">        Data data = new Data();</span><br><span class="line">        while(true)&#123;</span><br><span class="line">            data.add();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Main中新建了十个子线程，每个子线程中都可以执行add()方法使i变量增大，我们使用synchronized关键字修饰add()静态方法，就是表明Data类的类实例被用作对象锁了。也就是data被锁住了，其它线程操作data时只能一次一个操作。所以如果你将synchronized关键字加在run()方法上就是无效的，因为这时锁住的对象是线程对象，线程对象是多变的，而非共享的区域。使用synchronized后线程执行互斥代码时大致过程是这样的：先获得互斥锁，然后清空工作内存，从主内存中拷贝变量的最新副本，执行代码，然后将更改后的共享变量的值刷新到主内存中，最后释放互斥锁。这样就实现了线程间共享数据逻辑。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于多线程这一大块是硬骨头，很难真正把它啃下来。文中还有许多地方没有涉及，而且由于是个人理解可能存在疏漏，后续在进行Android线程剖析时再做补充。</p>
 
             </div>
         </div>
@@ -329,7 +314,7 @@
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/07/11/Linux菜鸟旅程足迹系列/" data-title="Linux菜鸟旅程足迹系列" data-url="http://yoursite.com/2016/07/11/Linux菜鸟旅程足迹系列/"></div>
+                <div class="ds-thread" data-thread-key="2016/07/25/小话java多线程机制/" data-title="小话java多线程机制" data-url="http://yoursite.com/2016/07/25/小话java多线程机制/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
