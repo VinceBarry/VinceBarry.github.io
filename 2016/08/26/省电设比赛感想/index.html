@@ -7,7 +7,7 @@
 
     
 
-    <title>Android二维码扫描开发（二）：YUV图像格式详解 | RoadToGeek技术小屋</title>
+    <title>省电设比赛感想 | RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Android二维码扫描开发（二）：YUV图像格式详解"/>
+    <meta property="og:title" content="省电设比赛感想"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋（少年，别再收藏文章了！）"/>
 
     
@@ -264,7 +264,7 @@
             
     
     
-    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a>
+    <a class="breadcrumb" href="/categories/心情随笔/">心情随笔</a>
 
 
         
@@ -281,19 +281,19 @@
             <div class="article-title">
                 
     
-        <h1>Android二维码扫描开发（二）：YUV图像格式详解</h1>
+        <h1>省电设比赛感想</h1>
     
 
 
             </div>
-            <time class="light-green-link-context" datetime="2016-05-03T05:11:34.000Z"><a href="/2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/">2016-05-03</a></time>
+            <time class="light-green-link-context" datetime="2016-08-26T12:07:31.000Z"><a href="/2016/08/26/省电设比赛感想/">2016-08-26</a></time>
 
             
     <div class="tags-row">
         
-            <a href="/tags/Android/" class="chip light-green">Android</a>
+            <a href="/tags/原创/" class="chip light-green">原创</a>
         
-            <a href="/tags/转载/" class="chip light-green">转载</a>
+            <a href="/tags/心情/" class="chip light-green">心情</a>
         
     </div>
 
@@ -304,62 +304,20 @@
 
 
             <div class="entry light-green-link-context">
-                <p>上一篇中，我们了解了Android二维码扫描开发的实现思路和原理。其中从相机里获取到的数据是NV21格式的，NV21属于YUV图像，当然有些外置摄像头会返回其他YUV格式的数据，那么我们就来看一看，到底什么是YUV图像。</p>
-<p>RGB图像大家都了解，RGB图像分为了三个颜色分量，R红色分量，G绿色分量，B蓝色分量。而YUV图像，也是分为了三个分量，Y亮度分量，用来表示明亮度，也叫灰阶值，U分量和V分量是色值分量，用来表示图像色彩与饱和度，其中U分量也叫Cb，表示的图像蓝色偏移量，V分量也叫Cr，用来表示图像红色部分偏移量，所以YUV有时也写作YCbCr。</p>
-<p>YUV图像把亮度和色度分开了，避免了亮度和色度的相互干扰，可以在降低色度采样率的情况下，保持图像的视觉质量。</p>
-<p><strong>[采样比率]</strong></p>
-<p>下面我们来看看YUV图像的采样方式，是如何改变色度采样率的。YUV图像有以下几种采样比例：</p>
-<p>444采样中，Y:U:V=4:4:4，每一个Y对应一个UV，水平和垂直方向都保持原数据；</p>
-<p>422采样中，Y:U:V=4:2:2，每两个Y共用一个UV，水平方向采用2:1采样，垂直方向保持原数据；</p>
-<p>411采样中，Y:U:V=4:1:1，每四个Y共用一个UV，水平方向采用4:1采样，垂直方向保持原数据；</p>
-<p>420采样中，Y:UV=4:2或Y:U:V=4:1:1，每四个Y共用一个UV，水平方向和垂直方向都采用2:1采样。</p>
-<p>如果用×表示Y数据，用〇表示UV数据，那么下面几种采样如下图所示：<br><img src="http://www.codernote.top/static/blog/file/2016/03/YUV%E9%87%87%E6%A0%B7_20160324141159.png" alt="caiyang"></p>
-<p><strong>[存储方式]</strong></p>
-<p>YUV数据的存储方式分为打包的(packed)和平面的(planar)。</p>
-<p>packed存储方式是，每一组YUV作为一个连续存储，每个组后面跟着另外一组，常见的有UYVY、YUYV等类型，以YUYV(属于YUV422)为例，储存方式如下图所示：<br><img src="http://www.codernote.top/static/blog/file/2016/03/YUYV422_20160324144247.png" alt="cunchu1"></p>
-<p>从上图中可以看出，两个相邻的Y共用一组UV，Y和UV是交错储存的。</p>
-<p>planar储存方式是，先是连续的Y，然后是连续的UV，UV可以交错也可以不交错。以YUV420为例，YUV420分为YUV420P和YUV420SP,区别是YUV420P中U和V是分开连续存储的，YUV420SP中，UV是交错存储的。如下图所示：</p>
-<p><img src="http://www.codernote.top/static/blog/file/2016/03/YUYV420_20160324150343.png" alt="cunchu2"></p>
-<p><strong>[常见YUV格式]</strong></p>
-<ul>
-<li><p>YUYV，YUYV属于YUV422，根据上面的图像也可以看出来，Y和UV是按照(YUYV)(YUYV)(YUYV)…的格式交错存储的。</p>
-</li>
-<li><p>UYVY，UYVY也是YUV422图像，和YUYV类似，不过是Y和UV的存储顺序按照(UYVY)(UYVY)(UYVY)…的顺序存储的。</p>
-</li>
-<li><p>YUV422P，属于YUV422图像，其中Y、U、V分别连续存储。</p>
-</li>
-<li><p>NV21和NV12,这两种格式都属于YUV420SP图像，Y连续存储，然后是交错的UV,二者区别是，NV21是V在U前，NV12是U在V前。</p>
-</li>
-<li><p>YU12和YV12，这两种格式属于YUV420P图像，Y、U、V分别连续存储。区别是YU12是Y在前，其次是U，最后是V；而YV12是Y在前，其次是V，最后是U。</p>
-</li>
-<li><p>I420，即YU12图像。</p>
-</li>
-</ul>
-<p><strong>[YUV图像处理]</strong></p>
-<ol>
-<li><p>YUV422和YUV420之间的转换</p>
-<p>YUV422转YUV420，需要在垂直方向上隔行采样，只保留奇数行或偶数行的UV数据。YUV420转YUV422，需要在垂直方向上，将一行拷贝成两行。</p>
-</li>
-<li><p>YUV转RGB</p>
-<p>YUV和RGB的计算方法，用矩阵公式表示的话，如下图所示：</p>
-<p><img src="http://www.codernote.top/static/blog/file/2016/03/YUV%E8%BD%ACRGB_20160324162455.png" alt="matrix"></p>
-</li>
-</ol>
-<p>如果用算数公式表示的话如下所示：</p>
-<p>RGB转YUV:</p>
-<pre><code>Y = 0.299 R + 0.587 G + 0.114 B
-
-U = - 0.1687 R - 0.3313 G + 0.5 B + 128
-
-V = 0.5 R - 0.4187 G - 0.0813 B + 128
-</code></pre><p>YUV转RGB</p>
-<pre><code>R = Y + 1.402 (V - 128)
-
-G = Y - 0.34414 (U - 128) - 0.71414 (V - 128)
-
-B = Y + 1.772 (U - 128)
-</code></pre><p>注意，这里只是单个像素点的转换方法，图像里的批量转换，还需根据YUV的储存格式进行考虑。</p>
-<p>YUV图像就先讲解到这里，下一篇我将对YUV图像和RGB图像的亮度计算，以及zxing的使用方法进行介绍。</p>
+                <p>这个暑假感觉也干了不少事情，但是由于自己太懒也没有记录下自己学会的东西，导致博客拖了很长时间都没有更新……最近一段时间忙着完成省电设，最后结果出来了，拿了个二等奖，已经很满足了，毕竟团队真正动工的时间也就三天……完成后有感而发，因此写下这篇博客来记录一下自己的心得，顺便作为大二生涯的开篇。下面开始记录自己的心情吧。</p>
+<p>先说说省电设。其实省电设从五月就开始了，然而我们团队（和另外两位硬件大佬）由于各有各的事情要干一直没有动工，可以说项目一直卡着没有前行。到了七月开始提出idea，但是团队还是没有动手，这之间我断断续续学了一些关于TCP/IP通信的知识，并不系统，然后大概画了一下APP的基本UI框架，其它的什么都没干了。一直这样拖着拖着，到了8月20号我和小伙伴们突然意识到省电设快要结束了，于是回到学校，又拖了一个白天，然后我就和两位大佬开始我们的极限挑战了。当时一开始我是想放弃了，毕竟真的没有试过在这么短的时间内完成一个APP的开发过程，最短的一次也有一周时间，后来脑子里想的就是做多少是多少吧。在这三天三夜里，我先在脑子里完成了APP的UI设计，然后开始了逻辑的完成实现和与硬件的对接通信。这个过程遇到了许多坑，比如串口程序经常跪掉，比如Socket所在线程紊乱等等问题。23号晚上一晚上都没有闭眼，一直在奋战着，第二天才睡了3个多小时。然而也没觉得有什么，就一直干了下去，直到24号晚上理想中要完成的CO报警器都没调试成功……其实到现在也不知bug在哪……到了凌晨我们才停止项目的开发开始拍视频。这里不得不说一下硬件小伙伴真心累，24号下午先是由于接反了CO检测模块导致模块烧毁而得千里迢迢跑去买，然后又因为电源问题他们得冒着“生命危险”去使用220V的强电……不得不感慨还是纯粹逻辑性的开发好啊……继续回到准备阶段，到了12点半终于拍完了视频，开始剪辑视频了，然而我的本本竟然TMD坏了！！！关键时刻掉链子，然后又开始修电脑之旅……差不多搞到2点才开始剪，本来还要拍CO报警的结果因为破电脑放弃了这个功能。后面拖着沉重的双眼开始剪辑视频，搞到4点才完成了剪辑。接着又跑到队友宿舍门口用着一台快要没粉的打印机（想象一下一边打印一边摇打印机的场景）打印报告，真的搞到了5点半才完成。接着回宿舍洗了个澡就准备去华工了。在去华工的车上真的是一躺下就完全变成死猪了。</p>
+<p>到了华工后就是答辩的问题了。开始时有点紧张，毕竟是第一次参加这种比赛，又加上对自己极限操作完成的作品没有信心。进入答辩现场后，一开始是让我们调试，一切都像测试一样，启动软硬件，SmartLink，然后连接，图表和仪表开始动态刷新，测试一下控制功能，没什么问题。然后我们断掉电。评委过来我们这边，我们开始讲解操作，到了评委叫我们展示APP显示空气数据一环时，突然间给哑住了，不刷新！！！NTM逗我吧……我开始方了，大佬向评委们解释是网络问题。然后后面关于硬件相关的东西我就全听不进去了（好吧听进去了也不知是什么鬼……）直到评委叫我们再秀一波关于空调控制的操作时，我才意识到。这次没什么问题。然后我们走出了现场，我觉得有点遗憾，毕竟测试时一直没问题的东西进去了秀一波失败了，而且报警功能没时间展示，感觉自己拖了后腿。最后结果出来还是很意外的，觉得二等奖这个名次对得起这三天的付出，逃……</p>
+<p>现在总结一下比赛带给我的收获吧……</p>
+<p>第一、这是我人生中第一次通宵的经历，竟然还通宵了两天……有一次这样的体验就够，不能再来一次了，这样对身体真心不好。比赛结束后我竟然睡了整整19个小时，自己都被吓到了……</p>
+<p>第二、和两个硬件的小伙伴更加熟悉了，人在江湖混，肯定有多从别人身上收获一些东西，比如大佬从底层的角度帮我纠正了之前对于线程同步的一些误区……交友有利，交比自己出色的人更加能够帮助自己提升。</p>
+<p>第三、实现了一次物联网开发。以后如果有这方面的需求的开发就容易一些，虽然这次的代码没什么价值了……</p>
+<p>第四、逼迫自己挑战了极限。在这么短的时间内开发首先要战胜的是自己觉得不可能的心态，然后才是那些鬼bug。比如之前一直不知道怎么写通信协议一块，当真正去做的时候才发现也就那样。Just do it！</p>
+<p>第五、极限挑战下面才能真正考察一个人的能力。你越无意识反应出来的代码才是你真正水平下的代码，像我这次比赛写的代码，毫无复用性可言，简直就是功能的拼凑，而且有些功能的选择并不是最优方案。所以要真正提高代码能力一定要打好基础，让基础性的东西快速反应从而拒绝垃圾代码的出现。</p>
+<p>关于比赛还有其他的的收获，在这里就不一一写出了。下面放一波这次比赛的记录图片。多图预警（先放一波APP）：<br><img src="http://7xszli.com1.z0.glb.clouddn.com/device-2016-08-24-135511.png" alt=""><br><img src="http://7xszli.com1.z0.glb.clouddn.com/device-2016-08-24-135527.png" alt=""><br><img src="http://7xszli.com1.z0.glb.clouddn.com/device-2016-08-24-135715.png" alt=""><br><img src="http://7xszli.com1.z0.glb.clouddn.com/device-2016-08-24-135732.png" alt=""></p>
+<p>再放一波硬件美图：<br><img src="http://7xszli.com1.z0.glb.clouddn.com/mmexport1472070886374.jpg" alt=""><br><img src="http://7xszli.com1.z0.glb.clouddn.com/IMG_20160824_233013.jpg" alt=""><br><img src="http://7xszli.com1.z0.glb.clouddn.com/microMsg.1472039722389.jpg" alt=""></p>
+<p>最后一波对大二的希冀：<br>不论过去，只看未来！<br><img src="http://i0.sinaimg.cn/ty/k/p/2012-05-20/U6594P6T12D6068779F44DT20120520152335.JPG" alt=""></p>
+<p><img src="http://images.sportsworldnews.com/data/thumbs/full/31800/600/0/0/0/kevin-durant.jpg" alt=""></p>
+<p><img src="http://cdn.sneakernews.com/wp-content/uploads/2016/07/kevin-durant-warriors.jpg" alt=""></p>
 
             </div>
         </div>
@@ -373,7 +331,7 @@ B = Y + 1.772 (U - 128)
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/" data-title="Android二维码扫描开发（二）：YUV图像格式详解" data-url="http://yoursite.com/2016/05/03/Android二维码扫描开发（二）：YUV图像格式详解/"></div>
+                <div class="ds-thread" data-thread-key="2016/08/26/省电设比赛感想/" data-title="省电设比赛感想" data-url="http://yoursite.com/2016/08/26/省电设比赛感想/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
