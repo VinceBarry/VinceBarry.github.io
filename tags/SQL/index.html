@@ -7,7 +7,7 @@
 
     
 
-    <title>Linux菜鸟旅程足迹——Shell基础 | RoadToGeek技术小屋</title>
+    <title>SQL | RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Linux菜鸟旅程足迹——Shell基础"/>
+    
     <meta property="og:site_name" content="RoadToGeek技术小屋（Learner、Thinker、Pacer）"/>
 
     
@@ -281,119 +281,30 @@
 
     <main>
         <div class="container main-container">
-    <nav class="page-nav hide-on-small-only">
+    
+
+<nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
-        <span class="breadcrumb">当前位置（分类目录）</span>
-        
-            
-    
-    
-    <a class="breadcrumb" href="/categories/Linux学习/">Linux学习</a>
-
-
+        <span class="breadcrumb">当前位置（标签）</span>
         
 
+        
+            <a class="breadcrumb" href="/tags/SQL/">SQL</a>
         
     </div>
 </nav>
 
-<article>
-    <div class="card">
-        <div class="card-content">
-            
-
-            <div class="article-title">
-                
-    
-        <h1>Linux菜鸟旅程足迹——Shell基础</h1>
-    
 
 
-            </div>
-            <time class="light-green-link-context" datetime="2016-07-11T05:25:26.000Z"><a href="/2016/07/11/Linux菜鸟旅程足迹——Shell基础/">2016-07-11</a></time>
-
-            
-    <div class="tags-row">
+    <div class="collection mt-0">
         
-            <a href="/tags/原创/" class="chip light-green">原创</a>
-        
-            <a href="/tags/Linux/" class="chip light-green">Linux</a>
+            <a href="/2016/10/12/Python操作MySQL基本环境搭建及增删改查实现/" class="collection-item grey-text text-darken-1">
+                <time datetime="2016-10-12T14:36:39.000Z">2016-10-12</time>
+                <span>&nbsp;&nbsp;&nbsp;</span>
+                Python操作MySQL基本环境搭建及增删改查实现
+            </a>
         
     </div>
-
-
-            <div class="toc light-green-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Shell的定义"><span class="section table-of-contents-text">Shell的定义</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#执行命令的顺序"><span class="section table-of-contents-text">执行命令的顺序</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#控制台和终端"><span class="section table-of-contents-text">控制台和终端</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#命令和文件名的自动补齐功能"><span class="section table-of-contents-text">命令和文件名的自动补齐功能</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#历史命令"><span class="section table-of-contents-text">历史命令</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#命令别名"><span class="section table-of-contents-text">命令别名</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#通配符和文件名变量"><span class="section table-of-contents-text">通配符和文件名变量</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#输入、输出重定向"><span class="section table-of-contents-text">输入、输出重定向</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#管道"><span class="section table-of-contents-text">管道</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#tee"><span class="section table-of-contents-text">tee</span></a></li></ol>
-</div>
-
-
-            <div class="entry light-green-link-context">
-                <h3 id="Shell的定义"><a href="#Shell的定义" class="headerlink" title="Shell的定义"></a>Shell的定义</h3><p>Shell就是命令解释器，是用户使用操作系统的接口，是命令语言、命令解释器和程序设计语言的统称。Linux使用bash作为默认的Shell，除此以外Linux还有其他的Shell如C Shell等。Shell独立于Linux的内核。</p>
-<h3 id="执行命令的顺序"><a href="#执行命令的顺序" class="headerlink" title="执行命令的顺序"></a>执行命令的顺序</h3><p>①别名；②关键字；③函数；④内部命令；⑤外部命令或外部脚本</p>
-<h3 id="控制台和终端"><a href="#控制台和终端" class="headerlink" title="控制台和终端"></a>控制台和终端</h3><p>控制台是直接和计算机相连接的原生设备，终端是软件的概念。在RHEL中有6个虚拟控制台和一个真实控制台。</p>
-<p>Shell命令行的格式：command [flags] [arguments1] [arguments2]<br>…</p>
-<p><strong>注解：具体的只需根据详细的命令进行比对即可知道每个地方的具体意义。help命令在这里就不阐述了，可以直接查阅相关命令手册。</strong></p>
-<h3 id="命令和文件名的自动补齐功能"><a href="#命令和文件名的自动补齐功能" class="headerlink" title="命令和文件名的自动补齐功能"></a>命令和文件名的自动补齐功能</h3><p>使用tab键即可直接不全命令和文件名和目录名。</p>
-<h3 id="历史命令"><a href="#历史命令" class="headerlink" title="历史命令"></a>历史命令</h3><ol>
-<li>history</li>
-<li>UP和DOWN键分别可以查阅历史命令</li>
-</ol>
-<h3 id="命令别名"><a href="#命令别名" class="headerlink" title="命令别名"></a>命令别名</h3><p>alias 别名=‘待替换的终端命令’</p>
-<p>直接执行alias会列出目前所有的别名设置</p>
-<h3 id="通配符和文件名变量"><a href="#通配符和文件名变量" class="headerlink" title="通配符和文件名变量"></a>通配符和文件名变量</h3><p><code>*</code> 匹配任何字符和任何数目的字符组合</p>
-<p><code>？</code> 匹配任何单个字符</p>
-<p><code>[]</code> 匹配任何包含在括号中的单字符</p>
-<h3 id="输入、输出重定向"><a href="#输入、输出重定向" class="headerlink" title="输入、输出重定向"></a>输入、输出重定向</h3><p>输入、输出重定向是指将系统默认的输入、输出设备（分别为键盘和终端屏幕）重新定义到其它来源或去向（文件）。最基本的用法是将它们重新定向到一个文件，从一个文件获取输入，输出到另一个文件中。</p>
-<p>作用：解决多次输入信息和处理输出信息的问题。</p>
-<p>&lt;输入重定向<br>如：<br><code>#wc &lt; file //返回文件包含的行数、单词数和字符数</code></p>
-<p><code>&gt;</code>输出重定向</p>
-<p><code>&gt;&gt;</code>追加重定向</p>
-<p><code>2&gt;</code>错误输出重定向</p>
-<p>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#cat &gt;file</span><br><span class="line">hello</span><br><span class="line">//将hello输出到file文件中</span><br><span class="line">#cat &gt;&gt;file</span><br><span class="line">helloworld</span><br><span class="line">//将helloworld追加到file文件中</span><br><span class="line">#ls file 2&gt;error.txt</span><br><span class="line">//如果file不存在那么错误信息将会保存到error.txt中</span><br><span class="line">#cat error.txt</span><br><span class="line">//上面的错误信息可以通过这行命令实现将错误信息输出到终端屏幕上</span><br></pre></td></tr></table></figure></p>
-<p>双重输出重定向</p>
-<p>1.将正确和错误输出结果分别输出到不同地方：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#ls -l 2&gt;error.txt &gt;result.txt</span><br><span class="line">#ls -l 2&gt;&gt;error.txt &gt;&gt;result.txt</span><br></pre></td></tr></table></figure></p>
-<p>2.将错误和正确输出结果输出到同一个地方：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#ls -l &amp;&gt;result.txt</span><br><span class="line">#ls -l &amp;&gt;&gt;result.txt</span><br></pre></td></tr></table></figure></p>
-<h3 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h3><p>将一个程序或命令的输出作为另一个程序或命令的输入<br>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ztg.txt | grep &quot;ztg&quot; |wc -l</span><br></pre></td></tr></table></figure></p>
-<p>将cat命令的输出作为grep命令的输入，grep命令的输出作为wc的输入</p>
-<h3 id="tee"><a href="#tee" class="headerlink" title="tee"></a>tee</h3><p>功能：将标准输入设备（着重）读取数据将其内容输出到标准输出设备和保存成文件。</p>
-<p><strong>注解：重定向在Windows批处理命令中也可以使用</strong></p>
-<p>欢迎阅读下一篇笔记——Vim、Emacs的使用</p>
-
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-    <section id="comment">
-        <div class="card">
-            <div class="card-content">
-                <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/07/11/Linux菜鸟旅程足迹——Shell基础/" data-title="Linux菜鸟旅程足迹——Shell基础" data-url="http://yoursite.com/2016/07/11/Linux菜鸟旅程足迹——Shell基础/"></div>
-
-                <script type="text/javascript">
-                    console.log(document.querySelector('.ds-thread'));
-                    var duoshuoQuery = {
-                        short_name: 'roadtogeek'
-                    };
-                    (function() {
-                        var ds = document.createElement('script');
-                        ds.type = 'text/javascript';
-                        ds.async = true;
-                        ds.src = (document.location.protocol == 'https:'
-                            ? 'https:'
-                            : 'http:') + '//static.duoshuo.com/embed.js';
-                        ds.charset = 'UTF-8';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-                    })();
-                </script>
-                <!-- Duoshuo Comment END -->
-            </div>
-        </div>
-    </section>
-
 
 
 </div>
