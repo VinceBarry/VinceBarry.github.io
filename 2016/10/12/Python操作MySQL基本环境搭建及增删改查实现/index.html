@@ -179,32 +179,8 @@
         
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Linux学习/">
-                    Linux学习 <span class="right">3 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-0" collapse-level="0">
                 <a class="no-padding" href="/categories/Python基础知识/">
                     Python基础知识 <span class="right">2 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Android快速开发/">
-                    Android快速开发 <span class="right">4 篇</span></a>
-                </a>
-            </li>
-
-        
-
-            <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/学习技巧/">
-                    学习技巧 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -219,8 +195,32 @@
         
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Android-Studio/">
-                    Android-Studio <span class="right">1 篇</span></a>
+                <a class="no-padding" href="/categories/Linux学习/">
+                    Linux学习 <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Android快速开发/">
+                    Android快速开发 <span class="right">4 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/计算机网络/">
+                    计算机网络 <span class="right">2 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/学习技巧/">
+                    学习技巧 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -235,8 +235,8 @@
         
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/Android源码阅读/">
-                    Android源码阅读 <span class="right">1 篇</span></a>
+                <a class="no-padding" href="/categories/Android-Studio/">
+                    Android-Studio <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -251,8 +251,8 @@
         
 
             <li class="collapse-level-0" collapse-level="0">
-                <a class="no-padding" href="/categories/计算机网络/">
-                    计算机网络 <span class="right">1 篇</span></a>
+                <a class="no-padding" href="/categories/Android源码阅读/">
+                    Android源码阅读 <span class="right">1 篇</span></a>
                 </a>
             </li>
 
@@ -345,7 +345,8 @@
 <h2 id="使用pymysql包"><a href="#使用pymysql包" class="headerlink" title="使用pymysql包"></a>使用pymysql包</h2><p>下面就是正是使用Python来操作mysql的第一步了。打开cmd，直接输入pip install PyMySql，等它安装完毕就OK了，就是这么简单。</p>
 <h2 id="利用Mysql-WorkBench可视化数据库"><a href="#利用Mysql-WorkBench可视化数据库" class="headerlink" title="利用Mysql WorkBench可视化数据库"></a>利用Mysql WorkBench可视化数据库</h2><p>对于数据库，如果用命令行的话有时可能会比较麻烦，这时可以考虑使用GUI界面代替CLI。官方提供了MySql WorkBench（<a href="http://dev.mysql.com/downloads/workbench/" target="_blank" rel="external">点击下载</a>）。使用WorkBench我们可以轻易地查看本地数据库的一些状态、数据库的操作等等，具体使用不多说了，这里只说一下新建数据库和数据表。点击图标栏第四个图标（create a new schema in the connected server），设置好相关参数就可以创建数据库。在Schema工具栏中，选择你要添加表的数据库，右键Tables选择“Create Table”，写好字段和数据类型，即可完成数据表的创建。</p>
 <h2 id="实现基本的数据库的增删改查"><a href="#实现基本的数据库的增删改查" class="headerlink" title="实现基本的数据库的增删改查"></a>实现基本的数据库的增删改查</h2><p>下面开始写代码。<br>具体代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">import pymysql</span><br><span class="line">def connDB():</span><br><span class="line">    #连接数据库</span><br><span class="line">    conn=pymysql.connect(host=&apos;localhost&apos;,user=&apos;root&apos;,passwd=&apos;&apos;,db=&apos;first&apos;)</span><br><span class="line">    cur=conn.cursor()</span><br><span class="line">    return (conn,cur)</span><br><span class="line"></span><br><span class="line">def exeUpdate(conn,cur,sql):</span><br><span class="line">    #更新语句，可执行Update，Insert语句</span><br><span class="line">    sta=cur.execute(sql)</span><br><span class="line">    conn.commit()</span><br><span class="line">    return (sta)</span><br><span class="line"></span><br><span class="line">def exeDelete(conn,cur,IDs):</span><br><span class="line">    #删除语句，可批量删除</span><br><span class="line">    for eachID in IDs.split(&apos; &apos;):</span><br><span class="line">        sta=cur.execute(&apos;delete from students where Id=%d&apos;%int(eachID))</span><br><span class="line">    conn.commit()</span><br><span class="line">    return (sta)</span><br><span class="line"></span><br><span class="line">def exeQuery(cur,sql):</span><br><span class="line">    #查询语句</span><br><span class="line">    cur.execute(sql)</span><br><span class="line">    result = cur.fetchone()</span><br><span class="line">    return (result)</span><br><span class="line"></span><br><span class="line">def connClose(conn,cur):</span><br><span class="line">    #关闭所有连接</span><br><span class="line">    cur.close()</span><br><span class="line">    conn.close()</span><br><span class="line"></span><br><span class="line">conn = connDB()[0]</span><br><span class="line">cur = connDB()[1]</span><br><span class="line">exeUpdate(conn,cur,&quot;INSERT INTO first_note (idfirst_note, note_title , note_content ) VALUES (0,&apos;Title&apos;,&apos;This is the content&apos;);&quot;)</span><br><span class="line">print(exeQuery(cur,&quot;SELECT note_title ,note_content FROM first_note;&quot;))</span><br><span class="line">connClose()</span><br></pre></td></tr></table></figure></p>
-<p>这里有几个地方说明一下：<br><strong>创建</strong>：我们通过<code>conn=pymysql.connect(host=&#39;localhost&#39;,user=&#39;root&#39;,passwd=&#39;&#39;,db=&#39;first&#39;)</code>方法获取一个connection对象。connection对象类似于数据操作过程中的管道，我们数据操作都是在connection之上进行的。（有过网络编程经验的朋友一下就理解了），然后再通过<code>cur=conn.cursor()</code>获取游标，游标对象则类似于管道中的载体，进行数据的传送。有了cur我们才能直接操作数据库。</p>
+<p>这里有几个地方说明一下：</p>
+<p><strong>创建</strong>：我们通过<code>conn=pymysql.connect(host=&#39;localhost&#39;,user=&#39;root&#39;,passwd=&#39;&#39;,db=&#39;first&#39;)</code>方法获取一个connection对象。connection对象类似于数据操作过程中的管道，我们数据操作都是在connection之上进行的。（有过网络编程经验的朋友一下就理解了），然后再通过<code>cur=conn.cursor()</code>获取游标，游标对象则类似于管道中的载体，进行数据的传送。有了cur我们才能直接操作数据库。</p>
 <p><strong>增删查改</strong>：代码中我们把增删查改分成四个函数，事实上这四个操作都是调用cur.execute()进行的，也就是直接使用SQL语言进行数据库操作。如果有必要我们应该对它们再次封装便于使用。具体代码看上面。</p>
 <p><strong>关闭</strong>：最后我们使用<code>cur.close() conn.close()</code>分别关闭游标和connection对象，这样就结束了一次数据操作。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这篇文章搭建的是win平台下的本地数据库，关于Linux平台的及远程数据库的相关操作类似。此外环境配完了更重要的是学习掌握SQL语言和最大程度运用Python写出优秀的代码。就这样啦~</p>
