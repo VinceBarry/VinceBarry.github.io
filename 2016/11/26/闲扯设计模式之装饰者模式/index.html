@@ -7,7 +7,7 @@
 
     
 
-    <title>Android二维码扫描开发（一）：实现思路与原理 | RoadToGeek技术小屋</title>
+    <title>闲扯设计模式之装饰者模式 | RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -15,7 +15,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <meta property="og:title" content="Android二维码扫描开发（一）：实现思路与原理"/>
+    <meta property="og:title" content="闲扯设计模式之装饰者模式"/>
     <meta property="og:site_name" content="RoadToGeek技术小屋（Learner、Thinker、Pacer）"/>
 
     
@@ -296,7 +296,7 @@
             
     
     
-    <a class="breadcrumb" href="/categories/Android第三方开源库/">Android第三方开源库</a>
+    <a class="breadcrumb" href="/categories/闲扯设计模式/">闲扯设计模式</a>
 
 
         
@@ -313,55 +313,42 @@
             <div class="article-title">
                 
     
-        <h1>Android二维码扫描开发（一）：实现思路与原理</h1>
+        <h1>闲扯设计模式之装饰者模式</h1>
     
 
 
             </div>
-            <time class="light-green-link-context" datetime="2016-05-03T04:49:41.000Z"><a href="/2016/05/03/Android二维码扫描开发（一）：实现思路与原理/">2016-05-03</a></time>
+            <time class="light-green-link-context" datetime="2016-11-26T08:35:23.000Z"><a href="/2016/11/26/闲扯设计模式之装饰者模式/">2016-11-26</a></time>
 
             
     <div class="tags-row">
         
-            <a href="/tags/Android/" class="chip light-green">Android</a>
+            <a href="/tags/原创/" class="chip light-green">原创</a>
         
-            <a href="/tags/转载/" class="chip light-green">转载</a>
+            <a href="/tags/设计模式/" class="chip light-green">设计模式</a>
         
     </div>
 
 
             <div class="toc light-green-link-context hide-on-med-and-down">
-    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#一、初始化相机"><span class="section table-of-contents-text">一、初始化相机</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#二、绑定SurfaceView"><span class="section table-of-contents-text">二、绑定SurfaceView</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#三、获取一帧图像"><span class="section table-of-contents-text">三、获取一帧图像</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#四、图像预处理"><span class="section table-of-contents-text">四、图像预处理</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#五、二维码解析"><span class="section table-of-contents-text">五、二维码解析</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#六、解析结果"><span class="section table-of-contents-text">六、解析结果</span></a></li></ol>
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#定义"><span class="section table-of-contents-text">定义</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#相关设计原则"><span class="section table-of-contents-text">相关设计原则</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#基本结构"><span class="section table-of-contents-text">基本结构</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#实例"><span class="section table-of-contents-text">实例</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#创建组件抽象类"><span class="section table-of-contents-text">创建组件抽象类</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#创建装饰者抽象类"><span class="section table-of-contents-text">创建装饰者抽象类</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#创建各种装饰者"><span class="section table-of-contents-text">创建各种装饰者</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#测试代码"><span class="section table-of-contents-text">测试代码</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#总结"><span class="section table-of-contents-text">总结</span></a></li></ol>
 </div>
 
 
             <div class="entry light-green-link-context">
-                <p><strong>写作原因现在二维码的使用已经十分普遍，各种传单广告，各大媒体都能见到它的影子，所以许多应用中都有二维码扫描生成功能，在自己的应用（特别是社交，分享类）加入二维码扫描是很有必要的。Google官方提供的Zxing库就能实现二维码扫描功能，下面我们一起拜读一下猿人记事关于Zxing的用法的解析实现。</strong></p>
-<p><a href="http://www.codernote.top/blog/info/117?hmsr=toutiao.io&amp;utm_medium=toutiao.io&amp;utm_source=toutiao.io" target="_blank" rel="external">Android二维码扫描开发（一）：实现思路与原理</a></p>
-<hr>
-<p>现在二维码已经非常普及了，那么二维码的扫描与处理也成为了Android开发中的一个必要技能。网上有很多关于Android中二维码处理的帖子，大都是在讲开源框架zxing用法，然后贴贴代码就完了，并没有一个系统的分析和原理解析。其中涉及到的Camera的操作和YUV图像处理，也大都没有详细的介绍。所以我自己写了这篇文章，把Android二维码的开发来从头捋一下。</p>
-<p>本例界面如下图所示，代码链接在文章最下方：</p>
-<p><img src="http://www.codernote.top/static/blog/file/2016/03/Screenshot_20160323-105716_20160323150030.png" alt="ScannerActivity"> <img src="http://www.codernote.top/static/blog/file/2016/03/device-2016-03-23-145909_20160323150037.png" alt="ResultActivity"></p>
-<p>二维码处理流程分为几个步骤：</p>
-<ol>
-<li>初始化相机，设置一些相机参数；</li>
-<li>绑定SurfaceView，在SurfaceView上显示预览图像；</li>
-<li>获取相机的一帧图像；</li>
-<li>对图像进行一定的预处理，只保留亮度信息，成为灰度图像；</li>
-<li>对灰度图像进行二维码解析，解析成功进入下一步，不成功回到第③步；</li>
-<li>返回解析结果并退出。</li>
-</ol>
-<p>流程图如下图所示：<br><img src="http://www.codernote.top/static/blog/file/2016/03/%E4%BA%8C%E7%BB%B4%E7%A0%81%E6%89%AB%E6%8F%8F%E5%8E%9F%E7%90%86_20160323134744.png" alt="liucheng"></p>
-<p>下面我们来具体看一看每一步都该怎么实现。</p>
-<h3 id="一、初始化相机"><a href="#一、初始化相机" class="headerlink" title="一、初始化相机"></a>一、初始化相机</h3><p>相机使用的是android.hardware.Camera这个类，在Android 5.0之后，推荐使用更强大的android.hardware.Camera2这个类，为了兼容更低版本Android系统，我们在这里仍然使用Camera类来实现。Camera可以通过setDisplayOrientation()方法设置预览图像的方向，旋转度数只能是0、90、180、270中的一个,根据需求，本例中设置为90度。Camera还可以通过Camera.Parameters类设置预览图像的分辨率，但是只能在气可支持的分辨率中选择一个，不能随便设置，我们需要根据屏幕大小,在其中选出一个最佳的预览图像分辨率，太大浪费资源，太小会显示不清楚，具体选择方法，在代码中有，这里就不细述了。Camera可以通过setPreviewFormat()方法来设置预览图像的数据格式，推荐选择的有ImageFormat.NV21和ImageFormat.YV12，默认是NV21。NV21属于YUV图像，和RGB图像有所不同，YUV图像在下一篇会有详细介绍。</p>
-<p>注意在使用Camera时，需要在AndroidManifest.xml里声明一些权限：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;uses-permission android:name=&quot;android.permission.CAMERA&quot; /&gt;</span><br><span class="line">&lt;uses-permission android:name=&quot;android.permission.FLASHLIGHT&quot; /&gt;</span><br><span class="line">&lt;uses-feature android:name=&quot;android.hardware.camera&quot; /&gt;</span><br><span class="line">&lt;uses-feature android:name=&quot;android.hardware.camera.autofocus&quot; /&gt;</span><br><span class="line">&lt;uses-feature android:name=&quot;android.hardware.camera.flash&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="二、绑定SurfaceView"><a href="#二、绑定SurfaceView" class="headerlink" title="二、绑定SurfaceView"></a>二、绑定SurfaceView</h3><p>在SurfaceView创建好后，通过Camera类的setPreviewDisplay()方法，将SurfaceHolder传入Camera。<br>调用Camera的startPreview()方法，Camera捕捉到的图像就会显示到SurfaceView上了。</p>
-<h3 id="三、获取一帧图像"><a href="#三、获取一帧图像" class="headerlink" title="三、获取一帧图像"></a>三、获取一帧图像</h3><p>调用Camera的setOneShotPreviewCallback(PreviewCallback cb)方法，可以请求获取一帧图像，获取到图像后，会调用PreviewCallback的onPreviewFrame(byte[] data, Camera camera)方法,其中的data参数就是图像的YUV数据了。</p>
-<h3 id="四、图像预处理"><a href="#四、图像预处理" class="headerlink" title="四、图像预处理"></a>四、图像预处理</h3><p>根据二维码的原理，我们只需要图像的亮度信息来进行二维码解析，所以我们要把获取到的彩色图像转换为灰度图像。YUV图像转换为灰度图像的方法，以及RGB图像转换为灰度图像的方法，在后续文章中会有介绍，这里只说原理，具体实现就不再赘述。</p>
-<h3 id="五、二维码解析"><a href="#五、二维码解析" class="headerlink" title="五、二维码解析"></a>五、二维码解析</h3><p>在这里，二维码解析使用的是google的zxing开源框架，把上一步处理后的灰度图像，封装为zxing的LuminanceSource，再封装为zxing的BinaryBitmap,然后就可以进行二维码解析了。<br>值得一提的是，利用zxing解析二维码是耗时操作，为避免ANR,需要写到子线程中来处理。<br>具体代码在这里就不贴了，后续章节中将会对zxing的使用及LuminanceSource的处理做详细解答。</p>
-<h3 id="六、解析结果"><a href="#六、解析结果" class="headerlink" title="六、解析结果"></a>六、解析结果</h3><p>本例中，除了返回解析到的字符串之外，还对LuminanceSource增加了一个renderCroppedGreyScaleBitmap()方法，用来生成处理好的灰度图像Bitmap。</p>
-<p>二维码扫描的大致流程和原理就叙述到这里了，下一篇将会对YUV图像进行详细的介绍。</p>
-<p><a href="https://github.com/xushanmeng/QRCodeScannerDemo" target="_blank" rel="external">查看二维码扫描Demo源码</a></p>
+                <h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>先给出装饰者模式的定义（来自维基百科）：装饰者模式，是面向对象编程领域中，一种动态地往一个类中添加新的行为的设计模式。就功能而言，修饰模式相比生成子类更为灵活，这样可以给某个对象而不是整个类添加一些功能。装饰者模式出现的意义是解决了运行时类功能的拓展，使得可以在运行时进行任一功能组合而不是需要为每种组合设计一个类（参见javaIO的设计）</p>
+<h2 id="相关设计原则"><a href="#相关设计原则" class="headerlink" title="相关设计原则"></a>相关设计原则</h2><p>装饰者模式遵循开放-关闭原则，及类应该对扩展开放，对修改关闭的原则。也就是说我们在项目开发过程中应尽量减少对已完成部分的修改，把重心放在功能的拓展至上。</p>
+<h2 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h2><p>这里我们通过UML类图来直观地理解装饰者模式的结构。如图：<br><img src="http://7xszli.com1.z0.glb.clouddn.com/dpdecorator.png" alt="Decorator UML类图"><br>这里有几个地方需要注意一下：装饰者与被装饰者继承自同一个抽象类或者接口（Component）的原因：我们利用多态，通过将装饰者与被装饰者继承自同一父抽象类或者接口实现被继承者在被装饰后类型不变的目的，也可以实现被装饰者相互修饰的目的。第二个需要注意的是，每个装饰者必须写好它们的描述属性，便于后期检查维护。</p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>下面利用一个例子来讲解装饰者模式的使用方法。下面的例子纯属瞎扯我们的主角VinceBarry是一名NBA新秀，他想要提高自己的篮球能力，通过学习模仿一些巨星的技巧是他最终选择的方案。于是他先学习了杜兰特的跳投技巧，然后不过瘾又学习了库里的三分球和欧文的运球技巧，最终他的能力达到了130超过了2k的上限……扯远了，下面我们利用代码来为VinceBarry增加能力。</p>
+<h3 id="创建组件抽象类"><a href="#创建组件抽象类" class="headerlink" title="创建组件抽象类"></a>创建组件抽象类</h3><p>首先我们需要一个父抽象类，这里我们命名为PlayBasketball。下面是他的具体实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">abstract class PlayBasketball &#123;</span><br><span class="line">    String description;</span><br><span class="line">    public String getDescription()&#123;</span><br><span class="line">        return description;</span><br><span class="line">    &#125;</span><br><span class="line">    public abstract int score();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里我们为VinceBarry和技能们抽象出了两个共有的属性：描述和技能值。从这里也可以看出这个抽象类应该是装饰者和被装饰者共有属性方法的容器。</p>
+<h3 id="创建装饰者抽象类"><a href="#创建装饰者抽象类" class="headerlink" title="创建装饰者抽象类"></a>创建装饰者抽象类</h3><p>下面我们再创建技能包的抽象类（对照上面的UML类图），我们取名为BasketballSkill，下面贴上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">abstract class BasketballSkill extends PlayBasketball &#123;</span><br><span class="line">    public abstract String getDescription();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个类继承自父抽象类PlayBasketball，类中有一个方法用于描述不同的装饰者，这个是装饰者必须实现的方法。</p>
+<h3 id="创建各种装饰者"><a href="#创建各种装饰者" class="headerlink" title="创建各种装饰者"></a>创建各种装饰者</h3><p>接下来就是创建各种技能了，这里我创建了三个技能：CurryThreePoint，DurantJumpShoot，IrvingDribbling。由于后两个代码与第一个类似，我就只展示CurryThreePoint这项技能的代码了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class CurryThreePoint extends BasketballSkill &#123;</span><br><span class="line">    private PlayBasketball playBasketball;</span><br><span class="line"></span><br><span class="line">    CurryThreePoint(PlayBasketball playBasketball) &#123;</span><br><span class="line">        this.playBasketball = playBasketball;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String getDescription() &#123;</span><br><span class="line">        return playBasketball.getDescription()+&quot; has curry&apos;s three point skill&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public int score() &#123;</span><br><span class="line">        return 40 + playBasketball.score();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>下面阐述一下这个类中的几个关键点：首先是继承自装饰者父类，所以必须重写getDescription()方法。然后我们重写最关键的方法：score()。这个方法的特点是，将装饰者中的特定行为与传入的被装饰者（也可能是装饰者）的行为进行叠加，这里的装饰者是我们在构造方法中传入的Playbasketball类型的对象。通过这种方式实现了对象行为的修改或功能的拓展。也就是在这里我们为VinceBarry加上了库里三分球的能力。</p>
+<h3 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h3><p>下面我们测试一下整个流程（关于装饰者的构建，在工厂和生成器模式中有更加优秀的方案，日后再扯）：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">public class Court &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        PlayBasketball vinceBarry = new VinceBarry();</span><br><span class="line">        System.out.println(vinceBarry.getDescription() + &quot; &quot; + vinceBarry.score());</span><br><span class="line">        vinceBarry = new DurantJumpShoot(vinceBarry);</span><br><span class="line">        vinceBarry = new CurryThreePoint(vinceBarry);</span><br><span class="line">        vinceBarry = new IrvingDribbling(vinceBarry);</span><br><span class="line">        System.out.println(vinceBarry.getDescription() + &quot; &quot; + vinceBarry.score());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>输出结果为<br><img src="http://7xszli.com1.z0.glb.clouddn.com/dpdecorator2.PNG" alt="结果"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>又到一学期快结束的时间段了，想想近来自己也没学啥，赠给自己一句话：就是干！</p>
 
             </div>
         </div>
@@ -375,7 +362,7 @@
         <div class="card">
             <div class="card-content">
                 <!-- Duoshuo Comment BEGIN -->
-                <div class="ds-thread" data-thread-key="2016/05/03/Android二维码扫描开发（一）：实现思路与原理/" data-title="Android二维码扫描开发（一）：实现思路与原理" data-url="http://yoursite.com/2016/05/03/Android二维码扫描开发（一）：实现思路与原理/"></div>
+                <div class="ds-thread" data-thread-key="2016/11/26/闲扯设计模式之装饰者模式/" data-title="闲扯设计模式之装饰者模式" data-url="http://yoursite.com/2016/11/26/闲扯设计模式之装饰者模式/"></div>
 
                 <script type="text/javascript">
                     console.log(document.querySelector('.ds-thread'));
