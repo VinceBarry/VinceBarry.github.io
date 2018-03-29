@@ -7,7 +7,7 @@
 
     
 
-    <title>归档：2016/9 | RoadToGeek技术小屋</title>
+    <title>RoadToGeek技术小屋</title>
     <meta name="author" content="陈颍聪">
     
     <meta name="description" content="RoadToGeek技术小屋">
@@ -289,46 +289,92 @@
 
     <main>
         <div class="container main-container">
-    
-
-<nav class="page-nav hide-on-small-only">
+    <nav class="page-nav hide-on-small-only">
     <div class="nav-wrapper brown darken-1">
         <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+
         
 
         
     </div>
 </nav>
 
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>无题</h1>
+    
 
 
-    <ul class="collapsible mt-0" data-collapsible="accordion">
-        
-        
-            <li>
-                <div class="collapsible-header active">
-                    <i class="fa fa-archive"></i>2016
-                </div>
-                <div class="collapsible-body">
-                    <div class="collection">
-                        
-                            <a href="/2016/09/07/探索美妙的AsyncTask实现及阅读源码收获/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-09-07T08:03:22.000Z">2016-09-07</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                探索美妙的AsyncTask实现及阅读源码收获
-                            </a>
-                        
-                            <a href="/2016/09/05/让洪水猛兽变成温顺小羊——浅谈Android线程池机制/" class="collection-item grey-text text-darken-1">
-                                <time datetime="2016-09-05T11:38:06.000Z">2016-09-05</time>
-                                <span>&nbsp;&nbsp;&nbsp;</span>
-                                让洪水猛兽变成温顺小羊——浅谈Android线程池机制
-                            </a>
-                        
-                    </div>
-                </div>
-            </li>
-        
-    </ul>
+            </div>
+            <time class="light-green-link-context" datetime="2018-03-29T14:11:54.054Z"><a href="/2018/03/29/How To Combine Two Lists/">2018-03-29</a></time>
+
+            
+
+            <div class="toc light-green-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Combine-The-Sequence-List"><span class="section table-of-contents-text">Combine The Sequence List</span></a></li></ol>
+</div>
+
+
+            <div class="entry light-green-link-context">
+                <hr>
+<p>title: How To Combine Two Lists?<br>date: 2018-03-29<br>categories:</p>
+<ul>
+<li>Data Structure<br>tags:</li>
+<li>Alogrithm</li>
+</ul>
+<hr>
+<p>In this article,I will introduce two code segments for combining two lists.Let’s do it.</p>
+<h3 id="Combine-The-Sequence-List"><a href="#Combine-The-Sequence-List" class="headerlink" title="Combine The Sequence List"></a>Combine The Sequence List</h3><blockquote>
+<p>Subject: Write code to realize a function that combine two backward sequence lists to one list.The result is in the first list.(Do not use a new list for temporary storage.)</p>
+</blockquote>
+<p>How to do this?</p>
+<p>Suppose there are two sequence lists,one is A,the other is B.We can move all the elements which are store in B to the back of A.After doing this,use a sorting algorithm to change the order in A,that is the result.But this means may a little redundancy.Is there any lightweight algorithm to realize that function?</p>
+<p><strong>Thinking:</strong> We draw a picture first.We can set two index value i and j,we use i to track the position of La at a time,use j to track the position of Lb.Because we will combine b to a,we can compare La’s element(<code>La.elem[i]</code>) with b’s element(<code>Lb.elem[j]</code>) from the tail to the head.Every time we compare <code>La.elem[i]</code> with <code>Lb.elem[j]</code>,if <code>La.elem[i]</code> is <strong>smaller</strong> than <code>Lb.elem[j]</code>,we move all the elements after La.elem[i] first,then move <code>Lb.elem[j]</code>to <code>La.elem[i]</code>,and La.length increments.But we should notice that when the i=La.length-1,there’s nothing to be moved,so this case need to be handle Individually.If <code>La.elem[i]</code> is <strong>bigger</strong> than <code>Lb.elem[j]</code>,just move the i point to the previous element.There are three possibilities that cause the cycle finished:One is i is smaller than 0 and j also smaller than 0;Or i is smaller 0 but j&gt;=0;or i&gt;=0 but j&lt;0.We need to deal with these cases.when i,j are all smaller than 0 <strong>or</strong> when i is bigger or equals 0 and j&lt;0,it indicates that the combine is finished;but when  i is smaller 0 but j is bigger or equals 0,it shows that there are some elements in Lb that never been inserted into La,so we have to insert them in the head of La.There is the code:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;malloc.h&gt;</span>  </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> ElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> status;</span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> LIST_INIT_SIZE 100</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> OK 1</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> OVERFLOW -1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">	ElemType *elem;</span><br><span class="line">	<span class="keyword">int</span> length;</span><br><span class="line">	<span class="keyword">int</span> listsize;</span><br><span class="line">&#125; SqList;</span><br><span class="line"></span><br><span class="line"><span class="comment">//初始化线性表 </span></span><br><span class="line"><span class="function">status <span class="title">InitList_Sq</span><span class="params">(SqList &amp;L)</span> </span>&#123;</span><br><span class="line">	L.elem = (ElemType *)<span class="built_in">malloc</span>(LIST_INIT_SIZE * sizeof(ElemType));</span><br><span class="line">	<span class="comment">//if (!L.elem) exit(OVERFLOW);</span></span><br><span class="line">	L.length = <span class="number">0</span>;</span><br><span class="line">	L.listsize = LIST_INIT_SIZE;</span><br><span class="line"></span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建有序表并为其赋值 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Create_sq</span><span class="params">(SqList &amp;L)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"创建一个有序表！\n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"输入有序表里的元素个数："</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line">	L.length = n;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"输入第%d个元素的值："</span>, i + <span class="number">1</span>);</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;L.elem[i]);</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印有序表 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Disp_Sq</span><span class="params">(SqList L)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, n;</span><br><span class="line">	n = L.length;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i&lt;n; i++) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%5d"</span>, L.elem[i]);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//合并有序表 </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Combine</span><span class="params">(SqList &amp;la, SqList lb)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = la.length - <span class="number">1</span>, j = lb.length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (i &gt;= <span class="number">0</span> &amp;&amp; j &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> (la.elem[i] &lt;= lb.elem[j]) &#123;</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> (!la.elem[i + <span class="number">1</span>])</span><br><span class="line">			&#123;</span><br><span class="line">				la.elem[i + <span class="number">1</span>] = lb.elem[j];</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">for</span> (int k = la.length - <span class="number">1</span>; k &gt;= i + <span class="number">1</span>; --k)</span><br><span class="line">				&#123;</span><br><span class="line">					la.elem[k + <span class="number">1</span>] = la.elem[k];</span><br><span class="line">				&#125;</span><br><span class="line">				la.elem[i + <span class="number">1</span>] = lb.elem[j];</span><br><span class="line">			&#125;</span><br><span class="line">			la.length++;</span><br><span class="line">			j--;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			i--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span>(j!=<span class="number">0</span>)&#123;</span><br><span class="line">	    la.length += j+<span class="number">1</span>;</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> l = la.length - <span class="number">1</span>; l &gt;= <span class="number">0</span>; l--)</span><br><span class="line">		    la.elem[l + j + <span class="number">1</span>] = la.elem[l];</span><br><span class="line">	    <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt;= j; m++)</span><br><span class="line">		    la.elem[m] = lb.elem[m];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	SqList sla;</span><br><span class="line">	SqList slb;</span><br><span class="line">	InitList_Sq(sla);</span><br><span class="line">	InitList_Sq(slb);</span><br><span class="line">		sla.length = <span class="number">5</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">			sla.elem[i] = i + <span class="number">5</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		slb.length = <span class="number">5</span>;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">			slb.elem[i] = i;</span><br><span class="line">		&#125;</span><br><span class="line">    Disp_Sq(sla);</span><br><span class="line">    Disp_Sq(slb);</span><br><span class="line">	Combine(sla, slb);</span><br><span class="line">	Disp_Sq(sla);</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+    <section id="comment">
+        <div class="card">
+            <div class="card-content">
+                <!-- Duoshuo Comment BEGIN -->
+                <div class="ds-thread" data-thread-key="2018/03/29/How To Combine Two Lists/" data-title="" data-url="http://yoursite.com/2018/03/29/How To Combine Two Lists/"></div>
+
+                <script type="text/javascript">
+                    console.log(document.querySelector('.ds-thread'));
+                    var duoshuoQuery = {
+                        short_name: 'roadtogeek'
+                    };
+                    (function() {
+                        var ds = document.createElement('script');
+                        ds.type = 'text/javascript';
+                        ds.async = true;
+                        ds.src = (document.location.protocol == 'https:'
+                            ? 'https:'
+                            : 'http:') + '//static.duoshuo.com/embed.js';
+                        ds.charset = 'UTF-8';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+                    })();
+                </script>
+                <!-- Duoshuo Comment END -->
+            </div>
+        </div>
+    </section>
+
 
 
 </div>
